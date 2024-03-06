@@ -1,7 +1,15 @@
+<template>
+  <div>
+    <AppHeader />
+    <AppFooter />
+  </div>
+</template>
+
 <script>
+import axios from "axios";
 import AppHeader from "./components/AppHeader.vue";
 import AppFooter from "./components/AppFooter.vue";
-import { RouterView } from "vue-router";
+import store from "../src/store.js";
 
 export default {
   name: "App",
@@ -9,12 +17,27 @@ export default {
     AppHeader,
     AppFooter,
   },
+  data() {
+    return {
+      restaurants: [],
+    };
+  },
+  methods: {
+    getRestaurants() {
+      axios
+        .get(`${store.api.mainUrl}${store.api.listUrl.restaurants}`)
+        .then((response) => {
+          this.restaurants = response.data.results;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
+  created() {
+    this.getRestaurants();
+  },
 };
 </script>
-
-<template>
-  <AppHeader />
-  <AppFooter />
-</template>
 
 <style></style>
