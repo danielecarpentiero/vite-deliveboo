@@ -2,7 +2,7 @@ import { reactive } from "vue";
 
 const store = reactive({
   api: {
-    mainUrl: "http://127.0.0.1:8000",
+    mainUrl: "http://127.0.0.1:8000/",
     storagePath: "/storage/",
     listUrl: {
       restaurants: "api/restaurants",

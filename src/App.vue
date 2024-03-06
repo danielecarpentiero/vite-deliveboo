@@ -20,17 +20,19 @@ export default {
   data() {
     return {
       restaurants: [],
+      store,
     };
   },
   methods: {
     getRestaurants() {
+      console.log(this.store);
       axios
-        .get(`${store.api.mainUrl}${store.api.listUrl.restaurants}`)
+        .get(this.store.api.mainUrl + this.store.api.listUrl.restaurants)
         .then((response) => {
           this.restaurants = response.data.results;
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         });
     },
   },
