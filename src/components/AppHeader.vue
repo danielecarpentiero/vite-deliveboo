@@ -5,6 +5,8 @@ export default {
 };
 </script>
 
-<template></template>
+<template>
+  <h1>Here goes the header</h1>
+</template>
 
 <style></style>

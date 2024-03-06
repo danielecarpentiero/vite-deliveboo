@@ -1,10 +1,16 @@
 <script>
+import RestaurantCard from "../components/RestaurantCard.vue";
+
 export default {
   name: "AppHome",
-  components: {},
+  components: {
+    RestaurantCard,
+  },
 };
 </script>
 
-<template></template>
+<template>
+  <RestaurantCard />
+</template>
 
 <style></style>
