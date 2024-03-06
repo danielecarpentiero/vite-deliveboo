@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "App",
+  name: "Searchbar",
   components: {},
 };
 </script>
