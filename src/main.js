@@ -1,11 +1,33 @@
-import { createApp } from "vue";
+import { createApp } from 'vue';
 
-import "./style.scss";
+import './style.scss';
 
-import * as bootstrap from "bootstrap";
+import * as bootstrap from 'bootstrap';
 
-import { router } from "./router.js";
+import { router } from './router.js';
 
-import App from "./App.vue";
+import App from './App.vue';
 
-createApp(App).use(router).mount("#app");
+// Font Exo-2
+import '@fontsource/exo-2';
+import '@fontsource/exo-2/400.css';
+import '@fontsource/exo-2/400-italic.css';
+
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core';
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faApple } from '@fortawesome/free-brands-svg-icons';
+import { faGooglePlay } from '@fortawesome/free-brands-svg-icons';
+
+/* add icons to the library */
+library.add(faFacebookF, faXTwitter, faInstagram, faApple, faGooglePlay);
+
+createApp(App)
+  .use(router)
+  .component('font-awesome-icon', FontAwesomeIcon)
+  .mount('#app');
