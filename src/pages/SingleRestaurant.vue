@@ -21,17 +21,12 @@ export default {
   },
   methods: {
     getRestaurants() {
-      console.log(this.store);
       axios
         .get(
-          this.store.api.mainUrl +
-            this.store.api.listUrl.restaurants +
-            "/" +
-            this.$route.params.slug
-        )
+          this.store.api.mainUrl + this.store.api.listUrl.restaurants + '/' + this.$route.params.slug)
         .then((response) => {
-          this.restaurants = response.data.results.data;
-          console.log(this.restaurants);
+          console.log(response);
+          this.restaurants = response.data.result;
         })
         .catch((error) => {
           console.log(error);
@@ -40,7 +35,6 @@ export default {
   },
   created() {
     this.getRestaurants();
-    console.log(this.getRestaurants);
     console.log(this.$route);
   },
 };

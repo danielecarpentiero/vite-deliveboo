@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     getRestaurants() {
-      console.log(this.store);
       axios
         .get(this.store.api.mainUrl + this.store.api.listUrl.restaurants)
         .then((response) => {
