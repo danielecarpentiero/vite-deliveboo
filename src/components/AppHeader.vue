@@ -1,7 +1,12 @@
 <script>
 export default {
   name: 'AppHeader',
-  components: {},
+  computed: {
+    isHome() {
+      // Controlla se la route corrente è la pagina home
+      return this.$route.name === 'home';
+    },
+  },
 };
 </script>
 
@@ -21,13 +26,8 @@ export default {
     <!-- Div vuoto per l'overlay nero sopra il video -->
     <div class="overlay"></div>
 
-    <!-- Video nel background -->
-    <video
-      playsinline="playsinline"
-      autoplay="autoplay"
-      muted="muted"
-      loop="loop"
-    >
+    <!-- Video nel background (solo se siamo nella home) -->
+    <video v-if="isHome" playsinline autoplay muted loop>
       <source src="/HeaderVideoSD.mp4" type="video/mp4" />
     </video>
 
@@ -35,7 +35,9 @@ export default {
     <div class="container h-100">
       <div class="d-flex h-100 text-center align-items-center">
         <div class="w-100 text-white">
-          <h1 class="display-3">Tutto il cibo che vuoi, quando lo vuoi</h1>
+          <h1 class="display-3 fw-bold">
+            Tutto il cibo che vuoi, quando lo vuoi
+          </h1>
         </div>
       </div>
     </div>
