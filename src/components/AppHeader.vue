@@ -6,18 +6,99 @@ export default {
 </script>
 
 <template>
-  <header class="text-center p-3">
-    <h1>DeliveBOO</h1>
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <!-- Logo -->
+      <div class="navbar-brand">
+        <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
+      </div>
+
+      <!-- Icona del carrello -->
+      <div class="cart-icon">Carrello</div>
+    </nav>
+
+    <!-- Div vuoto per l'overlay nero sopra il video -->
+    <div class="overlay"></div>
+
+    <!-- Video nel background -->
+    <video
+      playsinline="playsinline"
+      autoplay="autoplay"
+      muted="muted"
+      loop="loop"
+    >
+      <source src="/HeaderVideoSD.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Contenuti Header -->
+    <div class="container h-100">
+      <div class="d-flex h-100 text-center align-items-center">
+        <div class="w-100 text-white">
+          <h1 class="display-3">Tutto il cibo che vuoi, quando lo vuoi</h1>
+        </div>
+      </div>
+    </div>
   </header>
 </template>
 
 <style scoped lang="scss">
 header {
-  h1 {
-    font-weight: 700;
-    font-style: italic;
-    color: #2b3445;
-  }
-  background-color: #ff9843;
+  position: relative;
+  background-color: black;
+  height: 75vh;
+  min-height: 25rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+header video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+header .container {
+  position: relative;
+  z-index: 2;
+}
+
+header .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 200px;
+  z-index: 3;
+}
+
+.navbar-brand {
+  /* Eventuali stili per il logo */
+}
+
+.logo {
+  max-height: 50px;
+}
+
+.cart-icon {
+  color: white;
+  font-size: 24px;
 }
 </style>
