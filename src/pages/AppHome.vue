@@ -48,18 +48,24 @@ export default {
 </script>
 
 <template>
+  <!-- Jumbo -->
+  <div class="jumbo d-flex align-items-center justify-content-center m-0">
+    <h1 class="text-white text-uppercase">what would you like to eat?</h1>
+  </div>
+  <!-- Jumbo -->
   <div class="container">
     <!-- tipi -->
-    <section>
-      <h1>what would you like to eat?</h1>
-    </section>
-
     <h2>choose your type of restaurant</h2>
-    <ul>
-      <li v-for="(type, index) in types">
+    <ul class="row list-unstyled">
+      <li
+        v-for="(type, index) in types"
+        class="col-6 col-md-3 text-center mt-3"
+      >
         <a href="#" role="button">{{ type.name }}</a>
       </li>
     </ul>
+    <!-- tipi -->
+
     <!-- Ristoranti -->
     <h2 class="text-center">Restaurants</h2>
     <ul class="row list-unstyled">
@@ -93,5 +99,10 @@ export default {
 .box {
   height: 300px;
   background-color: aqua;
+}
+
+.jumbo {
+  height: 600px;
+  background-color: brown;
 }
 </style>
