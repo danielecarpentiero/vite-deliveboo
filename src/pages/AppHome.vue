@@ -62,7 +62,7 @@ export default {
 					<label class="form-check-label" :for="index">
 						{{ type.name }}
 					</label>
-					<div class="type-img" v-show="types">
+					<div class="type-img-container">
 						<img class="types-image" :src="store.api.mainUrl + type.img" :alt="type.name">
 					</div>
 				</div>
@@ -94,7 +94,7 @@ export default {
 	background-color: aqua;
 }
 
-.type-img {
+.type-img-container {
 	width: 50px;
 	height: 50px;
 	overflow: hidden;
