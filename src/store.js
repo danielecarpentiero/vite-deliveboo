@@ -5,7 +5,7 @@ const store = reactive({
     mainUrl: "http://127.0.0.1:8000/",
     storagePath: "/storage/",
     listUrl: {
-      restaurants: "api/restaurants",
+      restaurants: "api/restaurants/",
     },
   },
   restaurants: {

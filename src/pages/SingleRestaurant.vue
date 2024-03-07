@@ -23,7 +23,10 @@ export default {
     getRestaurants() {
       axios
         .get(
-          this.store.api.mainUrl + this.store.api.listUrl.restaurants + '/' + this.$route.params.slug)
+          this.store.api.mainUrl +
+            this.store.api.listUrl.restaurants +
+            this.$route.params.slug
+        )
         .then((response) => {
           console.log(response);
           this.restaurants = response.data.result;
