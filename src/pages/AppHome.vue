@@ -78,7 +78,7 @@ export default {
 			<h1>What would you like to eat?</h1>
 		</section>
 
-		<h2>Choose your type of restaurant</h2>
+		<h2>Choose the type of food you would like to eat</h2>
 		<ul class="d-flex flex-wrap gap-4 p-0">
 			<li v-for="(type, index) in types" class="list-unstyled">
 				<div class="form-check">
