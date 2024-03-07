@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return {
-      restaurants: [],
+      restaurant: [],
       store,
     };
   },
@@ -29,7 +29,8 @@ export default {
         )
         .then((response) => {
           console.log(response);
-          this.restaurants = response.data.result;
+          this.restaurant = response.data.result;
+          console.log(response.data.result);
         })
         .catch((error) => {
           console.log(error);
@@ -46,10 +47,29 @@ export default {
 <template>
   <div class="card">
     <div class="card-body">
-      <h2 class="card-title">{{ restaurants.name }}</h2>
-      <h3>{{ restaurants.address }}</h3>
+      <h1 class="card-title">{{ restaurant.name }}</h1>
+      <h2>{{ restaurant.address }}</h2>
+      <ul class="list-unstyled">
+        <li v-for="food in restaurant.foods" :key="food.id">
+          <h3>{{ food.name }}</h3>
+          <p>{{ food.description }}</p>
+          <p>Prezzo: {{ food.price }} €</p>
+          <p v-if="food.is_vegetarian">Vegetariano</p>
+          <p v-else>Non vegetariano</p>
+          <img
+            :src="store.api.mainUrl + store.api.storagePath + food.img"
+            :alt="food.slug"
+          />
+          <p v-if="food.is_visible">Elemento disponibile</p>
+          <p v-else>Elemento non disponibile</p>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
-<style></style>
+<style scoped lang="scss">
+img {
+  width: 20%;
+}
+</style>
