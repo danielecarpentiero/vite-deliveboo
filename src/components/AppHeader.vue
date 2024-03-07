@@ -89,10 +89,6 @@ header .overlay {
   z-index: 3;
 }
 
-.navbar-brand {
-  /* Eventuali stili per il logo */
-}
-
 .logo {
   max-height: 50px;
 }
