@@ -21,11 +21,15 @@ export default {
 
 	methods: {
 		getRestaurants() {
+			let params = {};
+
+			if (this.selectedTypes.length > 0) {
+				params.types = this.selectedTypes.join(',');
+			}
+
 			axios
 				.get(this.store.api.mainUrl + this.store.api.listUrl.restaurants, {
-					params: {
-						types: this.selectedTypes.join(','),
-					}
+					params: params,
 				})
 				.then((response) => {
 					this.restaurants = response.data.results.data;
