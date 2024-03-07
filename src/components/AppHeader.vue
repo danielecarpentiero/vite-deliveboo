@@ -15,7 +15,7 @@ export default {
       </div>
 
       <!-- Icona del carrello -->
-      <div class="cart-icon">Carrello</div>
+      <div class="cart-icon">Shopping Cart</div>
     </nav>
 
     <!-- Div vuoto per l'overlay nero sopra il video -->
