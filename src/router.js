@@ -9,6 +9,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: AppHome,
+      props: (route) => ({ types: route.query.types }),
     },
     {
       path: "/restaurant/:slug",

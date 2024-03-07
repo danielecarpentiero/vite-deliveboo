@@ -9,17 +9,24 @@ export default {
 	components: {
 		RestaurantCard,
 	},
+
 	data() {
 		return {
 			restaurants: [],
 			store,
 			types: [],
+			selectedTypes: [],
 		};
 	},
+
 	methods: {
 		getRestaurants() {
 			axios
-				.get(this.store.api.mainUrl + this.store.api.listUrl.restaurants)
+				.get(this.store.api.mainUrl + this.store.api.listUrl.restaurants, {
+					params: {
+						types: this.selectedTypes.join(','),
+					}
+				})
 				.then((response) => {
 					this.restaurants = response.data.results.data;
 				})
@@ -33,14 +40,27 @@ export default {
 				.get(this.store.api.mainUrl + this.store.api.listUrl.types)
 				.then((response) => {
 					this.types = response.data.results;
-					console.log(this.types);
 				})
 				.catch((error) => {
 					console.log(error);
 				});
 		},
+
+		updateFilter() {
+			// Aggiorna l'URL con i tipi selezionati
+			const selectedTypesString = this.selectedTypes.join(',');
+			this.$router.push({ query: { types: selectedTypesString || undefined } });
+
+			// Aggiorna la lista dei ristoranti
+			this.getRestaurants();
+		}
 	},
-	created() {
+
+	watch: {
+		selectedTypes: 'updateFilter' // Aggiorna il filtro quando cambia l'array dei tipi selezionati
+	},
+
+	mounted() {
 		this.getRestaurants();
 		this.getTypes();
 	},
@@ -51,14 +71,15 @@ export default {
 	<div class="container">
 		<!-- tipi -->
 		<section>
-			<h1>what would you like to eat?</h1>
+			<h1>What would you like to eat?</h1>
 		</section>
 
-		<h2>choose your type of restaurant</h2>
+		<h2>Choose your type of restaurant</h2>
 		<ul class="d-flex flex-wrap gap-4 p-0">
 			<li v-for="(type, index) in types" class="list-unstyled">
 				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="" :id="index">
+					<input v-model="selectedTypes" class="form-check-input" type="checkbox" :value="type.name"
+						:id="index">
 					<label class="form-check-label" :for="index">
 						{{ type.name }}
 					</label>
@@ -79,7 +100,7 @@ export default {
 						<div class="box"></div>
 						<h6 class="mt-3 mb-1">Restaurant Types:</h6>
 						<ul class="list-unstyled d-flex gap-3 justify-content-center">
-							<li v-for="(  type, index  ) in   restaurant.types  ">{{ type.name }}</li>
+							<li v-for="(type, index) in restaurant.types ">{{ type.name }}</li>
 						</ul>
 					</div>
 				</RouterLink>
