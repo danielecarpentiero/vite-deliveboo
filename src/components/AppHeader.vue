@@ -6,6 +6,15 @@ export default {
       store,
     }
   },
+  methods: {
+    removeItemFromCart(index){
+      this.store.cart.items.splice(index, 1);
+      this.updateCart();
+    },
+    updateCart(){
+      localStorage.setItem('items', JSON.stringify(this.store.cart.items));
+    }
+  },
   name: 'AppHeader',
   computed: {
     isHome() {
@@ -27,13 +36,19 @@ export default {
 
       <!-- Icona del carrello -->
       <div class="mt-4">
-        <h4>Carrello</h4>
-        <ul>
-          <li v-for="(item, index) in items" :key="index">
-            {{ item.name }} - {{ item.price }} €
-            <button @click="removeItemFromCart(index)">Rimuovi</button>
-          </li>
-        </ul>
+          <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+    <font-awesome-icon :icon="['fas', 'cart-shopping']" />
+  </button>
+  <ul class="dropdown-menu">
+  <li v-if="store.cart.items.length > 0" v-for="(item, index) in store.cart.items" :key="index" class="dropdown-item">
+    {{ item.name }} - {{ item.price }} €
+    <button @click.stop="removeItemFromCart(index)">Rimuovi</button>
+  </li>
+  <li v-else class="dropdown-item"> Il tuo carrello è vuoto</li>
+</ul>
+
+</div>
       </div>
     </nav>
 

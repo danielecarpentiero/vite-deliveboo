@@ -23,9 +23,10 @@ import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faApple } from '@fortawesome/free-brands-svg-icons';
 import { faGooglePlay } from '@fortawesome/free-brands-svg-icons';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
-library.add(faFacebookF, faXTwitter, faInstagram, faApple, faGooglePlay);
+library.add(faFacebookF, faXTwitter, faInstagram, faApple, faGooglePlay, faCartShopping);
 
 createApp(App)
   .use(router)

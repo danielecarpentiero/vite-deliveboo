@@ -116,7 +116,6 @@ export default {
         <ul>
           <li v-for="(item, index) in this.store.cart.items" :key="index">
             {{ item.name }} - {{ item.price }} €
-            <button @click="removeItemFromCart(index)">Rimuovi</button>
           </li>
         </ul>
       </div>
