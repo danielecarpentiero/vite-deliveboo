@@ -36,16 +36,16 @@ export default {
 
       <!-- Icona del carrello -->
       <div class="mt-4">
-          <div class="dropdown">
+          <div class="dropdown dropstart">
   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
     <font-awesome-icon :icon="['fas', 'cart-shopping']" />
   </button>
   <ul class="dropdown-menu">
   <li v-if="store.cart.items.length > 0" v-for="(item, index) in store.cart.items" :key="index" class="dropdown-item">
     {{ item.name }} - {{ item.price }} €
-    <button @click.stop="removeItemFromCart(index)">Rimuovi</button>
+    <button @click.stop="removeItemFromCart(index)">Remove item</button>
   </li>
-  <li v-else class="dropdown-item"> Il tuo carrello è vuoto</li>
+  <li v-else class="dropdown-item">Your cart is empty</li>
 </ul>
 
 </div>
@@ -65,7 +65,7 @@ export default {
       <div class="d-flex h-100 text-center align-items-center">
         <div class="w-100 text-white">
           <h1 class="display-3 fw-bold">
-            Tutto il cibo che vuoi, quando vuoi.
+            All the food you want, when you want.
           </h1>
         </div>
       </div>
