@@ -50,7 +50,7 @@ export default {
       <div class="d-flex h-100 text-center align-items-center">
         <div class="w-100 text-white">
           <h1 class="display-3 fw-bold">
-            Tutto il cibo che vuoi, quando lo vuoi
+            Tutto il cibo che vuoi, quando vuoi.
           </h1>
         </div>
       </div>

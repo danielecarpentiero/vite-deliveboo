@@ -30,7 +30,6 @@ export default {
       // Mostra un messaggio di errore o rimuovi gli articoli esistenti prima di aggiungere il nuovo articolo
       alert('Puoi ordinare solo da un ristorante alla volta. Svuota il carrello per ordinare da un altro ristorante.');
       // Oppure svuota automaticamente il carrello
-    
     }
   },
     // Rimuovi un elemento dal carrello
@@ -55,12 +54,15 @@ export default {
     },
   },
   created() {
-    this.getRestaurants();
-    console.log(this.$route);
+  this.getRestaurants();
+  console.log(this.$route);
+  if (!this.store.cart.items) {
     this.store.cart.items = JSON.parse(localStorage.getItem('items')) || [];
-  },
+  }
+},
+
   watch: {
-    items: {
+    'store.cart.items': {
       handler(newItems) {
         localStorage.setItem('items', JSON.stringify(newItems));
       },
