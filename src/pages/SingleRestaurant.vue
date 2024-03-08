@@ -22,6 +22,7 @@ export default {
   },
   methods: {
     addItemToCart(food) {
+      console.log('ciao');
     // Verifica se il carrello è vuoto o contiene solo articoli dallo stesso ristorante
     if (this.store.cart.items.length === 0 || this.store.cart.items[0].restaurant_id === food.restaurant_id) {
       this.store.cart.items.push(food);
@@ -61,7 +62,7 @@ export default {
   watch: {
     items: {
       handler(newItems) {
-        localStorage.setItem('items', JSON.stringify(newItems));
+        localStorage.setItem('items', JSON.stringify(newItem));
       },
       deep: true,
     },
@@ -106,7 +107,7 @@ export default {
               <div class="mt-4">
         <h4>Carrello</h4>
         <ul>
-          <li v-for="(item, index) in items" :key="index">
+          <li v-for="(item, index) in this.store.cart.items" :key="index">
             {{ item.name }} - {{ item.price }} €
             <button @click="removeItemFromCart(index)">Rimuovi</button>
           </li>
