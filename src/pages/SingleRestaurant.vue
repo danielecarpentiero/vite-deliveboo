@@ -40,6 +40,9 @@ export default {
     updateCart(){
       localStorage.setItem('items', JSON.stringify(this.store.cart.items));
     },
+    getQuantity(item) {
+    return this.store.cart.items.filter(cartItem => cartItem.name === item.name).length;
+  },
     getRestaurants() {
       axios
         .get(
@@ -114,10 +117,12 @@ export default {
               <div class="mt-4">
         <h4>Carrello</h4>
         <ul>
-          <li v-for="(item, index) in this.store.cart.items" :key="index">
-            {{ item.name }} - {{ item.price }} €
-          </li>
-        </ul>
+  <li v-for="(item, index) in store.cart.items" :key="index">
+    {{ item.name }} x {{ getQuantity(item) }} - {{ item.price * getQuantity(item) }} €
+    <button @click.stop="removeItemFromCart(index)">Rimuovi</button>
+  </li>
+</ul>
+
       </div>
             </div>
           </div>
