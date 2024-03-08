@@ -36,40 +36,24 @@ export default {
 
       <!-- Icona del carrello -->
       <div class="mt-4">
-          <div class="dropdown dropstart">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-    <font-awesome-icon :icon="['fas', 'cart-shopping']" />
-  </button>
-  <ul class="dropdown-menu">
-  <li v-if="store.cart.items.length > 0" v-for="(item, index) in store.cart.items" :key="index" class="dropdown-item">
-    {{ item.name }} - {{ item.price }} €
-    <button @click.stop="removeItemFromCart(index)">Remove item</button>
-  </li>
-  <li v-else class="dropdown-item">Your cart is empty</li>
-</ul>
-
-</div>
+        <div class="dropdown dropstart">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            <font-awesome-icon :icon="['fas', 'cart-shopping']" />
+          </button>
+          <ul class="dropdown-menu">
+            <li v-if="store.cart.items.length > 0" v-for="(item, index) in store.cart.items" :key="index" class="dropdown-item">
+            {{ item.name }} - {{ item.price }} €
+            <button @click.stop="removeItemFromCart(index)">Remove item</button>
+            </li>
+            <li v-else class="dropdown-item">Your cart is empty</li>
+          </ul>
+        </div>
       </div>
     </nav>
 
     <!-- Div vuoto per l'overlay nero sopra il video -->
-    <div class="overlay"></div>
 
-    <!-- Video nel background (solo se siamo nella home) -->
-    <video v-if="isHome" playsinline autoplay muted loop>
-      <source src="/HeaderVideoSD.mp4" type="video/mp4" />
-    </video>
-
-    <!-- Contenuti Header -->
-    <div class="container h-100">
-      <div class="d-flex h-100 text-center align-items-center">
-        <div class="w-100 text-white">
-          <h1 class="display-3 fw-bold">
-            All the food you want, when you want.
-          </h1>
-        </div>
-      </div>
-    </div>
+   
   </header>
 </template>
 
@@ -77,8 +61,8 @@ export default {
 header {
   position: relative;
   background-color: black;
-  height: 75vh;
-  min-height: 25rem;
+  height: 7vh;
+  min-height: 7rem;
   width: 100%;
   overflow: hidden;
 }

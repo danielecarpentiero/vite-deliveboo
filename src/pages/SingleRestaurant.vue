@@ -82,6 +82,7 @@ export default {
 
 
 <template>
+  
   <div class="container card my-4 bg-dark text-white rounded-4">
     <div class="card-body">
       <!-- <h1 class="card-title text-center">{{ restaurant.name }}</h1>
