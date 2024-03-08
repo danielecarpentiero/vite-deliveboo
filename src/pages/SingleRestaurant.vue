@@ -66,7 +66,6 @@ export default {
     this.store.cart.items = JSON.parse(localStorage.getItem('items'));
   }
 },
-
   watch: {
     items: {
       handler(newItems) {
