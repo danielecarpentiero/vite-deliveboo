@@ -67,6 +67,7 @@ export default {
             </div>
 
             <div
+              v-if="food.is_visible == 0"
               class="flip-card-back rounded-5 d-flex flex-column justify-content-center align-items-center gap-2"
             >
               <h3 class="mb-2 text-uppercase">{{ food.name }}</h3>
