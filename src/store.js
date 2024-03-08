@@ -15,9 +15,9 @@ const store = reactive({
   },
   error: [],
   cart: {
-    newItem: '',
-      items: [], 
-  }
+    newItem: "",
+    items: [],
+  },
 });
 
 export default store;
