@@ -17,15 +17,14 @@ export default {
     return {
       restaurant: [],
       store,
-      newItem: '',
-      items: [], 
+      
     };
   },
   methods: {
     addItemToCart(food) {
     // Verifica se il carrello è vuoto o contiene solo articoli dallo stesso ristorante
-    if (this.items.length === 0 || this.items[0].restaurant_id === food.restaurant_id) {
-      this.items.push(food);
+    if (this.store.cart.items.length === 0 || this.store.cart.items[0].restaurant_id === food.restaurant_id) {
+      this.store.cart.items.push(food);
     } else {
       // Mostra un messaggio di errore o rimuovi gli articoli esistenti prima di aggiungere il nuovo articolo
       alert('Puoi ordinare solo da un ristorante alla volta. Svuota il carrello per ordinare da un altro ristorante.');
@@ -35,7 +34,7 @@ export default {
   },
     // Rimuovi un elemento dal carrello
     removeItemFromCart(index) {
-      this.items.splice(index, 1);
+      this.store.cart.items.splice(index, 1);
     },
     getRestaurants() {
       axios
@@ -57,7 +56,7 @@ export default {
   created() {
     this.getRestaurants();
     console.log(this.$route);
-    this.items = JSON.parse(localStorage.getItem('items')) || [];
+    this.store.cart.items = JSON.parse(localStorage.getItem('items')) || [];
   },
   watch: {
     items: {

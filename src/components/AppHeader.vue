@@ -20,7 +20,15 @@ export default {
       </div>
 
       <!-- Icona del carrello -->
-      <div class="cart-icon">Shopping Cart</div>
+      <div class="mt-4">
+        <h4>Carrello</h4>
+        <ul>
+          <li v-for="(item, index) in items" :key="index">
+            {{ item.name }} - {{ item.price }} €
+            <button @click="removeItemFromCart(index)">Rimuovi</button>
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Div vuoto per l'overlay nero sopra il video -->

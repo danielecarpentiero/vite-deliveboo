@@ -14,6 +14,10 @@ const store = reactive({
     searchKey: [],
   },
   error: [],
+  cart: {
+    newItem: '',
+      items: [], 
+  }
 });
 
 export default store;
