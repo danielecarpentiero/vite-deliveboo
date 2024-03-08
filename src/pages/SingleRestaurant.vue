@@ -17,9 +17,26 @@ export default {
     return {
       restaurant: [],
       store,
+      newItem: '',
+      items: [], 
     };
   },
   methods: {
+    addItemToCart(food) {
+    // Verifica se il carrello è vuoto o contiene solo articoli dallo stesso ristorante
+    if (this.items.length === 0 || this.items[0].restaurant_id === food.restaurant_id) {
+      this.items.push(food);
+    } else {
+      // Mostra un messaggio di errore o rimuovi gli articoli esistenti prima di aggiungere il nuovo articolo
+      alert('Puoi ordinare solo da un ristorante alla volta. Svuota il carrello per ordinare da un altro ristorante.');
+      // Oppure svuota automaticamente il carrello
+    
+    }
+  },
+    // Rimuovi un elemento dal carrello
+    removeItemFromCart(index) {
+      this.items.splice(index, 1);
+    },
     getRestaurants() {
       axios
         .get(
@@ -40,9 +57,19 @@ export default {
   created() {
     this.getRestaurants();
     console.log(this.$route);
+    this.items = JSON.parse(localStorage.getItem('items')) || [];
+  },
+  watch: {
+    items: {
+      handler(newItems) {
+        localStorage.setItem('items', JSON.stringify(newItems));
+      },
+      deep: true,
+    },
   },
 };
 </script>
+
 
 <template>
   <div class="container card my-4 bg-dark text-white rounded-4">
@@ -76,7 +103,16 @@ export default {
               <p v-else>Non vegetariano</p>
               <p v-if="food.is_visible">Elemento disponibile</p>
               <p v-else>Elemento non disponibile</p>
-              <button class="btn btn-primary w-50 mt-4">Select</button>
+              <button class="btn btn-primary w-50 mt-4" @click="addItemToCart(food)">Aggiungi al carrello</button>
+              <div class="mt-4">
+        <h4>Carrello</h4>
+        <ul>
+          <li v-for="(item, index) in items" :key="index">
+            {{ item.name }} - {{ item.price }} €
+            <button @click="removeItemFromCart(index)">Rimuovi</button>
+          </li>
+        </ul>
+      </div>
             </div>
           </div>
         </li>
