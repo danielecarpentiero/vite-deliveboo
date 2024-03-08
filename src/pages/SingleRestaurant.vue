@@ -106,15 +106,7 @@ export default {
               <p v-if="food.is_visible">Elemento disponibile</p>
               <p v-else>Elemento non disponibile</p>
               <button class="btn btn-primary w-50 mt-4" @click="addItemToCart(food)">Aggiungi al carrello</button>
-              <div class="mt-4">
-        <h4>Carrello</h4>
-        <ul>
-          <li v-for="(item, index) in this.store.cart.items" :key="index">
-            {{ item.name }} - {{ item.price }} €
-            <button @click="removeItemFromCart(index)">Rimuovi</button>
-          </li>
-        </ul>
-      </div>
+
             </div>
           </div>
         </li>
