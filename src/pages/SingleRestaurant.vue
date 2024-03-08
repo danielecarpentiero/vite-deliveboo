@@ -62,7 +62,7 @@ export default {
   watch: {
     items: {
       handler(newItems) {
-        localStorage.setItem('items', JSON.stringify(newItem));
+        localStorage.setItem('items', JSON.stringify(newItems));
       },
       deep: true,
     },
