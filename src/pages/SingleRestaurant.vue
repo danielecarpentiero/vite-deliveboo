@@ -1,5 +1,6 @@
 <script>
 import { RouterView } from 'vue-router';
+import {RouterLink} from 'vue-router';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 import axios from 'axios';
@@ -131,6 +132,11 @@ export default {
       </ul>
     </div>
   </div>
+  <div class="container mb-3">
+    <button class="btn btn-primary"> 
+      <router-link class="text-white"  style="text-decoration: none;" to="/">Back to restaurants</router-link>
+    </button>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -191,4 +197,5 @@ img {
   color: white;
   transform: rotateY(180deg);
 }
+
 </style>

@@ -136,7 +136,7 @@ export default {
 	position: relative;
 	.jumbotext{
 		position: absolute;
-		top: 50%;
+		top: 0%;
 	}
 }
 video {
