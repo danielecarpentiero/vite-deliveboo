@@ -24,6 +24,9 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faApple } from "@fortawesome/free-brands-svg-icons";
 import { faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+// import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
 library.add(
@@ -32,7 +35,10 @@ library.add(
   faInstagram,
   faApple,
   faGooglePlay,
-  faCartShopping
+  faCartShopping,
+  // faTrashCan,
+  faPlus,
+  faMinus
 );
 
 createApp(App)
