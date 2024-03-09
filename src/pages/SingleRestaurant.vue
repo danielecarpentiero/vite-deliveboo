@@ -8,7 +8,7 @@ import { Modal } from 'bootstrap';
 
 export default {
 	name: 'SingleRestaurant',
-	props: ['restaurant'],
+	// props: ['restaurant'],
 	components: {
 		AppHeader,
 		RouterView,
@@ -96,10 +96,16 @@ export default {
 
 	created() {
 		this.getRestaurants();
-		if (!localStorage.getItem('items')) {
+		// Inizializza items nel localStorage
+		let itemsString = localStorage.getItem('items');
+		if (!itemsString) {
 			localStorage.setItem('items', JSON.stringify([]));
+		}
+		// Recupera items dall'localStorage
+		if (itemsString) {
+			this.store.cart.items = JSON.parse(itemsString);
 		} else {
-			this.store.cart.items.item = JSON.parse(localStorage.getItem('items'));
+			this.store.cart.items = [];
 		}
 	},
 
