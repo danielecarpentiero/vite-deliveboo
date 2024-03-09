@@ -7,18 +7,24 @@ const store = reactive({
     listUrl: {
       restaurants: "api/restaurants/",
       types: "api/types",
+      orders: "api/orders",
     },
   },
+
   restaurants: {
     currentPage: 1,
     searchKey: [],
   },
+
   error: [],
+
   cart: {
     newItem: "",
     items: [],
     subtotal: 0,
   },
+
+  guest: [],
 });
 
 export default store;
