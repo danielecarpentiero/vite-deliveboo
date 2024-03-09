@@ -1,5 +1,6 @@
 <script>
 import store from '../store';
+
 export default {
     name: 'AppHeader',
 
@@ -19,6 +20,10 @@ export default {
                 this.store.cart.items.splice(index, 1);
             }
             this.updateCart();
+        },
+
+        incrementItemInCart(index) {
+            this.store.cart.items[index].quantity++;
         },
 
         updateCart() {
@@ -64,38 +69,6 @@ export default {
             <!-- Logo -->
             <div class="navbar-brand">
                 <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
-            </div>
-
-            <!-- Icona del carrello -->
-            <div class="mt-4">
-                <div class="dropdown dropstart">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <font-awesome-icon :icon="['fas', 'cart-shopping']" />
-                    </button>
-                    <ul class="dropdown-menu">
-                        <div class="dropdown-item" v-if="store.cart.items.length > 0">{{
-                            store.cart.items[0].restaurant_name }}</div>
-                        <li v-if="store.cart.items.length > 0" class="dropdown-item">
-                            <div v-for="(food, index) in store.cart.items" :key="index"
-                                class="d-flex gap-1 align-items-center">
-                                {{ food.item }} - {{ food.price }} € (x {{ food.quantity }})
-                                <button @click.stop="removeItemFromCart(index)"
-                                    class="btn btn-danger btn-sm">Remove</button>
-                            </div>
-                            <div class="dropdown-item checkout d-flex gap-1 align-items-center">
-                                <div class="subtotal">
-                                    Subtotal: {{ this.store.cart.subtotal }}
-                                </div>
-                                <router-link :to="{ name: 'checkout' }">
-                                    <button class="btn btn-success btn-sm">Go</button>
-                                </router-link>
-                            </div>
-                        </li>
-                        <li v-else class="dropdown-item">
-                            <span>Your cart is empty</span>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </nav>
 
@@ -180,6 +153,14 @@ header .overlay {
     &:active {
         color: #212529;
         background-color: transparent;
+    }
+
+    &:focus {
+        background-color: #fff;
+    }
+
+    &:hover {
+        background-color: #fff;
     }
 }
 </style>
