@@ -47,7 +47,6 @@ export default {
 						img: food.img,
 						restaurant_slug: restaurant.slug
 					});
-					console.log(restaurant.slug);
 				}
 			} else {
 				this.errorCart(food, restaurant);
