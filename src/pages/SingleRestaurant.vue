@@ -14,15 +14,18 @@ export default {
 		RouterView,
 		AppFooter,
 	},
+
 	data() {
 		return {
 			restaurant: [],
 			store,
 			count: 1,
 			selectedFood: null,
+			selectedFoodName: null,
 			currentRestaurant: null,
 		};
 	},
+
 	methods: {
 		addItemToCart(food, restaurant) {
 			// Verifica se il carrello è vuoto o contiene solo articoli dallo stesso ristorante
@@ -47,18 +50,9 @@ export default {
 			this.updateCart();
 		},
 
-		// // Rimuovi un elemento dal carrello
-		// removeItemFromCart(index) {
-		// 	this.store.cart.items.splice(index, 1);
-		// },
-
 		updateCart() {
 			localStorage.setItem('items', JSON.stringify(this.store.cart.items));
 		},
-
-		// getQuantity(item) {
-		// 	return this.store.cart.items.filter(cartItem => cartItem.name === item.name).length;
-		// },
 
 		getRestaurants() {
 			axios
@@ -83,6 +77,7 @@ export default {
 			// Mostra la modale
 			modal.show();
 			this.selectedFood = food;
+			this.selectedFoodName = food.name;
 			this.currentRestaurant = restaurant;
 		},
 
@@ -96,30 +91,26 @@ export default {
 
 	created() {
 		this.getRestaurants();
-		// Inizializza items nel localStorage
-		let itemsString = localStorage.getItem('items');
-		if (!itemsString) {
+		if (!localStorage.getItem('items')) {
+			// Se il localstorage è undefined inserisci un array vuoto
 			localStorage.setItem('items', JSON.stringify([]));
-		}
-		// Recupera items dall'localStorage
-		if (itemsString) {
-			this.store.cart.items = JSON.parse(itemsString);
 		} else {
-			this.store.cart.items = [];
+			// Se il localstorage è già popolato aggiungi altri elementi
+			this.store.cart.items = JSON.parse(localStorage.getItem('items'));
 		}
 	},
 
 	watch: {
-		items: {
+		'store.cart.items': {
 			handler(newItems) {
 				localStorage.setItem('items', JSON.stringify(newItems));
 			},
 			deep: true,
 		},
 	},
+
 };
 </script>
-
 
 <template>
 	<div class="container card my-4 bg-dark text-white rounded-4">
@@ -155,7 +146,6 @@ export default {
 							data-bs-target="#exampleModal">
 							Launch demo modal
 						</button>
-
 					</div>
 				</li>
 			</ul>
@@ -168,7 +158,8 @@ export default {
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body text-dark">
-							You can order from one restaurant at a time. Do you want to empty your cart?
+							You can order from one restaurant at a time. Do you want to empty your cart and insert "{{
+					this.selectedFoodName }}"?
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary text-white"

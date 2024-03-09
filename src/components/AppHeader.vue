@@ -22,8 +22,13 @@ export default {
         },
 
         updateCart() {
-            localStorage.setItem('items', JSON.stringify(this.store.cart.items.item));
-        }
+            // Recupera gli elementi dal localStorage. Se non ci sono elementi, restituisce un array vuoto.
+            const storedItems = JSON.parse(localStorage.getItem('items')) || [];
+            // Combina gli elementi presenti nel localStorage con quelli attuali nel carrello utilizzando l'operatore spread per creare un nuovo array.
+            const updatedItems = [...storedItems, ...this.store.cart.items];
+            // Trasforma in stinga JSON l'array combinato e lo salva nel localStorage con la chiave 'items'.
+            localStorage.setItem('items', JSON.stringify(updatedItems));
+        },
     },
 
     computed: {
@@ -32,7 +37,24 @@ export default {
             return this.$route.name === 'home';
         },
     },
+
+    watch: {
+        'store.cart.items': {
+            handler() {
+                let subtotal = 0; // Inizializza il subtotal come variabile locale
+                this.store.cart.items.forEach(element => {
+                    const price = parseFloat(element.price);
+                    if (!isNaN(price)) {
+                        subtotal += price * element.quantity; // Aggiungi il prezzo senza arrotondare
+                    }
+                });
+                this.store.cart.subtotal = subtotal.toFixed(2); // Assegna il subtotal arrotondato a due decimali
+            },
+            deep: true // Assicurati di osservare le modifiche in profondità
+        }
+    }
 };
+
 </script>
 
 <template>
@@ -54,9 +76,19 @@ export default {
                         <div class="dropdown-item" v-if="store.cart.items.length > 0">{{
                             store.cart.items[0].restaurant_name }}</div>
                         <li v-if="store.cart.items.length > 0" class="dropdown-item">
-                            <div v-for="(food, index) in store.cart.items" :key="index">
-                                (x {{ food.quantity }}) {{ food.item }} - {{ food.price }} €
-                                <button @click.stop="removeItemFromCart(index)">Remove item</button>
+                            <div v-for="(food, index) in store.cart.items" :key="index"
+                                class="d-flex gap-1 align-items-center">
+                                {{ food.item }} - {{ food.price }} € (x {{ food.quantity }})
+                                <button @click.stop="removeItemFromCart(index)"
+                                    class="btn btn-danger btn-sm">Remove</button>
+                            </div>
+                            <div class="dropdown-item checkout d-flex gap-1 align-items-center">
+                                <div class="subtotal">
+                                    Subtotal: {{ this.store.cart.subtotal }}
+                                </div>
+                                <router-link :to="{ name: 'checkout' }">
+                                    <button class="btn btn-success btn-sm">Go</button>
+                                </router-link>
                             </div>
                         </li>
                         <li v-else class="dropdown-item">
@@ -93,7 +125,7 @@ header {
     position: relative;
     background-color: black;
     height: 75vh;
-    min-height: 25rem;
+    min-height: 400px;
     width: 100%;
     overflow: hidden;
 }
@@ -131,16 +163,23 @@ header .overlay {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 200px;
+    padding: .625rem 12.5rem;
     z-index: 3;
 }
 
 .logo {
-    max-height: 50px;
+    max-height: 3.125rem;
 }
 
 .cart-icon {
     color: white;
-    font-size: 24px;
+    font-size: 1.5rem;
+}
+
+.dropdown-item {
+    &:active {
+        color: #212529;
+        background-color: transparent;
+    }
 }
 </style>
