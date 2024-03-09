@@ -5,6 +5,7 @@ import AppFooter from '../components/AppFooter.vue';
 import axios from 'axios';
 import store from '../store';
 import { Modal } from 'bootstrap';
+import Cart from '../components/Cart.vue';
 
 export default {
 	name: 'SingleRestaurant',
@@ -13,6 +14,7 @@ export default {
 		AppHeader,
 		RouterView,
 		AppFooter,
+		Cart,
 	},
 
 	data() {
@@ -42,7 +44,10 @@ export default {
 						restaurant_id: food.restaurant_id,
 						restaurant_name: restaurant.name,
 						price: food.price,
+						img: food.img,
+						restaurant_slug: restaurant.slug
 					});
+					console.log(restaurant.slug);
 				}
 			} else {
 				this.errorCart(food, restaurant);
@@ -81,7 +86,7 @@ export default {
 			this.currentRestaurant = restaurant;
 		},
 
-		emptyCart() {
+		removeItem() {
 			this.store.cart.items = [];
 			if (this.selectedFood) {
 				this.addItemToCart(this.selectedFood, this.currentRestaurant);
@@ -89,7 +94,7 @@ export default {
 		}
 	},
 
-	created() {
+	mounted() {
 		this.getRestaurants();
 		if (!localStorage.getItem('items')) {
 			// Se il localstorage è undefined inserisci un array vuoto
@@ -113,63 +118,73 @@ export default {
 </script>
 
 <template>
-	<div class="container card my-4 bg-dark text-white rounded-4">
-		<div class="card-body">
-			<!-- <h1 class="card-title text-center">{{ restaurant.name }}</h1>
+	<div class="container text-center">
+		<div class="row">
+			<div class="col-12 col-md-8">
+				<div id="menu" class="container card my-4 bg-dark text-white rounded-4">
+					<div class="card-body">
+						<!-- <h1 class="card-title text-center">{{ restaurant.name }}</h1>
 	  <p class="text-center">{{ restaurant.address }}</p> -->
-			<h3 class="mt-2 text-center">Menu</h3>
+						<h3 class="mt-2 text-center">Menu</h3>
 
-			<ul class="list-unstyled row gap-3 justify-content-center">
-				<li v-for="food in restaurant.foods" :key="food.id"
-					class="col-12 col-md-3 text-center flip-card mt-3 rounded-5">
-					<div class="flip-card-inner shadow rounded-5">
-						<div class="w-100 flip-card-front rounded-5">
-							<img :src="store.api.mainUrl + store.api.storagePath + food.img" :alt="food.slug"
-								class="rounded-5" />
-						</div>
-						<!-- Flip card -->
-						<div
-							class="flip-card-back rounded-5 d-flex flex-column justify-content-center align-items-center gap-2">
-							<h3 class="mb-2 text-uppercase">{{ food.name }}</h3>
-							<p><span>Description:</span> {{ food.description }}</p>
-							<p>Prezzo: {{ food.price }} €</p>
-							<p v-if="food.is_vegetarian">Vegetariano</p>
-							<p v-else>Non vegetariano</p>
-							<p v-if="food.is_visible">Elemento disponibile</p>
-							<p v-else>Elemento non disponibile</p>
-							<button class="btn btn-primary w-50 mt-4" @click="addItemToCart(food, restaurant)">Aggiungi
-								al
-								carrello</button>
-						</div>
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-							data-bs-target="#exampleModal">
-							Launch demo modal
-						</button>
-					</div>
-				</li>
-			</ul>
-			<!-- Modal -->
-			<div class="modal fade" id="empty-modal-cart">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Emptying cart</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body text-dark">
-							You can order from one restaurant at a time. Do you want to empty your cart and insert "{{
-					this.selectedFoodName }}"?
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary text-white"
-								data-bs-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-danger text-white" @click="emptyCart()"
-								data-bs-dismiss="modal">Empty
-								cart</button>
+						<ul class="list-unstyled row gap-3 justify-content-center">
+							<li v-for="food in restaurant.foods" :key="food.id"
+								class="col-12 col-md-3 text-center flip-card mt-3 rounded-5">
+								<div class="flip-card-inner shadow rounded-5">
+									<div class="w-100 flip-card-front rounded-5">
+										<img :src="store.api.mainUrl + store.api.storagePath + food.img"
+											:alt="food.slug" class="rounded-5" />
+									</div>
+									<!-- Flip card -->
+									<div
+										class="flip-card-back rounded-5 d-flex flex-column justify-content-center align-items-center gap-2">
+										<div class="info">
+											<h3 class="mt-5 mb-2 text-uppercase">{{ food.name }}</h3>
+											<p>Description: {{ food.description }}</p>
+											<p>Prezzo: {{ food.price }} €</p>
+											<p v-if="food.is_vegetarian">Vegetariano</p>
+											<p v-else>Non vegetariano</p>
+											<p v-if="food.is_visible">Elemento disponibile</p>
+											<p v-else>Elemento non disponibile</p>
+											<button class="btn btn-success w-30 mt-4"
+												@click="addItemToCart(food, restaurant)"><font-awesome-icon
+													:icon="['fas', 'plus']" /></button>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+						<!-- Modal -->
+						<div class="modal fade" id="empty-modal-cart">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Emptying cart</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+									</div>
+									<div class="modal-body text-dark">
+										You can order from one restaurant at a time. Do you want to empty your cart and
+										insert
+										"{{
+								this.selectedFoodName }}"?
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary text-white"
+											data-bs-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-danger text-white" @click="removeItem()"
+											data-bs-dismiss="modal">Empty
+											cart</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="col-12 col-md-4 cart my-4 p-2 rounded-4">
+				<h2 class="text-white">Carrello</h2>
+				<Cart />
 			</div>
 		</div>
 	</div>
@@ -185,10 +200,17 @@ img {
 	height: 100%;
 }
 
+.cart {
+	position: sticky;
+	top: 20px;
+	align-self: start;
+	background-color: #ed8141;
+}
+
 .flip-card {
 	background-color: transparent;
-	width: 400px;
-	height: 400px;
+	width: 250px;
+	height: 250px;
 	perspective: 1000px;
 	/* Remove this if you don't want the 3D effect */
 }
@@ -233,5 +255,9 @@ img {
 			rgba(64, 74, 172, 1) 98%);
 	color: white;
 	transform: rotateY(180deg);
+
+	.info {
+		font-size: 15px;
+	}
 }
 </style>
