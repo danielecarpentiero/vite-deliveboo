@@ -7,6 +7,11 @@ export default {
     data() {
         return {
             store,
+            guestName: null,
+            guestSurname: null,
+            guestAddress: null,
+            guestPhone: null,
+            guestEmail: null,
         }
     },
 
@@ -28,12 +33,43 @@ export default {
 
     mounted() {
         if (!localStorage.getItem('items')) {
-            // Se il localstorage è undefined inserisci un array vuoto
             localStorage.setItem('items', JSON.stringify([]));
         } else {
-            // Se il localstorage è già popolato aggiungi altri elementi
             this.store.cart.items = JSON.parse(localStorage.getItem('items'));
-        }
+        };
+
+        // Braintree payments
+        const button = document.querySelector('#submit-button');
+
+        braintree.dropin.create({
+            authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
+            container: '#dropin-container',
+        }, function (createErr, instance) {
+            button.addEventListener('click', function () {
+                instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+                    if (requestPaymentMethodErr) {
+                        console.error('Error requesting payment method:', requestPaymentMethodErr);
+                        return;
+                    }
+                    // Invia il payload.nonce al server tramite Axios
+                    axios.post(this.store.api.mainUrl + this.store.api.listUrl.orders, {
+                        nonce: payload.nonce,
+                        guestName: this.guestName,
+                        guestSurname: this.guestSurname,
+                        guestAddress: this.guestAddress,
+                        guestPhone: this.guestPhone,
+                        guestEmail: this.guestEmail,
+                        total: this.store.cart.subtotal,
+                    }).then(function (response) {
+                        console.log('Payment success:', response.data);
+                        // Possiamo fare altre azioni qui in base alla risposta del server
+                    }).catch(function (error) {
+                        console.error('Payment error:', error);
+                        // Gestiamo eventuali errori qui
+                    });
+                });
+            });
+        });
     },
 
     watch: {
@@ -93,8 +129,34 @@ export default {
                 <div v-else>
                     <p>Cart is empty</p>
                 </div>
+                <div v-if="store.cart.items.length > 0" class="paymeny-form mt-5">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Name" v-model="guestName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Surname</label>
+                        <input type="text" class="form-control" id="surname" placeholder="Surname"
+                            v-model="guestSurname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="Address"
+                            v-model="guestAddress">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="number" class="form-control" id="phone" placeholder="Phone" v-model="guestPhone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1"
+                            placeholder="name@example.com" v-model="guestEmail">
+                    </div>
+                </div>
                 </p>
-                <a href="#" class="btn btn-success me-3" v-if="store.cart.items.length > 0">Go to payment</a>
+                <div id="dropin-container" v-if="store.cart.items.length > 0"></div>
+                <button id="submit-button" class="btn btn-success me-3">Pay</button>
                 <RouterLink v-if="store.cart.items.length > 0"
                     :to="{ name: 'restaurant', params: { slug: store.cart.items[0].restaurant_slug } }">
                     <button class="btn btn-secondary">Back to restaurant</button>
@@ -110,5 +172,37 @@ export default {
     height: 100px;
     overflow: hidden;
     border-radius: 50%;
+}
+
+.button {
+    cursor: pointer;
+    font-weight: 500;
+    left: 3px;
+    line-height: inherit;
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.button--small {
+    padding: 10px 20px;
+    font-size: 0.875rem;
+}
+
+.button--green {
+    outline: none;
+    background-color: #64d18a;
+    border-color: #64d18a;
+    color: white;
+    transition: all 200ms ease;
+}
+
+.button--green:hover {
+    background-color: #8bdda8;
+    color: white;
 }
 </style>
