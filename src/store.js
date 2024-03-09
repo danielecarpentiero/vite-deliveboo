@@ -17,6 +17,7 @@ const store = reactive({
   cart: {
     newItem: "",
     items: [],
+    subtotal: 0,
   },
 });
 
