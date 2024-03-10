@@ -1,6 +1,7 @@
 <script>
 import store from '../store';
 import { myMixin } from '../myMixin';
+import axios from 'axios';
 
 export default {
     name: 'Checkout',
@@ -44,7 +45,7 @@ export default {
         const button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
-            authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
+            authorization: 'sandbox_4x7jkkm3_n2sddky376q9g4bt',
             container: '#dropin-container',
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
@@ -54,14 +55,14 @@ export default {
                         return;
                     }
                     // Invia il payload.nonce al server tramite Axios
-                    axios.post(this.store.api.mainUrl + this.store.api.listUrl.orders, {
+                    axios.post(store.api.mainUrl + store.api.listUrl.orders, {
                         nonce: payload.nonce,
-                        guestName: this.guestName,
-                        guestSurname: this.guestSurname,
-                        guestAddress: this.guestAddress,
-                        guestPhone: this.guestPhone,
-                        guestEmail: this.guestEmail,
-                        total: this.store.cart.subtotal,
+                        amount: store.cart.subtotal,
+                        // guestName: this.guestName,
+                        // guestSurname: this.guestSurname,
+                        // guestAddress: this.guestAddress,
+                        // guestPhone: this.guestPhone,
+                        // guestEmail: this.guestEmail,
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
                         // Possiamo fare altre azioni qui in base alla risposta del server
@@ -148,7 +149,7 @@ export default {
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="number" class="form-control" id="phone" placeholder="Phone" v-model="guestPhone">
+                        <input type="text" class="form-control" id="phone" placeholder="Phone" v-model="guestPhone">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Email address</label>
