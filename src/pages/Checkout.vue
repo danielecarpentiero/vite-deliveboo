@@ -1,8 +1,10 @@
 <script>
 import store from '../store';
+import { myMixin } from '../myMixin';
 
 export default {
     name: 'Checkout',
+    mixins: [myMixin],
 
     data() {
         return {

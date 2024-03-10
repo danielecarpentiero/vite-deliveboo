@@ -85,7 +85,7 @@ export default {
 			this.currentRestaurant = restaurant;
 		},
 
-		removeItem() {
+		emptyAndReplaceCart() {
 			this.store.cart.items = [];
 			if (this.selectedFood) {
 				this.addItemToCart(this.selectedFood, this.currentRestaurant);
@@ -171,8 +171,8 @@ export default {
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary text-white"
 											data-bs-dismiss="modal">Close</button>
-										<button type="button" class="btn btn-danger text-white" @click="removeItem()"
-											data-bs-dismiss="modal">Empty
+										<button type="button" class="btn btn-danger text-white"
+											@click="emptyAndReplaceCart()" data-bs-dismiss="modal">Empty
 											cart</button>
 									</div>
 								</div>
