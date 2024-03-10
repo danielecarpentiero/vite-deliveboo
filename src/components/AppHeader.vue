@@ -10,54 +10,12 @@ export default {
         }
     },
 
-    methods: {
-        removeItemFromCart(index) {
-            if (this.store.cart.items[index].quantity > 1) {
-                // Diminuisci la quantità qualora il cibo abbia più di una quantity
-                this.store.cart.items[index].quantity--;
-            } else {
-                // Altrimenti se il cibo è stato selezionato una volta eliminalo
-                this.store.cart.items.splice(index, 1);
-            }
-            this.updateCart();
-        },
-
-        incrementItemInCart(index) {
-            this.store.cart.items[index].quantity++;
-        },
-
-        updateCart() {
-            // Recupera gli elementi dal localStorage. Se non ci sono elementi, restituisce un array vuoto.
-            const storedItems = JSON.parse(localStorage.getItem('items')) || [];
-            // Combina gli elementi presenti nel localStorage con quelli attuali nel carrello utilizzando l'operatore spread per creare un nuovo array.
-            const updatedItems = [...storedItems, ...this.store.cart.items];
-            // Trasforma in stinga JSON l'array combinato e lo salva nel localStorage con la chiave 'items'.
-            localStorage.setItem('items', JSON.stringify(updatedItems));
-        },
-    },
-
     computed: {
         isHome() {
             // Controlla se la route corrente è la pagina home
             return this.$route.name === 'home';
         },
     },
-
-    watch: {
-        'store.cart.items': {
-            handler() {
-                let subtotal = 0; // Inizializza il subtotal come variabile locale
-                this.store.cart.items.forEach(element => {
-                    const price = parseFloat(element.price);
-                    if (!isNaN(price)) {
-                        subtotal += price * element.quantity; // Aggiungi il prezzo senza arrotondare
-                    }
-                });
-                this.store.cart.subtotal = subtotal.toFixed(2); // Assegna il subtotal arrotondato a due decimali
-            },
-            deep: true // Assicurati di osservare le modifiche in profondità
-        }
-    }
 };
 
 </script>
