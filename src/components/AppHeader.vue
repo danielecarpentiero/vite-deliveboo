@@ -1,25 +1,19 @@
 <script>
-import store from '../store';
+import store from "../store";
+
 export default {
-  data(){
+  name: "AppHeader",
+
+  data() {
     return {
       store,
-    }
+    };
   },
-  methods: {
-    removeItemFromCart(index){
-      this.store.cart.items.splice(index, 1);
-      this.updateCart();
-    },
-    updateCart(){
-      localStorage.setItem('items', JSON.stringify(this.store.cart.items));
-    }
-  },
-  name: 'AppHeader',
+
   computed: {
     isHome() {
       // Controlla se la route corrente è la pagina home
-      return this.$route.name === 'home';
+      return this.$route.name === "home";
     },
   },
 };
@@ -33,27 +27,9 @@ export default {
       <div class="navbar-brand">
         <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
       </div>
-
-      <!-- Icona del carrello -->
-      <div class="mt-4">
-        <div class="dropdown dropstart">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-            <font-awesome-icon :icon="['fas', 'cart-shopping']" />
-          </button>
-          <ul class="dropdown-menu">
-            <li v-if="store.cart.items.length > 0" v-for="(item, index) in store.cart.items" :key="index" class="dropdown-item">
-            {{ item.name }} - {{ item.price }} €
-            <button @click.stop="removeItemFromCart(index)">Remove item</button>
-            </li>
-            <li v-else class="dropdown-item">Your cart is empty</li>
-          </ul>
-        </div>
-      </div>
     </nav>
 
     <!-- Div vuoto per l'overlay nero sopra il video -->
-
-   
   </header>
 </template>
 
@@ -61,8 +37,8 @@ export default {
 header {
   position: relative;
   background-color: black;
-  height: 7vh;
-  min-height: 7rem;
+  // height: 75vh;
+  // min-height: 400px;
   width: 100%;
   overflow: hidden;
 }
@@ -100,16 +76,31 @@ header .overlay {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 200px;
+  padding: 0.625rem 12.5rem;
   z-index: 3;
 }
 
 .logo {
-  max-height: 50px;
+  max-height: 3.125rem;
 }
 
 .cart-icon {
   color: white;
-  font-size: 24px;
+  font-size: 1.5rem;
+}
+
+.dropdown-item {
+  &:active {
+    color: #212529;
+    background-color: transparent;
+  }
+
+  &:focus {
+    background-color: #fff;
+  }
+
+  &:hover {
+    background-color: #fff;
+  }
 }
 </style>
