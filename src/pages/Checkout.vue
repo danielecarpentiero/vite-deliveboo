@@ -34,6 +34,7 @@ export default {
     },
 
     mounted() {
+        const self = this;
         if (!localStorage.getItem('items')) {
             localStorage.setItem('items', JSON.stringify([]));
         } else {
@@ -44,7 +45,7 @@ export default {
         const button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
-            authorization: 'sandbox_rz3nhxvq_t55vsgy33n9tvxgn',
+            authorization: 'sandbox_4x7jkkm3_n2sddky376q9g4bt',
             container: '#dropin-container',
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
@@ -57,12 +58,12 @@ export default {
                     axios.post(store.api.mainUrl + store.api.listUrl.orders, {
                         nonce: payload.nonce,
                         amount: store.cart.subtotal,
-                        first_name: guestName,
-                        last_name: guestSurname,
-                        email: guestEmail,
-                        phone: guestPhone,
-                        address: guestAddress,
-                        restaurant_id: store.cart.items.restaurant_id,
+                        first_name: self.guestName,
+                        last_name: self.guestSurname,
+                        email: self.guestEmail,
+                        phone: self.guestPhone,
+                        address: self.guestAddress,
+                        restaurant_id: store.cart.items[0].restaurant_id,
                         foods_id: [1, 2, 3],
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
@@ -71,7 +72,7 @@ export default {
                         console.error('Payment error:', error);
                         // Gestiamo eventuali errori qui
                     });
-                    
+
                 });
             });
         });
@@ -151,12 +152,13 @@ export default {
                     </div>
                     <div class="mb-3">
                         <label for="guestPhone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="guestPhone" placeholder="Phone" v-model="guestPhone">
+                        <input type="text" class="form-control" id="guestPhone" placeholder="Phone"
+                            v-model="guestPhone">
                     </div>
                     <div class="mb-3">
                         <label for="guestEmail" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="guestEmail"
-                            placeholder="name@example.com" v-model="guestEmail">
+                        <input type="email" class="form-control" id="guestEmail" placeholder="name@example.com"
+                            v-model="guestEmail">
                     </div>
                 </div>
                 </p>
