@@ -45,7 +45,7 @@ export default {
         const button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
-            authorization: 'sandbox_rz3nhxvq_t55vsgy33n9tvxgn',
+            authorization: 'sandbox_4x7jkkm3_n2sddky376q9g4bt',
             container: '#dropin-container',
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
@@ -58,13 +58,13 @@ export default {
                     axios.post(store.api.mainUrl + store.api.listUrl.orders, {
                         nonce: payload.nonce,
                         amount: store.cart.subtotal,
-                        customerData: {
-                            first_name: 'daniele',
-                            last_name: 'carpentiero',
-                            email: 'daniele@io.it',
-                            phone: '3317526531',
-                            address: 'via prova 44'
-                        }
+                        first_name: 'daniele',
+                        last_name: 'carpentiero',
+                        email: 'daniele@io.it',
+                        phone: '3317526531',
+                        address: 'via prova 44',
+                        restaurant_id: '1',
+                        foods_id: [1, 2, 3],
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
                         // Possiamo fare altre azioni qui in base alla risposta del server
