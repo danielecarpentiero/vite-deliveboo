@@ -6,7 +6,6 @@ import axios from 'axios';
 export default {
     name: 'Checkout',
     mixins: [myMixin],
-
     data() {
         return {
             store,
@@ -45,7 +44,7 @@ export default {
         const button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
-            authorization: 'sandbox_4x7jkkm3_n2sddky376q9g4bt',
+            authorization: 'sandbox_rz3nhxvq_t55vsgy33n9tvxgn',
             container: '#dropin-container',
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
@@ -58,12 +57,12 @@ export default {
                     axios.post(store.api.mainUrl + store.api.listUrl.orders, {
                         nonce: payload.nonce,
                         amount: store.cart.subtotal,
-                        first_name: 'daniele',
-                        last_name: 'carpentiero',
-                        email: 'daniele@io.it',
-                        phone: '3317526531',
-                        address: 'via prova 44',
-                        restaurant_id: '1',
+                        first_name: guestName,
+                        last_name: guestSurname,
+                        email: guestEmail,
+                        phone: guestPhone,
+                        address: guestAddress,
+                        restaurant_id: store.cart.items.restaurant_id,
                         foods_id: [1, 2, 3],
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
@@ -72,6 +71,7 @@ export default {
                         console.error('Payment error:', error);
                         // Gestiamo eventuali errori qui
                     });
+                    
                 });
             });
         });
@@ -140,22 +140,22 @@ export default {
                         <input type="text" class="form-control" id="guestName" placeholder="Name" v-model="guestName">
                     </div>
                     <div class="mb-3">
-                        <label for="surname" class="form-label">Surname</label>
-                        <input type="text" class="form-control" id="surname" placeholder="Surname"
+                        <label for="guestSurname" class="form-label">Surname</label>
+                        <input type="text" class="form-control" id="guestSurname" placeholder="Surname"
                             v-model="guestSurname">
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="Address"
+                        <label for="guestAddress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="guestAddress" placeholder="Address"
                             v-model="guestAddress">
                     </div>
                     <div class="mb-3">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="phone" placeholder="Phone" v-model="guestPhone">
+                        <label for="guestPhone" class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="guestPhone" placeholder="Phone" v-model="guestPhone">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1"
+                        <label for="guestEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="guestEmail"
                             placeholder="name@example.com" v-model="guestEmail">
                     </div>
                 </div>
