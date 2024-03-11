@@ -10,11 +10,11 @@ export default {
     data() {
         return {
             store,
-            guestName: null,
-            guestSurname: null,
-            guestAddress: null,
-            guestPhone: null,
-            guestEmail: null,
+            guestName: "",
+            guestSurname: "",
+            guestAddress: "",
+            guestPhone: "",
+            guestEmail: "",
         }
     },
 
@@ -45,7 +45,7 @@ export default {
         const button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
-            authorization: 'sandbox_9qmwpjsy_77rbtrddqmqkhcmx',
+            authorization: 'sandbox_rz3nhxvq_t55vsgy33n9tvxgn',
             container: '#dropin-container',
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
@@ -58,11 +58,13 @@ export default {
                     axios.post(store.api.mainUrl + store.api.listUrl.orders, {
                         nonce: payload.nonce,
                         amount: store.cart.subtotal,
-                        // guestName: this.guestName,
-                        // guestSurname: this.guestSurname,
-                        // guestAddress: this.guestAddress,
-                        // guestPhone: this.guestPhone,
-                        // guestEmail: this.guestEmail,
+                        customerData: {
+                            first_name: 'daniele',
+                            last_name: 'carpentiero',
+                            email: 'daniele@io.it',
+                            phone: '3317526531',
+                            address: 'via prova 44'
+                        }
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
                         // Possiamo fare altre azioni qui in base alla risposta del server
@@ -134,8 +136,8 @@ export default {
                 </div>
                 <div v-if="store.cart.items.length > 0" class="paymeny-form mt-5">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Name" v-model="guestName">
+                        <label for="guestName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="guestName" placeholder="Name" v-model="guestName">
                     </div>
                     <div class="mb-3">
                         <label for="surname" class="form-label">Surname</label>
