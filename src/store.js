@@ -23,6 +23,8 @@ const store = reactive({
     items: [],
     subtotal: 0,
   },
+
+  foods: [],
 });
 
 export default store;

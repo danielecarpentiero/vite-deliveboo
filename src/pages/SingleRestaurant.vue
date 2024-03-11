@@ -37,10 +37,12 @@ export default {
 				if (index !== -1) {
 					// Se l'elemento esiste già, incrementa la quantità
 					this.store.cart.items[index].quantity++;
+					this.store.foods.push(food.id);
 				} else {
 					// Se l'elemento non esiste, aggiungilo al carrello
 					this.store.cart.items.push({
 						item: food.name,
+						food_id: food.id,
 						quantity: 1,
 						restaurant_id: food.restaurant_id,
 						restaurant_name: restaurant.name,
@@ -48,6 +50,7 @@ export default {
 						img: food.img,
 						restaurant_slug: restaurant.slug
 					});
+					this.store.foods.push(food.id);
 				}
 			} else {
 				this.errorCart(food, restaurant);
@@ -57,6 +60,7 @@ export default {
 
 		updateCart() {
 			localStorage.setItem('items', JSON.stringify(this.store.cart.items));
+			localStorage.setItem('foods', JSON.stringify(this.store.foods));
 		},
 
 		getRestaurants() {
@@ -88,6 +92,7 @@ export default {
 
 		emptyAndReplaceCart() {
 			this.store.cart.items = [];
+			this.store.foods = [];
 			if (this.selectedFood) {
 				this.addItemToCart(this.selectedFood, this.currentRestaurant);
 			}
@@ -96,12 +101,22 @@ export default {
 
 	mounted() {
 		this.getRestaurants();
+		// Carrello
 		if (!localStorage.getItem('items')) {
 			// Se il localstorage è undefined inserisci un array vuoto
 			localStorage.setItem('items', JSON.stringify([]));
 		} else {
 			// Se il localstorage è già popolato aggiungi altri elementi
 			this.store.cart.items = JSON.parse(localStorage.getItem('items'));
+		}
+
+		// Cibo
+		if (!localStorage.getItem('foods')) {
+			// Se il localstorage è undefined inserisci un array vuoto
+			localStorage.setItem('foods', JSON.stringify([]));
+		} else {
+			// Se il localstorage è già popolato aggiungi altri elementi
+			this.store.foods = JSON.parse(localStorage.getItem('foods'));
 		}
 	},
 
@@ -112,6 +127,13 @@ export default {
 			},
 			deep: true,
 		},
+
+		'store.foods': {
+			handler(newItems) {
+				localStorage.setItem('foods', JSON.stringify(newItems));
+			},
+			deep: true,
+		}
 	},
 
 };
