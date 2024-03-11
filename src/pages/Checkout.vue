@@ -58,7 +58,6 @@ export default {
                     axios.post(store.api.mainUrl + store.api.listUrl.orders, {
                         nonce: payload.nonce,
                         amount: store.cart.subtotal,
-                        // customerData: {
                         first_name: 'daniele',
                         last_name: 'carpentiero',
                         email: 'daniele@io.it',
@@ -66,7 +65,6 @@ export default {
                         address: 'via prova 44',
                         restaurant_id: '1',
                         foods_id: [1, 2, 3],
-                        // }
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
                         // Possiamo fare altre azioni qui in base alla risposta del server
