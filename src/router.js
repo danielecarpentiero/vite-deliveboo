@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import SingleRestaurant from "./pages/SingleRestaurant.vue";
 import AppHome from "./pages/AppHome.vue";
 import Checkout from "./pages/Checkout.vue";
+import Successful from "./pages/Successful.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -22,6 +23,11 @@ const router = createRouter({
       name: "checkout",
       component: Checkout,
     },
+    {
+      path: "/successful",
+      name: "successful",
+      component: Successful,
+    }
   ],
   scrollBehavior(to, from, savedPosition) {
     // always scroll to top
