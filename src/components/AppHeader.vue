@@ -1,20 +1,13 @@
 <script>
-import store from "../store";
+import store from '../store';
 
 export default {
-  name: "AppHeader",
+  name: 'AppHeader',
 
   data() {
     return {
       store,
     };
-  },
-
-  computed: {
-    isHome() {
-      // Controlla se la route corrente è la pagina home
-      return this.$route.name === "home";
-    },
   },
 };
 </script>
@@ -27,6 +20,9 @@ export default {
       <div class="navbar-brand">
         <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
       </div>
+      <div>
+        <font-awesome-icon :icon="['fas', 'cart-shopping']" class="cart-icon" />
+      </div>
     </nav>
 
     <!-- Div vuoto per l'overlay nero sopra il video -->
@@ -34,9 +30,11 @@ export default {
 </template>
 
 <style scoped lang="scss">
+@import '/src/style.scss';
+
 header {
   position: relative;
-  background-color: black;
+  background-color: $darkgreen;
   // height: 75vh;
   // min-height: 400px;
   width: 100%;
@@ -76,17 +74,17 @@ header .overlay {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.625rem 12.5rem;
+  padding: 1.3rem 12.5rem;
   z-index: 3;
 }
 
 .logo {
-  max-height: 3.125rem;
+  max-height: 5rem;
 }
 
 .cart-icon {
-  color: white;
-  font-size: 1.5rem;
+  color: $beige;
+  font-size: 2rem;
 }
 
 .dropdown-item {
