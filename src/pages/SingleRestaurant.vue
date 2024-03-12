@@ -38,7 +38,7 @@ export default {
         this.store.cart.items[0].restaurant_id === food.restaurant_id
       ) {
         let index = this.store.cart.items.findIndex(
-          (item) => item.food_id === food.id
+          (item) => item.id === food.id
         );
         if (index !== -1) {
           // Se l'elemento esiste già, incrementa la quantità
