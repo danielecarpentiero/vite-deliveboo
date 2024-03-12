@@ -24,7 +24,7 @@ const store = reactive({
     subtotal: 0,
   },
 
-  foods: [],
+  //   foods: [],
 });
 
 export default store;
