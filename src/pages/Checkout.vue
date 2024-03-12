@@ -84,6 +84,12 @@ export default {
                         foods_id: JSON.parse(localStorage.getItem('foodIds')),
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
+                        
+                        self.store.cart.items = [];
+
+                        localStorage.removeItem('items');
+
+                        ocalStorage.removeItem('foods');
                         // Possiamo fare altre azioni qui in base alla risposta del server
                     }).catch(function (error) {
                         console.error('Payment error:', error);
