@@ -17,18 +17,14 @@ export default {
         }
     },
 
+    computed: {
+        allFoodIds() {
+            return this.getAllFoodIds();
+        }
+    },
+
     methods: {
         removeItemFromCart(index) {
-            const itemIdToRemove = this.store.cart.items[index].food_id;
-
-            // Trova l'indice della prima occorrenza dell'elemento da rimuovere
-            const indexToRemove = this.store.foods.findIndex(food => food === itemIdToRemove);
-
-            // Rimuovi solo la prima occorrenza dell'elemento dall'array
-            if (indexToRemove !== -1) {
-                this.store.foods.splice(indexToRemove, 1);
-            }
-
             if (this.store.cart.items[index].quantity > 1) {
                 // Diminuisci la quantità qualora il cibo abbia più di una quantity
                 this.store.cart.items[index].quantity--;
@@ -40,24 +36,27 @@ export default {
 
         incrementItemInCart(index) {
             this.store.cart.items[index].quantity++;
-            this.store.foods.push(this.store.cart.items[index].food_id);
         },
     },
 
     mounted() {
         const self = this;
+
         // Carrello
         if (!localStorage.getItem('items')) {
             localStorage.setItem('items', JSON.stringify([]));
         } else {
             this.store.cart.items = JSON.parse(localStorage.getItem('items'));
         };
+
         // Cibo
-        if (!localStorage.getItem('foods')) {
-            localStorage.setItem('foods', JSON.stringify([]));
+        if (!localStorage.getItem('foodIds')) {
+            // Se il localstorage è undefined inserisci un array vuoto
+            localStorage.setItem('foodIds', JSON.stringify([]));
         } else {
-            this.store.foods = JSON.parse(localStorage.getItem('foods'));
-        };
+            // Se il localstorage è già popolato aggiungi altri elementi
+            localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
+        }
 
         // Braintree payments
         const button = document.querySelector('#submit-button');
@@ -82,7 +81,7 @@ export default {
                         phone: self.guestPhone,
                         address: self.guestAddress,
                         restaurant_id: store.cart.items[0].restaurant_id,
-                        foods_id: store.foods,
+                        foods_id: JSON.parse(localStorage.getItem('foodIds')),
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
                         // Possiamo fare altre azioni qui in base alla risposta del server
@@ -97,6 +96,7 @@ export default {
     },
 
     watch: {
+        // Carrello
         'store.cart.items': {
             handler(newItems) {
                 localStorage.setItem('items', JSON.stringify(newItems));
@@ -104,9 +104,10 @@ export default {
             deep: true,
         },
 
-        'store.foods': {
-            handler(newItems) {
-                localStorage.setItem('foods', JSON.stringify(newItems));
+        // Cibo
+        'allFoodIds': {
+            handler() {
+                localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
             },
             deep: true,
         }
@@ -156,7 +157,8 @@ export default {
                         </div>
                     </li>
                 </ul>
-                <div v-if="store.cart.items.length > 0" class="total">Totale: {{ store.cart.subtotal }} €</div>
+                <div v-if="store.cart.items.length > 0" class="total">Totale: {{ store.cart.subtotal }} €
+                </div>
                 <div v-else>
                     <p>Cart is empty</p>
                 </div>

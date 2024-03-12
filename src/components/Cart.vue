@@ -15,16 +15,6 @@ export default {
 
     methods: {
         removeItemFromCart(index) {
-            const itemIdToRemove = this.store.cart.items[index].food_id;
-
-            // Trova l'indice della prima occorrenza dell'elemento da rimuovere
-            const indexToRemove = this.store.foods.findIndex(food => food === itemIdToRemove);
-
-            // Rimuovi solo la prima occorrenza dell'elemento dall'array
-            if (indexToRemove !== -1) {
-                this.store.foods.splice(indexToRemove, 1);
-            }
-
             if (this.store.cart.items[index].quantity > 1) {
                 // Diminuisci la quantità qualora il cibo abbia più di una quantity
                 this.store.cart.items[index].quantity--;
@@ -36,7 +26,6 @@ export default {
 
         incrementItemInCart(index) {
             this.store.cart.items[index].quantity++;
-            this.store.foods.push(this.store.cart.items[index].food_id);
         },
     },
 };

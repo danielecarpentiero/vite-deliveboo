@@ -5,12 +5,13 @@ import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 import axios from 'axios';
 import store from '../store';
+import { myMixin } from '../myMixin';
 import { Modal } from 'bootstrap';
 import Cart from '../components/Cart.vue';
 
 export default {
 	name: 'SingleRestaurant',
-	// props: ['restaurant'],
+	mixins: [myMixin],
 	components: {
 		AppHeader,
 		RouterView,
@@ -33,11 +34,10 @@ export default {
 		addItemToCart(food, restaurant) {
 			// Verifica se il carrello è vuoto o contiene solo articoli dallo stesso ristorante
 			if (this.store.cart.items.length === 0 || this.store.cart.items[0].restaurant_id === food.restaurant_id) {
-				let index = this.store.cart.items.findIndex(item => item.item === food.name);
+				let index = this.store.cart.items.findIndex(item => item.id === food.id);
 				if (index !== -1) {
 					// Se l'elemento esiste già, incrementa la quantità
 					this.store.cart.items[index].quantity++;
-					this.store.foods.push(food.id);
 				} else {
 					// Se l'elemento non esiste, aggiungilo al carrello
 					this.store.cart.items.push({
@@ -50,7 +50,6 @@ export default {
 						img: food.img,
 						restaurant_slug: restaurant.slug
 					});
-					this.store.foods.push(food.id);
 				}
 			} else {
 				this.errorCart(food, restaurant);
@@ -60,7 +59,7 @@ export default {
 
 		updateCart() {
 			localStorage.setItem('items', JSON.stringify(this.store.cart.items));
-			localStorage.setItem('foods', JSON.stringify(this.store.foods));
+			// localStorage.setItem('foods', JSON.stringify(this.store.foods));
 		},
 
 		getRestaurants() {
@@ -99,6 +98,12 @@ export default {
 		}
 	},
 
+	computed: {
+		allFoodIds() {
+			return this.getAllFoodIds();
+		}
+	},
+
 	mounted() {
 		this.getRestaurants();
 		// Carrello
@@ -111,16 +116,23 @@ export default {
 		}
 
 		// Cibo
-		if (!localStorage.getItem('foods')) {
+		if (!localStorage.getItem('foodIds')) {
 			// Se il localstorage è undefined inserisci un array vuoto
-			localStorage.setItem('foods', JSON.stringify([]));
+			localStorage.setItem('foodIds', JSON.stringify([]));
 		} else {
 			// Se il localstorage è già popolato aggiungi altri elementi
-			this.store.foods = JSON.parse(localStorage.getItem('foods'));
+			localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
+		}
+	},
+
+	computed: {
+		allFoodIds() {
+			return this.getAllFoodIds();
 		}
 	},
 
 	watch: {
+		// Carrello
 		'store.cart.items': {
 			handler(newItems) {
 				localStorage.setItem('items', JSON.stringify(newItems));
@@ -128,9 +140,10 @@ export default {
 			deep: true,
 		},
 
-		'store.foods': {
-			handler(newItems) {
-				localStorage.setItem('foods', JSON.stringify(newItems));
+		// Cibo
+		'allFoodIds': {
+			handler() {
+				localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
 			},
 			deep: true,
 		}
