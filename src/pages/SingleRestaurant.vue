@@ -222,7 +222,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-4 cart my-4">
+      <div class="cart col-12 col-md-4 cart my-4">
         <Cart />
       </div>
     </div>
@@ -232,6 +232,12 @@ export default {
 <style scoped lang="scss">
 .bg-team {
   background-color: #0c2d57;
+}
+
+.cart {
+  position: sticky;
+  top: 20px;
+  align-self: start;
 }
 
 img {
