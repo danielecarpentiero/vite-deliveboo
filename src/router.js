@@ -11,7 +11,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: AppHome,
-      props: (route) => ({ types: route.query.types }),
+      // props: (route) => ({ types: route.query.types }),
     },
     {
       path: "/restaurant/:slug",
@@ -27,12 +27,13 @@ const router = createRouter({
       path: "/successful",
       name: "successful",
       component: Successful,
-    }
+    },
   ],
-  scrollBehavior(to, from, savedPosition) {
-    // always scroll to top
-    return { top: 0 }
-  },
+
+  //   scrollBehavior(to, from, savedPosition) {
+  //     // always scroll to top
+  //     return { top: 0 };
+  //   },
 });
 
 export { router };
