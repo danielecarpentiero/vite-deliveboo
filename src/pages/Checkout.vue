@@ -62,7 +62,7 @@ export default {
         const button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
-            authorization: 'sandbox_4x7jkkm3_n2sddky376q9g4bt',
+            authorization: 'sandbox_v2y6rm6z_94yq2hy5s6kz94zj',
             container: '#dropin-container',
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
