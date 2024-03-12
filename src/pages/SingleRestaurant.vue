@@ -71,8 +71,8 @@ export default {
       axios
         .get(
           this.store.api.mainUrl +
-          this.store.api.listUrl.restaurants +
-          this.$route.params.slug
+            this.store.api.listUrl.restaurants +
+            this.$route.params.slug
         )
         .then((response) => {
           this.restaurant = response.data.result;
@@ -163,56 +163,76 @@ export default {
         <div id="menu" class="container card my-4 bg-dark text-white rounded-4">
           <div class="card-body">
             <!-- <h1 class="card-title text-center">{{ restaurant.name }}</h1>
-	  <p class="text-center">{{ restaurant.address }}</p> -->
+          <p class="text-center">{{ restaurant.address }}</p> -->
             <h3 class="mt-2 text-center">Menu</h3>
 
-            <ul class="list-unstyled row gap-3 justify-content-center">
-              <li v-for="food in restaurant.foods" :key="food.id"
-                class="col-12 col-md-3 text-center flip-card mt-3 rounded-5">
-                <div class="flip-card-inner shadow rounded-5">
-                  <div class="w-100 flip-card-front rounded-5">
-                    <img :src="store.api.mainUrl + store.api.storagePath + food.img
-                " :alt="food.slug" class="rounded-5" />
-                  </div>
-                  <!-- Flip card -->
-                  <div
-                    class="flip-card-back rounded-5 d-flex flex-column justify-content-center align-items-center gap-2">
-                    <div class="info">
-                      <h3 class="mt-5 mb-2 text-uppercase">{{ food.name }}</h3>
-                      <p>Description: {{ food.description }}</p>
-                      <p>Prezzo: {{ food.price }} €</p>
-                      <p v-if="food.is_vegetarian">Vegetariano</p>
-                      <p v-else>Non vegetariano</p>
-                      <p v-if="food.is_visible">Elemento disponibile</p>
-                      <p v-else>Elemento non disponibile</p>
-                      <button class="btn btn-success w-30 mt-4" @click="addItemToCart(food, restaurant)">
-                        <font-awesome-icon :icon="['fas', 'plus']" />
-                      </button>
-                    </div>
+            <div class="row">
+              <div
+                v-for="food in restaurant.foods"
+                :key="food.id"
+                class="col-md-4 mb-4"
+              >
+                <div class="card h-100 shadow">
+                  <img
+                    :src="store.api.mainUrl + store.api.storagePath + food.img"
+                    :alt="food.slug"
+                    class="card-img-top"
+                  />
+                  <div class="card-body">
+                    <h5 class="card-title">{{ food.name }}</h5>
+                    <p class="card-text">{{ food.description }}</p>
+                    <p class="card-text">Prezzo: {{ food.price }} €</p>
+                    <p v-if="food.is_vegetarian">Vegetariano</p>
+                    <p v-else>Non vegetariano</p>
+                    <p v-if="food.is_visible">Elemento disponibile</p>
+                    <p v-else>Elemento non disponibile</p>
+                    <button
+                      class="btn btn-success w-100 mt-4"
+                      @click="addItemToCart(food, restaurant)"
+                    >
+                      Aggiungi al carrello
+                    </button>
                   </div>
                 </div>
-              </li>
-            </ul>
+              </div>
+            </div>
+
             <!-- Modal -->
             <div class="modal fade" id="empty-modal-cart">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
+                    <h1
+                      class="modal-title fs-5 text-dark"
+                      id="exampleModalLabel"
+                    >
                       Emptying cart
                     </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
                   </div>
                   <div class="modal-body text-dark text-start">
                     You can order from one restaurant at a time. Do you want to
                     empty your cart and insert "{{ this.selectedFoodName }}"?
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">
+                    <button
+                      type="button"
+                      class="btn btn-secondary text-white"
+                      data-bs-dismiss="modal"
+                    >
                       Close
                     </button>
-                    <button type="button" class="btn btn-danger text-white" @click="emptyAndReplaceCart()"
-                      data-bs-dismiss="modal">
+                    <button
+                      type="button"
+                      class="btn btn-danger text-white"
+                      @click="emptyAndReplaceCart()"
+                      data-bs-dismiss="modal"
+                    >
                       Empty cart
                     </button>
                   </div>
@@ -243,59 +263,5 @@ export default {
 img {
   width: 100%;
   height: 100%;
-}
-
-.flip-card {
-  background-color: transparent;
-  width: 250px;
-  height: 250px;
-  perspective: 1000px;
-  /* Remove this if you don't want the 3D effect */
-}
-
-/* This container is needed to position the front and back side */
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-}
-
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-/* Position the front and back side */
-.flip-card-front,
-.flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  /* Safari */
-  backface-visibility: hidden;
-}
-
-/* Style the front side (fallback if image is missing) */
-.flip-card-front {
-  background-color: #bbb;
-  color: black;
-}
-
-/* Style the back side */
-.flip-card-back {
-  background: rgb(255, 134, 20);
-  background: linear-gradient(118deg,
-      rgba(255, 134, 20, 1) 0%,
-      rgba(64, 74, 172, 1) 98%);
-  color: white;
-  transform: rotateY(180deg);
-
-  .info {
-    font-size: 15px;
-  }
 }
 </style>
