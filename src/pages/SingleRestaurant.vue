@@ -34,7 +34,7 @@ export default {
 		addItemToCart(food, restaurant) {
 			// Verifica se il carrello è vuoto o contiene solo articoli dallo stesso ristorante
 			if (this.store.cart.items.length === 0 || this.store.cart.items[0].restaurant_id === food.restaurant_id) {
-				let index = this.store.cart.items.findIndex(item => item.id === food.id);
+				let index = this.store.cart.items.findIndex(item => item.food_id === food.id);
 				if (index !== -1) {
 					// Se l'elemento esiste già, incrementa la quantità
 					this.store.cart.items[index].quantity++;
@@ -59,7 +59,6 @@ export default {
 
 		updateCart() {
 			localStorage.setItem('items', JSON.stringify(this.store.cart.items));
-			// localStorage.setItem('foods', JSON.stringify(this.store.foods));
 		},
 
 		getRestaurants() {
