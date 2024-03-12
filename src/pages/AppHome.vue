@@ -65,6 +65,7 @@ export default {
 	},
 
 	mounted() {
+		this.selectedTypes = this.$route.query.types ? this.$route.query.types.split(',') : [];
 		this.getRestaurants();
 		this.getTypes();
 	},
@@ -74,21 +75,21 @@ export default {
 <template>
 	<div class="jumbo">
 		<video playsinline autoplay muted loop>
-      <source src="/HeaderVideoSD.mp4" type="video/mp4" />
-    </video>
+			<source src="/HeaderVideoSD.mp4" type="video/mp4" />
+		</video>
 
-    <!-- Contenuti Header -->
-    <div class="container h-100 jumbotext">
-      <div class="d-flex h-100 text-center align-items-center">
-        <div class="w-100 text-white">
-          <h1 class="display-3 fw-bold">
-            All the food you want, when you want it.
-          </h1>
-        </div>
-      </div>
-    </div>
+		<!-- Contenuti Header -->
+		<div class="container h-100 jumbotext">
+			<div class="d-flex h-100 text-center align-items-center">
+				<div class="w-100 text-white">
+					<h1 class="display-3 fw-bold">
+						All the food you want, when you want it.
+					</h1>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+
 	<div class="container">
 		<!-- tipi -->
 		<section>
@@ -131,21 +132,23 @@ export default {
 </template>
 
 <style scoped lang="scss">
-
-.jumbo{
+.jumbo {
 	position: relative;
-	.jumbotext{
+
+	.jumbotext {
 		position: absolute;
 		top: 0%;
 	}
 }
+
 video {
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: 0;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: 0;
 }
+
 .box {
 	height: 300px;
 	background-color: aqua;
