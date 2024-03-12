@@ -1,5 +1,17 @@
 // myMixin.js
 export const myMixin = {
+  methods: {
+    getAllFoodIds() {
+      const foodIds = [];
+      this.store.cart.items.forEach((item) => {
+        for (let i = 0; i < item.quantity; i++) {
+          foodIds.push(item.food_id);
+        }
+      });
+      return foodIds;
+    },
+  },
+
   watch: {
     "store.cart.items": {
       handler() {
