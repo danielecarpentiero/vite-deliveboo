@@ -10,19 +10,25 @@ export default {
     data() {
         return {
             store,
-            guestName: "",
-            guestSurname: "",
-            guestAddress: "",
-            guestPhone: "",
-            guestEmail: "",
+            guestName: '',
+            guestSurname: '',
+            guestAddress: '',
+            guestPhone: '',
+            guestEmail: '',
+            errorName: '',
+            errorSurname: '',
+            errorAddress: '',
+            errorPhone: '',
+            errorEmail: '',
             braintreeAuthToken: config.braintreeAuthToken,
+            hasError: false,
         }
     },
 
     computed: {
         allFoodIds() {
             return this.getAllFoodIds();
-        }
+        },
     },
 
     methods: {
@@ -40,9 +46,60 @@ export default {
             this.store.cart.items[index].quantity++;
         },
 
-         redirectToAllRestaurant() {
+        redirectToAllRestaurant() {
             this.$router.push({ name: 'home' });
-        }
+        },
+
+        isValidEmail(email) {
+            // Espressione regolare per la validazione dell'email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        },
+
+        isValidPhone(phone) {
+            // Espressione regolare per la validazione del numero di telefono
+            const phoneRegex = /^\d{7,15}$/; // Minimo 7 e massimo 15 cifre
+            return phoneRegex.test(phone);
+        },
+
+        validateInput() {
+            this.hasError = false;
+            if (this.guestName === '') {
+                this.errorName = 'Inserisci un nome';
+                this.hasError = true;
+            } else {
+                this.errorName = '';
+            }
+
+            if (this.guestSurname === '') {
+                this.errorSurname = 'Inserisci un cognome';
+                this.hasError = true;
+            } else {
+                this.errorSurname = '';
+            }
+
+            if (this.guestAddress === '') {
+                this.errorAddress = 'Inserisci un indirizzo';
+                this.hasError = true;
+            } else {
+                this.errorAddress = '';
+            }
+
+            if (this.guestPhone === '' || !(this.isValidPhone(this.guestPhone))) {
+                this.errorPhone = 'Inserisci un telefono valido';
+                this.hasError = true;
+            } else {
+                this.errorPhone = '';
+            }
+
+            if (this.guestEmail === '' || !(this.isValidEmail(this.guestEmail))) {
+                this.errorEmail = 'Inserisci un\'email valida';
+                this.hasError = true;
+            } else {
+                this.errorEmail = '';
+            }
+            // Check ritorna 5 se tutti i controlli sono superati
+        },
     },
 
     mounted() {
@@ -64,43 +121,44 @@ export default {
             localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
         }
 
-        // Braintree payments
         const button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
-            authorization: this.braintreeAuthToken,
+            authorization: self.braintreeAuthToken,
             container: '#dropin-container',
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
-                instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-                    if (requestPaymentMethodErr) {
-                        console.error('Error requesting payment method:', requestPaymentMethodErr);
-                        return;
-                    }
-                    // Invia il payload.nonce al server tramite Axios
-                    axios.post(store.api.mainUrl + store.api.listUrl.orders, {
-                        nonce: payload.nonce,
-                        amount: store.cart.subtotal,
-                        first_name: self.guestName,
-                        last_name: self.guestSurname,
-                        email: self.guestEmail,
-                        phone: self.guestPhone,
-                        address: self.guestAddress,
-                        restaurant_id: store.cart.items[0].restaurant_id,
-                        foods_id: JSON.parse(localStorage.getItem('foodIds')),
-                    }).then(function (response) {
-                        console.log('Payment success:', response.data);
-                        self.store.cart.items = [];
-                        localStorage.removeItem('items');
-                        localStorage.removeItem('foods');
-                        self.$router.push({ name: 'successful' });
-                        // Possiamo fare altre azioni qui in base alla risposta del server
-                    }).catch(function (error) {
-                        console.error('Payment error:', error);
-                        // Gestiamo eventuali errori qui
+                self.validateInput();
+                if (!self.hasError) {
+                    instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+                        if (requestPaymentMethodErr) {
+                            console.error('Error requesting payment method:', requestPaymentMethodErr);
+                            return;
+                        }
+                        // Invia il payload.nonce al server tramite Axios
+                        axios.post(store.api.mainUrl + store.api.listUrl.orders, {
+                            nonce: payload.nonce,
+                            amount: store.cart.subtotal,
+                            first_name: self.guestName,
+                            last_name: self.guestSurname,
+                            email: self.guestEmail,
+                            phone: self.guestPhone,
+                            address: self.guestAddress,
+                            restaurant_id: store.cart.items[0].restaurant_id,
+                            foods_id: JSON.parse(localStorage.getItem('foodIds')),
+                        }).then(function (response) {
+                            console.log('Payment success:', response.data);
+                            self.store.cart.items = [];
+                            localStorage.removeItem('items');
+                            localStorage.removeItem('foods');
+                            self.$router.push({ name: 'successful' });
+                            // Possiamo fare altre azioni qui in base alla risposta del server
+                        }).catch(function (error) {
+                            console.error('Payment error:', error);
+                            // Gestiamo eventuali errori qui
+                        });
                     });
-
-                });
+                };
             });
         });
     },
@@ -120,7 +178,14 @@ export default {
                 localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
             },
             deep: true,
-        }
+        },
+
+        // Watch per il cambio di valore nei campi degli input
+        guestName: 'validateInput',
+        guestSurname: 'validateInput',
+        guestAddress: 'validateInput',
+        guestPhone: 'validateInput',
+        guestEmail: 'validateInput',
     },
 };
 </script>
@@ -175,38 +240,47 @@ export default {
                 <div v-if="store.cart.items.length > 0" class="paymeny-form mt-5">
                     <div class="mb-3">
                         <label for="guestName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="guestName" placeholder="Name" v-model="guestName">
+                        <input type="text" class="form-control" id="guestName" placeholder="Name" v-model="guestName"
+                            maxlength="20">
+                        <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorName }}</strong>
                     </div>
                     <div class="mb-3">
                         <label for="guestSurname" class="form-label">Surname</label>
                         <input type="text" class="form-control" id="guestSurname" placeholder="Surname"
-                            v-model="guestSurname">
+                            v-model="guestSurname" maxlength="20">
+                        <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorSurname }}</strong>
                     </div>
                     <div class="mb-3">
                         <label for="guestAddress" class="form-label">Address</label>
                         <input type="text" class="form-control" id="guestAddress" placeholder="Address"
-                            v-model="guestAddress">
+                            v-model="guestAddress" maxlength="50">
+                        <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorAddress }}</strong>
                     </div>
                     <div class="mb-3">
                         <label for="guestPhone" class="form-label">Phone</label>
                         <input type="text" class="form-control" id="guestPhone" placeholder="Phone"
                             v-model="guestPhone">
+                        <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorPhone }}</strong>
                     </div>
                     <div class="mb-3">
                         <label for="guestEmail" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="guestEmail" placeholder="name@example.com"
                             v-model="guestEmail">
+                        <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorEmail }}</strong>
                     </div>
                 </div>
                 </p>
+                <div v-if="hasError" class="alert alert-warning" role="alert">
+                    Compila tutti i campi per procedere al pagamento
+                </div>
                 <div id="dropin-container" v-if="store.cart.items.length > 0"></div>
-                <button id="submit-button" class="btn btn-success me-3"
-                    v-show="store.cart.items.length > 0">Pay</button>
+                <button id="submit-button" class="btn btn-success me-3" v-show="store.cart.items.length > 0"
+                    :disabled="hasError">Pay</button>
                 <RouterLink v-if="store.cart.items.length > 0"
                     :to="{ name: 'restaurant', params: { slug: store.cart.items[0].restaurant_slug } }">
                     <button class="btn btn-secondary me-3">Back to restaurant</button>
                 </RouterLink>
-                <button class="btn btn-secondary" @click="redirectToAllRestaurant" >Back to Home</button>
+                <button class="btn btn-secondary" @click="redirectToAllRestaurant">Back to Home</button>
             </div>
         </div>
     </div>
