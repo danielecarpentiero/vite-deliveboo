@@ -2,6 +2,7 @@
 import store from '../store';
 import { myMixin } from '../myMixin';
 import axios from 'axios';
+import config from '../config.json';
 
 export default {
     name: 'Checkout',
@@ -14,6 +15,7 @@ export default {
             guestAddress: "",
             guestPhone: "",
             guestEmail: "",
+            braintreeAuthToken: config.braintreeAuthToken,
         }
     },
 
@@ -62,7 +64,7 @@ export default {
         const button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
-            authorization: 'sandbox_v2y6rm6z_94yq2hy5s6kz94zj',
+            authorization: this.braintreeAuthToken,
             container: '#dropin-container',
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
@@ -84,12 +86,9 @@ export default {
                         foods_id: JSON.parse(localStorage.getItem('foodIds')),
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
-                        
                         self.store.cart.items = [];
-
                         localStorage.removeItem('items');
-
-                        ocalStorage.removeItem('foods');
+                        localStorage.removeItem('foods');
                         // Possiamo fare altre azioni qui in base alla risposta del server
                     }).catch(function (error) {
                         console.error('Payment error:', error);
