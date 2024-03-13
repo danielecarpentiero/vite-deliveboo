@@ -18,20 +18,23 @@ export default {
 <template>
   <header>
     <!-- Navbar -->
-    <nav class="navbar">
-      <!-- Logo -->
-      <RouterLink :to="{ name: 'home' }">
-        <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
-      </RouterLink>
-      <div>
-        <RouterLink :to="{ name: 'checkout' }">
-          <font-awesome-icon
-            :icon="['fas', 'cart-shopping']"
-            class="cart-icon"
-          />
+    <div class="container">
+      <nav class="navbar">
+        <!-- Logo -->
+        <RouterLink :to="{ name: 'home' }">
+          <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
         </RouterLink>
-      </div>
-    </nav>
+        <div>
+          <RouterLink :to="{ name: 'checkout' }">
+            <font-awesome-icon
+              :icon="['fas', 'cart-shopping']"
+              class="cart-icon"
+            />
+            <a class="px-2"> Subtotal: {{ store.cart.subtotal }} € </a>
+          </RouterLink>
+        </div>
+      </nav>
+    </div>
 
     <!-- Div vuoto per l'overlay nero sopra il video -->
   </header>
@@ -77,12 +80,13 @@ header .overlay {
   z-index: 1;
 }
 
+a {
+  color: #f2e8cf;
+  text-decoration: none;
+}
+
 /* Navbar */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.3rem 12.5rem;
   z-index: 3;
 }
 

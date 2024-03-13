@@ -1,16 +1,16 @@
 <script>
-import { RouterView } from 'vue-router';
-import { RouterLink } from 'vue-router';
-import AppHeader from '../components/AppHeader.vue';
-import AppFooter from '../components/AppFooter.vue';
-import axios from 'axios';
-import store from '../store';
-import { myMixin } from '../myMixin';
-import { Modal } from 'bootstrap';
-import Cart from '../components/Cart.vue';
+import { RouterView } from "vue-router";
+import { RouterLink } from "vue-router";
+import AppHeader from "../components/AppHeader.vue";
+import AppFooter from "../components/AppFooter.vue";
+import axios from "axios";
+import store from "../store";
+import { myMixin } from "../myMixin";
+import { Modal } from "bootstrap";
+import Cart from "../components/Cart.vue";
 
 export default {
-  name: 'SingleRestaurant',
+  name: "SingleRestaurant",
   mixins: [myMixin],
   components: {
     AppHeader,
@@ -63,7 +63,7 @@ export default {
     },
 
     updateCart() {
-      localStorage.setItem('items', JSON.stringify(this.store.cart.items));
+      localStorage.setItem("items", JSON.stringify(this.store.cart.items));
       // localStorage.setItem('foods', JSON.stringify(this.store.foods));
     },
 
@@ -84,7 +84,7 @@ export default {
 
     errorCart(food, restaurant) {
       // Seleziona l'elemento HTML della modale
-      let modalElement = document.getElementById('empty-modal-cart');
+      let modalElement = document.getElementById("empty-modal-cart");
       // Inizializza la modale utilizzando il costruttore Modal di Bootstrap
       let modal = new Modal(modalElement);
       // Mostra la modale
@@ -103,7 +103,7 @@ export default {
     },
 
     redirectToAllRestaurant() {
-      this.$router.push({ name: 'home' });
+      this.$router.push({ name: "home" });
     },
   },
 
@@ -116,21 +116,21 @@ export default {
   mounted() {
     this.getRestaurants();
     // Carrello
-    if (!localStorage.getItem('items')) {
+    if (!localStorage.getItem("items")) {
       // Se il localstorage è undefined inserisci un array vuoto
-      localStorage.setItem('items', JSON.stringify([]));
+      localStorage.setItem("items", JSON.stringify([]));
     } else {
       // Se il localstorage è già popolato aggiungi altri elementi
-      this.store.cart.items = JSON.parse(localStorage.getItem('items'));
+      this.store.cart.items = JSON.parse(localStorage.getItem("items"));
     }
 
     // Cibo
-    if (!localStorage.getItem('foodIds')) {
+    if (!localStorage.getItem("foodIds")) {
       // Se il localstorage è undefined inserisci un array vuoto
-      localStorage.setItem('foodIds', JSON.stringify([]));
+      localStorage.setItem("foodIds", JSON.stringify([]));
     } else {
       // Se il localstorage è già popolato aggiungi altri elementi
-      localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
+      localStorage.setItem("foodIds", JSON.stringify(this.allFoodIds));
     }
   },
 
@@ -142,9 +142,9 @@ export default {
 
   watch: {
     // Carrello
-    'store.cart.items': {
+    "store.cart.items": {
       handler(newItems) {
-        localStorage.setItem('items', JSON.stringify(newItems));
+        localStorage.setItem("items", JSON.stringify(newItems));
       },
       deep: true,
     },
@@ -152,7 +152,7 @@ export default {
     // Cibo
     allFoodIds: {
       handler() {
-        localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
+        localStorage.setItem("foodIds", JSON.stringify(this.allFoodIds));
       },
       deep: true,
     },
@@ -259,6 +259,10 @@ export default {
 <style scoped lang="scss">
 .bg-team {
   background-color: #0c2d57;
+}
+
+.container.text-center {
+  min-height: 70vh;
 }
 
 .cart {
