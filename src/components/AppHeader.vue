@@ -1,8 +1,11 @@
 <script>
-import store from '../store';
+import store from "../store";
+import { RouterLink } from "vue-router";
+import { myMixin } from "../myMixin";
 
 export default {
-  name: 'AppHeader',
+  name: "AppHeader",
+  mixins: [myMixin],
 
   data() {
     return {
@@ -21,7 +24,12 @@ export default {
         <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
       </div>
       <div>
-        <font-awesome-icon :icon="['fas', 'cart-shopping']" class="cart-icon" />
+        <RouterLink :to="{ name: 'checkout' }">
+          <font-awesome-icon
+            :icon="['fas', 'cart-shopping']"
+            class="cart-icon"
+          />
+        </RouterLink>
       </div>
     </nav>
 
@@ -30,7 +38,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import '/src/style.scss';
+@import "/src/style.scss";
 
 header {
   position: relative;
