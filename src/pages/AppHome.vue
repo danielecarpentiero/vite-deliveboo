@@ -1,10 +1,10 @@
 <script>
-import axios from "axios";
-import store from "../store";
-import { RouterLink } from "vue-router";
+import axios from 'axios';
+import store from '../store';
+import { RouterLink } from 'vue-router';
 
 export default {
-  name: "AppHome",
+  name: 'AppHome',
 
   data() {
     return {
@@ -16,11 +16,12 @@ export default {
   },
 
   methods: {
+    //Ottiene i ristoranti dall'api
     getRestaurants() {
       let params = {};
 
       if (this.selectedTypes.length > 0) {
-        params.types = this.selectedTypes.join(",");
+        params.types = this.selectedTypes.join(',');
       }
 
       axios
@@ -35,6 +36,7 @@ export default {
         });
     },
 
+    //Ottiene i tipi
     getTypes() {
       axios
         .get(this.store.api.mainUrl + this.store.api.listUrl.types)
@@ -48,7 +50,7 @@ export default {
 
     updateFilter() {
       // Aggiorna l'URL con i tipi selezionati
-      const selectedTypesString = this.selectedTypes.join(",");
+      const selectedTypesString = this.selectedTypes.join(',');
       this.$router.push({ query: { types: selectedTypesString || undefined } });
 
       // Aggiorna la lista dei ristoranti
@@ -57,12 +59,12 @@ export default {
   },
 
   watch: {
-    selectedTypes: "updateFilter", // Aggiorna il filtro quando cambia l'array dei tipi selezionati
+    selectedTypes: 'updateFilter',
   },
 
   mounted() {
     this.selectedTypes = this.$route.query.types
-      ? this.$route.query.types.split(",")
+      ? this.$route.query.types.split(',')
       : [];
     this.getRestaurants();
     this.getTypes();
@@ -96,33 +98,32 @@ export default {
   <div class="container">
     <!-- tipi -->
     <section>
-      <h1>What would you like to eat?</h1>
+      <h1 class="my-5 text-center">What you want to eat today?</h1>
     </section>
-
-    <h2>Choose the type of food you would like to eat</h2>
-    <ul class="d-flex flex-wrap gap-4 p-0">
-      <li v-for="(type, index) in types" class="list-unstyled">
-        <div class="form-check">
+    <div class="container-filters">
+      <ul class="d-flex justify-content-between p-0">
+        <li v-for="(type, index) in types" class="list-unstyled" :key="index">
           <input
-            v-model="selectedTypes"
-            class="form-check-input"
             type="checkbox"
+            :id="`type-${type.name}`"
+            v-model="selectedTypes"
             :value="type.name"
-            :id="index"
+            class="type-checkbox"
           />
-          <label class="form-check-label" :for="index">
-            {{ type.name }}
-          </label>
-          <div class="type-img-container">
+          <label :for="`type-${type.name}`" class="type-img-container">
             <img
               class="types-image"
               :src="store.api.mainUrl + type.img"
               :alt="type.name"
             />
-          </div>
-        </div>
-      </li>
-    </ul>
+            <div class="type-name">
+              <b>{{ type.name.toUpperCase() }}</b>
+            </div>
+          </label>
+        </li>
+      </ul>
+    </div>
+
     <!-- Ristoranti -->
     <h2 class="text-center">Restaurants</h2>
     <ul class="row list-unstyled">
@@ -159,6 +160,9 @@ export default {
 </template>
 
 <style scoped lang="scss">
+@import '/src/style.scss';
+
+/* Stili per il jumbotron */
 .jumbo {
   position: relative;
 
@@ -190,8 +194,10 @@ export default {
   }
 }
 
+/* Stili per le immagini */
 .box {
   height: 300px;
+
   img {
     width: 100%;
     height: 100%;
@@ -199,15 +205,74 @@ export default {
   }
 }
 
-.type-img-container {
-  width: 50px;
-  height: 50px;
-  overflow: hidden;
-  border-radius: 50%;
+/* Nascondi le checkbox */
+.type-checkbox {
+  display: none;
 }
 
+/* Stili per il container dei filtri */
+.container-filters {
+  display: flex;
+  justify-content: center;
+}
+
+/* Stili per il container delle immagini */
+.type-img-container {
+  position: relative;
+  width: 100px;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: 0.3s;
+}
+
+/* Stili per le immagini dei tipi */
 .types-image {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  border-radius: 20%;
+  transition: transform 0.3s;
+  filter: grayscale(1);
+}
+
+/* Stili per il nome del tipo */
+.type-name {
+  position: absolute;
+  width: 100%;
+  bottom: 10;
+  left: 0;
+  background-color: $beige;
+  color: $orange;
+  padding: 5px 0;
+}
+
+/* Stili quando la checkbox è selezionata */
+.type-checkbox:checked + label .type-img-container {
+  border-color: $orange;
+}
+
+.type-checkbox:checked + label .type-name {
+  background-color: $orange;
+  color: $beige;
+}
+.type-checkbox:checked + label .types-image {
+  filter: grayscale(0);
+}
+
+/* Effetto hover */
+.type-img-container:hover {
+  width: 300px;
+  border-color: orange;
+
+  img {
+    filter: grayscale(0);
+  }
 }
 </style>
