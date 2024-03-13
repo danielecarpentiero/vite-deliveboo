@@ -2,11 +2,11 @@
 import store from '../store';
 import { myMixin } from '../myMixin';
 import axios from 'axios';
+import config from '../config.json';
 
 export default {
     name: 'Checkout',
     mixins: [myMixin],
-
     data() {
         return {
             store,
@@ -15,6 +15,13 @@ export default {
             guestAddress: "",
             guestPhone: "",
             guestEmail: "",
+            braintreeAuthToken: config.braintreeAuthToken,
+        }
+    },
+
+    computed: {
+        allFoodIds() {
+            return this.getAllFoodIds();
         }
     },
 
@@ -32,20 +39,36 @@ export default {
         incrementItemInCart(index) {
             this.store.cart.items[index].quantity++;
         },
+
+         redirectToAllRestaurant() {
+            this.$router.push({ name: 'home' });
+        }
     },
 
     mounted() {
+        const self = this;
+
+        // Carrello
         if (!localStorage.getItem('items')) {
             localStorage.setItem('items', JSON.stringify([]));
         } else {
             this.store.cart.items = JSON.parse(localStorage.getItem('items'));
         };
 
+        // Cibo
+        if (!localStorage.getItem('foodIds')) {
+            // Se il localstorage è undefined inserisci un array vuoto
+            localStorage.setItem('foodIds', JSON.stringify([]));
+        } else {
+            // Se il localstorage è già popolato aggiungi altri elementi
+            localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
+        }
+
         // Braintree payments
         const button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
-            authorization: 'sandbox_rz3nhxvq_t55vsgy33n9tvxgn',
+            authorization: this.braintreeAuthToken,
             container: '#dropin-container',
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
@@ -58,32 +81,46 @@ export default {
                     axios.post(store.api.mainUrl + store.api.listUrl.orders, {
                         nonce: payload.nonce,
                         amount: store.cart.subtotal,
-                        customerData: {
-                            first_name: 'daniele',
-                            last_name: 'carpentiero',
-                            email: 'daniele@io.it',
-                            phone: '3317526531',
-                            address: 'via prova 44'
-                        }
+                        first_name: self.guestName,
+                        last_name: self.guestSurname,
+                        email: self.guestEmail,
+                        phone: self.guestPhone,
+                        address: self.guestAddress,
+                        restaurant_id: store.cart.items[0].restaurant_id,
+                        foods_id: JSON.parse(localStorage.getItem('foodIds')),
                     }).then(function (response) {
                         console.log('Payment success:', response.data);
+                        self.store.cart.items = [];
+                        localStorage.removeItem('items');
+                        localStorage.removeItem('foods');
+                        self.$router.push({ name: 'successful' });
                         // Possiamo fare altre azioni qui in base alla risposta del server
                     }).catch(function (error) {
                         console.error('Payment error:', error);
                         // Gestiamo eventuali errori qui
                     });
+
                 });
             });
         });
     },
 
     watch: {
+        // Carrello
         'store.cart.items': {
             handler(newItems) {
                 localStorage.setItem('items', JSON.stringify(newItems));
             },
             deep: true,
         },
+
+        // Cibo
+        'allFoodIds': {
+            handler() {
+                localStorage.setItem('foodIds', JSON.stringify(this.allFoodIds));
+            },
+            deep: true,
+        }
     },
 };
 </script>
@@ -130,7 +167,8 @@ export default {
                         </div>
                     </li>
                 </ul>
-                <div v-if="store.cart.items.length > 0" class="total">Totale: {{ store.cart.subtotal }} €</div>
+                <div v-if="store.cart.items.length > 0" class="total">Totale: {{ store.cart.subtotal }} €
+                </div>
                 <div v-else>
                     <p>Cart is empty</p>
                 </div>
@@ -140,23 +178,24 @@ export default {
                         <input type="text" class="form-control" id="guestName" placeholder="Name" v-model="guestName">
                     </div>
                     <div class="mb-3">
-                        <label for="surname" class="form-label">Surname</label>
-                        <input type="text" class="form-control" id="surname" placeholder="Surname"
+                        <label for="guestSurname" class="form-label">Surname</label>
+                        <input type="text" class="form-control" id="guestSurname" placeholder="Surname"
                             v-model="guestSurname">
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="Address"
+                        <label for="guestAddress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="guestAddress" placeholder="Address"
                             v-model="guestAddress">
                     </div>
                     <div class="mb-3">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="phone" placeholder="Phone" v-model="guestPhone">
+                        <label for="guestPhone" class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="guestPhone" placeholder="Phone"
+                            v-model="guestPhone">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1"
-                            placeholder="name@example.com" v-model="guestEmail">
+                        <label for="guestEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="guestEmail" placeholder="name@example.com"
+                            v-model="guestEmail">
                     </div>
                 </div>
                 </p>
@@ -165,8 +204,9 @@ export default {
                     v-show="store.cart.items.length > 0">Pay</button>
                 <RouterLink v-if="store.cart.items.length > 0"
                     :to="{ name: 'restaurant', params: { slug: store.cart.items[0].restaurant_slug } }">
-                    <button class="btn btn-secondary">Back to restaurant</button>
+                    <button class="btn btn-secondary me-3">Back to restaurant</button>
                 </RouterLink>
+                <button class="btn btn-secondary" @click="redirectToAllRestaurant" >Back to Home</button>
             </div>
         </div>
     </div>

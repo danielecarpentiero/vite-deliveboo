@@ -57,14 +57,15 @@ export default {
 
 			// Aggiorna la lista dei ristoranti
 			this.getRestaurants();
-		}
+		},
 	},
 
 	watch: {
-		selectedTypes: 'updateFilter' // Aggiorna il filtro quando cambia l'array dei tipi selezionati
+		selectedTypes: 'updateFilter', // Aggiorna il filtro quando cambia l'array dei tipi selezionati
 	},
 
 	mounted() {
+		this.selectedTypes = this.$route.query.types ? this.$route.query.types.split(',') : [];
 		this.getRestaurants();
 		this.getTypes();
 	},
@@ -73,22 +74,27 @@ export default {
 
 <template>
 	<div class="jumbo">
-		<video playsinline autoplay muted loop>
-      <source src="/HeaderVideoSD.mp4" type="video/mp4" />
-    </video>
+		<!-- Div Vuoto per -->
+		<div class="overlay"></div>
 
-    <!-- Contenuti Header -->
-    <div class="container h-100 jumbotext">
-      <div class="d-flex h-100 text-center align-items-center">
-        <div class="w-100 text-white">
-          <h1 class="display-3 fw-bold">
-            All the food you want, when you want it.
-          </h1>
-        </div>
-      </div>
-    </div>
+		<!-- Video -->
+		<video playsinline autoplay muted loop>
+			<source src="/HeaderVideoSD.mp4" type="video/mp4" />
+		</video>
+
+		<!-- Contenuti Header -->
+		<div class="container h-100 jumbotext">
+			<div class="d-flex h-100 align-items-center justify-content-center">
+				<div class="w-100 text-center text-white">
+					<h1 class="display-3 fw-bold">
+						Get delicious meals delivered fast, right to your door. Order now
+						and satisfy your cravings in minutes!
+					</h1>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+
 	<div class="container">
 		<!-- tipi -->
 		<section>
@@ -100,12 +106,12 @@ export default {
 			<li v-for="(type, index) in types" class="list-unstyled">
 				<div class="form-check">
 					<input v-model="selectedTypes" class="form-check-input" type="checkbox" :value="type.name"
-						:id="index">
+						:id="index" />
 					<label class="form-check-label" :for="index">
 						{{ type.name }}
 					</label>
 					<div class="type-img-container">
-						<img class="types-image" :src="store.api.mainUrl + type.img" :alt="type.name">
+						<img class="types-image" :src="store.api.mainUrl + type.img" :alt="type.name" />
 					</div>
 				</div>
 			</li>
@@ -113,15 +119,17 @@ export default {
 		<!-- Ristoranti -->
 		<h2 class="text-center">Restaurants</h2>
 		<ul class="row list-unstyled">
-			<li class="col-12 col-md-6 col-lg-4 g2" v-for="(  restaurant, index  ) in   restaurants  " :key="index">
+			<li class="col-12 col-md-6 col-lg-4 g2" v-for="(restaurant, index) in restaurants" :key="index">
 				<RouterLink class="link-offset-2 link-underline link-underline-opacity-0 text-dark"
 					:to="{ name: 'restaurant', params: { slug: restaurant.slug } }">
-					<div class="shadow p-3 mb-5 bg-body-tertiary rounded text-center glass-card">
+					<div class="shadow p-3 mb-5 bg-white rounded text-center glass-card">
 						<h2>{{ restaurant.name }}</h2>
-						<div class="box"></div>
+						<div class="box">
+							<img :src="store.api.mainUrl + store.api.storagePath + restaurant.cover_img" alt="">
+						</div>
 						<h6 class="mt-3 mb-1">Restaurant Types:</h6>
 						<ul class="list-unstyled d-flex gap-3 justify-content-center">
-							<li v-for="(type, index) in restaurant.types ">{{ type.name }}</li>
+							<li v-for="(type, index) in restaurant.types">{{ type.name }}</li>
 						</ul>
 					</div>
 				</RouterLink>
@@ -131,24 +139,44 @@ export default {
 </template>
 
 <style scoped lang="scss">
-
-.jumbo{
+.jumbo {
 	position: relative;
-	.jumbotext{
+
+	.jumbotext {
 		position: absolute;
-		top: 0%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 4;
+	}
+
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 99.5%;
+		width: 100%;
+		background-color: black;
+		opacity: 0.5;
+		z-index: 1;
+	}
+
+	video {
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		z-index: 0;
 	}
 }
-video {
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: 0;
-}
+
 .box {
 	height: 300px;
-	background-color: aqua;
+	img{
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 }
 
 .type-img-container {
@@ -162,4 +190,6 @@ video {
 	width: 100%;
 	height: 100%;
 }
+
+
 </style>
