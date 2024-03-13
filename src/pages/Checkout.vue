@@ -39,6 +39,10 @@ export default {
         incrementItemInCart(index) {
             this.store.cart.items[index].quantity++;
         },
+
+         redirectToAllRestaurant() {
+            this.$router.push({ name: 'home' });
+        }
     },
 
     mounted() {
@@ -89,6 +93,7 @@ export default {
                         self.store.cart.items = [];
                         localStorage.removeItem('items');
                         localStorage.removeItem('foods');
+                        self.$router.push({ name: 'successful' });
                         // Possiamo fare altre azioni qui in base alla risposta del server
                     }).catch(function (error) {
                         console.error('Payment error:', error);
@@ -199,8 +204,9 @@ export default {
                     v-show="store.cart.items.length > 0">Pay</button>
                 <RouterLink v-if="store.cart.items.length > 0"
                     :to="{ name: 'restaurant', params: { slug: store.cart.items[0].restaurant_slug } }">
-                    <button class="btn btn-secondary">Back to restaurant</button>
+                    <button class="btn btn-secondary me-3">Back to restaurant</button>
                 </RouterLink>
+                <button class="btn btn-secondary" @click="redirectToAllRestaurant" >Back to Home</button>
             </div>
         </div>
     </div>

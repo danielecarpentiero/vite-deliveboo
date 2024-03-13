@@ -101,6 +101,10 @@ export default {
         this.addItemToCart(this.selectedFood, this.currentRestaurant);
       }
     },
+
+    redirectToAllRestaurant() {
+      this.$router.push({ name: 'home' });
+    },
   },
 
   computed: {
@@ -158,6 +162,9 @@ export default {
 
 <template>
   <div class="container text-center">
+    <button class="btn btn-secondary mt-3" @click="redirectToAllRestaurant">
+      Back to Home
+    </button>
     <div class="row">
       <div class="col-12 col-md-8">
         <div id="menu" class="container card my-4 bg-dark text-white rounded-4">

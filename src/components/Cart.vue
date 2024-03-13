@@ -42,11 +42,7 @@ export default {
       class="cart-header d-flex justify-content-between align-items-center p-2"
     >
       <h5 class="m-0">Shopping Cart</h5>
-      <span
-        class="text-danger btn text-decoration-underline"
-        @click="removeAllItems"
-        >Remove All</span
-      >
+      <span class="text-danger btn" @click="removeAllItems">Remove All</span>
     </div>
 
     <ul class="list-unstyled text-dark">
