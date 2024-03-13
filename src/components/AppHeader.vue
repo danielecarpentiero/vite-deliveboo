@@ -20,9 +20,9 @@ export default {
     <!-- Navbar -->
     <nav class="navbar">
       <!-- Logo -->
-      <div class="navbar-brand">
+      <RouterLink :to="{ name: 'home' }">
         <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
-      </div>
+      </RouterLink>
       <div>
         <RouterLink :to="{ name: 'checkout' }">
           <font-awesome-icon
