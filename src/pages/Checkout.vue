@@ -201,7 +201,7 @@ export default {
                 </p>
                 <div id="dropin-container" v-if="store.cart.items.length > 0"></div>
                 <button id="submit-button" class="btn btn-success me-3"
-                    v-show="store.cart.items.length > 0">Pay</button>
+                    v-if="store.cart.items.length > 0">Pay</button>
                 <RouterLink v-if="store.cart.items.length > 0"
                     :to="{ name: 'restaurant', params: { slug: store.cart.items[0].restaurant_slug } }">
                     <button class="btn btn-secondary me-3">Back to restaurant</button>
