@@ -278,13 +278,15 @@ export default {
   filter: grayscale(0);
 }
 
-/* Effetto hover */
-.type-img-container:hover {
-  width: 300px;
-  border-color: orange;
+/* Effetto hover - solo per desktop */
+@media (min-width: 601px) {
+  .type-img-container:hover {
+    width: 300px;
+    border-color: orange;
 
-  img {
-    filter: grayscale(0);
+    img {
+      filter: grayscale(0);
+    }
   }
 }
 
