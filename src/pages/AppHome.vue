@@ -136,10 +136,10 @@ export default {
           class="link-offset-2 link-underline link-underline-opacity-0 text-dark"
           :to="{ name: 'restaurant', params: { slug: restaurant.slug } }"
         >
-          <div class="shadow p-3 mb-5 bg-white rounded text-center glass-card">
-            <h2>{{ restaurant.name }}</h2>
-            <div class="box">
+          <div class="card card-restaurant">
+            <div class="card-image">
               <img
+                class="img"
                 :src="
                   store.api.mainUrl +
                   store.api.storagePath +
@@ -147,11 +147,24 @@ export default {
                 "
                 alt=""
               />
+              <div class="ripple-cont"></div>
             </div>
-            <h6 class="mt-3 mb-1">Restaurant Types:</h6>
-            <ul class="list-unstyled d-flex gap-3 justify-content-center">
-              <li v-for="(type, index) in restaurant.types">{{ type.name }}</li>
-            </ul>
+            <div class="table">
+              <h2 class="card-caption text-center">
+                {{ restaurant.name }}
+              </h2>
+              <h6 class="category text-center">
+                Restaurant Types:
+                <ul class="list-unstyled d-flex gap-3 justify-content-center">
+                  <li
+                    v-for="(type, index) in restaurant.types"
+                    :key="`type-${index}`"
+                  >
+                    {{ type.name }}
+                  </li>
+                </ul>
+              </h6>
+            </div>
           </div>
         </RouterLink>
       </li>
@@ -237,7 +250,6 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 20%;
   transition: transform 0.3s;
   filter: grayscale(1);
 }
@@ -274,5 +286,67 @@ export default {
   img {
     filter: grayscale(0);
   }
+}
+
+.card {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.87);
+  background: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card .card-image {
+  height: 20%;
+  position: relative;
+  overflow: hidden;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: -30px;
+  border-radius: 6px;
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.card .card-image img {
+  width: 100%;
+  height: 20%;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.card .card-image .card-caption {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: #fff;
+  font-size: 1.3em;
+  text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);
+}
+
+.card img {
+  width: 20%;
+  height: auto;
+}
+
+.card-restaurant {
+  margin-top: 30px;
+}
+
+.card-restaurant .card-caption {
+  margin-top: 5px;
+}
+
+.card-restaurant .card-image + .category {
+  margin-top: 20px;
+}
+
+.category {
+  color: $orange;
+  font-weight: bold;
 }
 </style>
