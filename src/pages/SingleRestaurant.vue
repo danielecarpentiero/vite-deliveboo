@@ -188,16 +188,16 @@ export default {
                   <div class="card-body">
                     <h5 class="card-title">{{ food.name }}</h5>
                     <p class="card-text">{{ food.description }}</p>
-                    <p class="card-text">Prezzo: {{ food.price }} €</p>
-                    <p v-if="food.is_vegetarian">Vegetariano</p>
-                    <p v-else>Non vegetariano</p>
-                    <p v-if="food.is_visible">Elemento disponibile</p>
-                    <p v-else>Elemento non disponibile</p>
+                    <p class="card-text">Price: {{ food.price }} €</p>
+                    <p v-if="food.is_vegetarian">Vegetarian</p>
+                    <p v-else>Not Vegetarian</p>
+                    <p v-if="food.is_visible">Available</p>
+                    <p v-else>Unavailable</p>
                     <button
                       class="btn btn-success w-100 mt-4"
                       @click="addItemToCart(food, restaurant)"
                     >
-                      Aggiungi al carrello
+                      Add to Cart
                     </button>
                   </div>
                 </div>
