@@ -358,11 +358,6 @@ export default {
   color: #212529;
 }
 
-.types-category {
-  font-size: 13px;
-  color: #212529;
-}
-
 @media (max-width: 900px) {
   .container-filters {
     display: block;
