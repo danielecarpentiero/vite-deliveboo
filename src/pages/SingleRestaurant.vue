@@ -183,28 +183,7 @@ export default {
             <!-- <h1 class="card-title text-center">{{ restaurant.name }}</h1>
           <p class="text-center">{{ restaurant.address }}</p> -->
             <h3 class="mt-2 text-center">Menu</h3>
-
-            <div class="row p-0 gap-5">
-              <div v-for="food in restaurant.foods" :key="food.id" class="col-md-6 mb-4 card card-h card-h row p-0">
-                <div class="col-md-4">
-                  <img :src="store.api.mainUrl + store.api.storagePath + food.img" :alt="food.slug"
-                    class="card-img-top w-100" />
-                </div>
-                <div class="col-8 p-0">
-                  <div>
-                    <h5 class="card-title">{{ food.name }}</h5>
-                    <p class="card-text">{{ food.description }}</p>
-                  </div>
-                  <div class="d-flex justify-content-between mt-4 align-items-center">
-                    <p class="card-text">{{ food.price }} €</p>
-                    <button class="btn btn-success" @click="addItemToCart(food, restaurant)">
-                      +
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
+          </div>
           <div class="d-flex gap-3 flex-wrap">
             <div v-for="food in restaurant.foods" :key="food.id" id="card-container">
               <div class="card mb-3" style="max-width: 500px;">
@@ -285,7 +264,8 @@ export default {
 
 .rst-img {
   width: 440px;
-  height: 100px;
+  height: 100%;
+  object-fit: contain;
 }
 
 .container.text-center {
