@@ -99,7 +99,7 @@ export default {
   <div class="container">
     <!-- tipi -->
 
-    <div class="container-filters">
+    <div class="container-filters mt-3">
       <!-- Filtri per mobile -->
       <ul v-if="isMobile" class="list-unstyled">
         <li v-for="(type, index) in types" :key="index">
@@ -197,8 +197,8 @@ export default {
   video {
     min-width: 100%;
     min-height: 100%;
-    width: auto;
-    height: auto;
+    height: calc(100vh - 96px);
+    object-fit: cover;
     z-index: 0;
   }
 }
