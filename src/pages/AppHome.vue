@@ -1,10 +1,10 @@
 <script>
-import axios from 'axios';
-import store from '../store';
-import { RouterLink } from 'vue-router';
+import axios from "axios";
+import store from "../store";
+import { RouterLink } from "vue-router";
 
 export default {
-  name: 'AppHome',
+  name: "AppHome",
 
   data() {
     return {
@@ -21,7 +21,7 @@ export default {
       let params = {};
 
       if (this.selectedTypes.length > 0) {
-        params.types = this.selectedTypes.join(',');
+        params.types = this.selectedTypes.join(",");
       }
 
       axios
@@ -50,7 +50,7 @@ export default {
 
     updateFilter() {
       // Aggiorna l'URL con i tipi selezionati
-      const selectedTypesString = this.selectedTypes.join(',');
+      const selectedTypesString = this.selectedTypes.join(",");
       this.$router.push({ query: { types: selectedTypesString || undefined } });
 
       // Aggiorna la lista dei ristoranti
@@ -59,7 +59,7 @@ export default {
   },
 
   watch: {
-    selectedTypes: 'updateFilter',
+    selectedTypes: "updateFilter",
   },
 
   computed: {
@@ -69,7 +69,7 @@ export default {
   },
   mounted() {
     this.selectedTypes = this.$route.query.types
-      ? this.$route.query.types.split(',')
+      ? this.$route.query.types.split(",")
       : [];
     this.getRestaurants();
     this.getTypes();
@@ -91,20 +91,14 @@ export default {
     <div class="container h-100 jumbotext">
       <div class="d-flex h-100 align-items-center justify-content-center">
         <div class="w-100 text-center text-white">
-          <h1 class="display-3 fw-bold">
-            Get delicious meals delivered fast, right to your door. Order now
-            and satisfy your cravings in minutes!
-          </h1>
+          <h1 class="display-3 fw-bold">What do you want to eat today?</h1>
         </div>
       </div>
     </div>
   </div>
-
   <div class="container">
     <!-- tipi -->
-    <section>
-      <h1 class="my-5 text-center">What you want to eat today?</h1>
-    </section>
+
     <div class="container-filters">
       <!-- Filtri per mobile -->
       <ul v-if="isMobile" class="list-unstyled">
@@ -208,7 +202,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import '/src/style.scss';
+@import "/src/style.scss";
 
 /* Stili per il jumbotron */
 .jumbo {
