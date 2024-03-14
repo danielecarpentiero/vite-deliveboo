@@ -1,10 +1,10 @@
 <script>
-import axios from "axios";
-import store from "../store";
-import { RouterLink } from "vue-router";
+import axios from 'axios';
+import store from '../store';
+import { RouterLink } from 'vue-router';
 
 export default {
-  name: "AppHome",
+  name: 'AppHome',
 
   data() {
     return {
@@ -21,7 +21,7 @@ export default {
       let params = {};
 
       if (this.selectedTypes.length > 0) {
-        params.types = this.selectedTypes.join(",");
+        params.types = this.selectedTypes.join(',');
       }
 
       axios
@@ -50,7 +50,7 @@ export default {
 
     updateFilter() {
       // Aggiorna l'URL con i tipi selezionati
-      const selectedTypesString = this.selectedTypes.join(",");
+      const selectedTypesString = this.selectedTypes.join(',');
       this.$router.push({ query: { types: selectedTypesString || undefined } });
 
       // Aggiorna la lista dei ristoranti
@@ -59,17 +59,17 @@ export default {
   },
 
   watch: {
-    selectedTypes: "updateFilter",
+    selectedTypes: 'updateFilter',
   },
 
   computed: {
     isMobile() {
-      return window.innerWidth <= 600; // o qualsiasi altro breakpoint che preferisci
+      return window.innerWidth <= 900; // o qualsiasi altro breakpoint che preferisci
     },
   },
   mounted() {
     this.selectedTypes = this.$route.query.types
-      ? this.$route.query.types.split(",")
+      ? this.$route.query.types.split(',')
       : [];
     this.getRestaurants();
     this.getTypes();
@@ -202,7 +202,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import "/src/style.scss";
+@import '/src/style.scss';
 
 /* Stili per il jumbotron */
 .jumbo {
@@ -308,7 +308,7 @@ export default {
 }
 
 /* Effetto hover - solo per desktop */
-@media (min-width: 601px) {
+@media (min-width: 901px) {
   .type-img-container:hover {
     width: 300px;
     border-color: orange;
@@ -383,7 +383,7 @@ export default {
   font-weight: bold;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .container-filters {
     display: block; /* Mostra i filtri come una lista verticale */
   }
@@ -423,14 +423,14 @@ export default {
   }
 
   /* Nascondi i filtri mobile su desktop */
-  @media (min-width: 601px) {
+  @media (min-width: 901px) {
     .type-name-mobile {
       display: none;
     }
   }
 
   /* Nascondi i filtri desktop su mobile */
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     .type-img-container {
       display: none;
     }
