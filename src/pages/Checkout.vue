@@ -3,12 +3,14 @@ import store from '../store';
 import { myMixin } from '../myMixin';
 import axios from 'axios';
 import config from '../config.json';
+import {router} from '../router'
 
 export default {
     name: 'Checkout',
     mixins: [myMixin],
     data() {
         return {
+            router,
             store,
             guestName: '',
             guestSurname: '',
@@ -46,8 +48,20 @@ export default {
             this.store.cart.items[index].quantity++;
         },
 
+        redirectToSingleRestaurant(){
+            this.$router.push({ name: 'restaurant', params: { slug: store.cart.items[0].restaurant_slug } });
+            window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Optional: Add smooth scrolling behavior
+      });
+        },
+
         redirectToAllRestaurant() {
             this.$router.push({ name: 'home' });
+            window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Optional: Add smooth scrolling behavior
+            });
         },
 
         isValidEmail(email) {
@@ -276,11 +290,8 @@ export default {
                 <div id="dropin-container" v-if="store.cart.items.length > 0"></div>
                 <button id="submit-button" class="btn btn-success me-3" v-show="store.cart.items.length > 0"
                     :disabled="hasError">Pay</button>
-                <RouterLink v-if="store.cart.items.length > 0"
-                    :to="{ name: 'restaurant', params: { slug: store.cart.items[0].restaurant_slug } }">
-                    <button class="btn btn-secondary me-3">Back to restaurant</button>
-                </RouterLink>
-                <button class="btn btn-secondary" @click="redirectToAllRestaurant">Back to Home</button>
+                <button v-if="store.cart.items.length > 0" class="btn btn-secondary me-3" @click ="redirectToSingleRestaurant">Back to restaurant</button>
+               <button class="btn btn-secondary" @click="redirectToAllRestaurant">Back to Home</button>
             </div>
         </div>
     </div>

@@ -168,6 +168,16 @@ export default {
     <div class="row">
       <div class="col-12 col-md-8">
         <div id="menu" class="container my-4 text-dark rounded-4">
+          <div class="rst-cnt p-3 rounded d-flex justify-content-between align-items-center">
+            <div>
+              <div class="rst-ttl fw-bold text-white text-center">{{ restaurant.name }}</div>
+            </div>
+          
+          
+            <img class="rst-img rounded img-fluid" :src="store.api.mainUrl + store.api.storagePath + restaurant.cover_img" :alt="restaurant.name"/>
+          
+        </div>
+          
           <div class="card-body">
             <!-- <h1 class="card-title text-center">{{ restaurant.name }}</h1>
           <p class="text-center">{{ restaurant.address }}</p> -->
@@ -269,6 +279,16 @@ export default {
 <style scoped lang="scss">
 .bg-team {
   background-color: #0c2d57;
+}
+.rst-cnt{
+  background-color: #386641;
+}
+.rst-ttl{
+  font-size: 60px;
+}
+.rst-img{
+  width: 440px;
+  height:100px;
 }
 
 .container.text-center {
