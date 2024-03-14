@@ -103,13 +103,8 @@ export default {
       <!-- Filtri per mobile -->
       <ul v-if="isMobile" class="list-unstyled">
         <li v-for="(type, index) in types" :key="index">
-          <input
-            type="checkbox"
-            :id="`type-${type.name}`"
-            v-model="selectedTypes"
-            :value="type.name"
-            class="type-checkbox"
-          />
+          <input type="checkbox" :id="`type-${type.name}`" v-model="selectedTypes" :value="type.name"
+            class="type-checkbox" />
           <label :for="`type-${type.name}`" class="type-name-mobile">
             <b>{{ type.name.toUpperCase() }}</b>
           </label>
@@ -118,13 +113,8 @@ export default {
       <!-- Filtri desktop-->
       <ul v-else class="d-flex justify-content-between p-0">
         <li v-for="(type, index) in types" :key="index">
-          <input
-            type="checkbox"
-            :id="`type-${type.name}`"
-            v-model="selectedTypes"
-            :value="type.name"
-            class="type-checkbox"
-          />
+          <input type="checkbox" :id="`type-${type.name}`" v-model="selectedTypes" :value="type.name"
+            class="type-checkbox" />
           <label :for="`type-${type.name}`" class="type-name">
             <b>{{ type.name.toUpperCase() }}</b>
           </label>
@@ -132,19 +122,10 @@ export default {
       </ul>
       <ul v-else class="d-flex justify-content-between p-0">
         <li v-for="(type, index) in types" class="list-unstyled" :key="index">
-          <input
-            type="checkbox"
-            :id="`type-${type.name}`"
-            v-model="selectedTypes"
-            :value="type.name"
-            class="type-checkbox"
-          />
+          <input type="checkbox" :id="`type-${type.name}`" v-model="selectedTypes" :value="type.name"
+            class="type-checkbox" />
           <label :for="`type-${type.name}`" class="type-img-container">
-            <img
-              class="types-image"
-              :src="store.api.mainUrl + type.img"
-              :alt="type.name"
-            />
+            <img class="types-image" :src="store.api.mainUrl + type.img" :alt="type.name" />
             <div class="type-name">
               <b>{{ type.name.toUpperCase() }}</b>
             </div>
@@ -156,44 +137,30 @@ export default {
     <!-- Ristoranti -->
     <h2 class="text-center mb-5 mt-3">Restaurants</h2>
     <ul class="row list-unstyled">
-      <li
-        class="col-12 col-md-6 col-lg-4 g2"
-        v-for="(restaurant, index) in restaurants"
-        :key="index"
-      >
-        <RouterLink
-          class="link-offset-2 link-underline link-underline-opacity-0 text-dark"
-          :to="{ name: 'restaurant', params: { slug: restaurant.slug } }"
-        >
-          <div class="card card-restaurant">
+      <li class="col-12 col-md-6 col-lg-4 g2" v-for="(restaurant, index) in restaurants" :key="index">
+        <RouterLink class="link-offset-2 link-underline link-underline-opacity-0 text-dark"
+          :to="{ name: 'restaurant', params: { slug: restaurant.slug } }">
+          <div class="card card-restaurant d-flex flex-column align-items-center border-0">
             <div class="card-image">
-              <img
-                class="img"
-                :src="
-                  store.api.mainUrl +
-                  store.api.storagePath +
-                  restaurant.cover_img
-                "
-                alt=""
-              />
+              <img class="img" :src="store.api.mainUrl +
+        store.api.storagePath +
+        restaurant.cover_img
+        " alt="" />
               <div class="ripple-cont"></div>
             </div>
-            <div class="table">
-              <h2 class="card-caption text-center">
-                {{ restaurant.name }}
-              </h2>
-              <h6 class="category text-center">
-                Restaurant Types:
-                <ul class="list-unstyled d-flex gap-3 justify-content-center">
-                  <li
-                    v-for="(type, index) in restaurant.types"
-                    :key="`type-${index}`"
-                  >
-                    {{ type.name }}
-                  </li>
-                </ul>
-              </h6>
-            </div>
+            <!-- <div class="table"> -->
+            <h4 class="card-caption text-center">
+              {{ restaurant.name }}
+            </h4>
+            <h6 class="category text-center">
+              Restaurant Types:
+              <ul class="list-unstyled d-flex gap-3 justify-content-center">
+                <li v-for="(type, index) in restaurant.types" :key="`type-${index}`" class="types-category mt-2">
+                  {{ type.name }}
+                </li>
+              </ul>
+            </h6>
+            <!-- </div> -->
           </div>
         </RouterLink>
       </li>
@@ -261,6 +228,8 @@ export default {
 /* Stili per il container delle immagini */
 .type-img-container {
   position: relative;
+  top: 0;
+  left: 0;
   width: 100px;
   height: 220px;
   overflow: hidden;
@@ -295,15 +264,16 @@ export default {
 }
 
 /* Stili quando la checkbox è selezionata */
-.type-checkbox:checked + label .type-img-container {
+.type-checkbox:checked+label .type-img-container {
   border-color: $orange;
 }
 
-.type-checkbox:checked + label .type-name {
+.type-checkbox:checked+label .type-name {
   background-color: $orange;
   color: $beige;
 }
-.type-checkbox:checked + label .types-image {
+
+.type-checkbox:checked+label .types-image {
   filter: grayscale(0);
 }
 
@@ -337,12 +307,12 @@ export default {
 }
 
 .card-image:hover {
-  transform: scale(1.1);
+  transform: scale(1.11);
 }
 
 .card .card-image {
-  height: 30vh;
-  width: 92%;
+  height: 300px;
+  width: 90%;
   position: relative;
   bottom: 30px;
   overflow: hidden;
@@ -374,7 +344,7 @@ export default {
   margin-top: 5px;
 }
 
-.card-restaurant .card-image + .category {
+.card-restaurant .card-image+.category {
   margin-top: 20px;
 }
 
@@ -383,41 +353,59 @@ export default {
   font-weight: bold;
 }
 
+.types-category {
+  font-size: 13px;
+  color: #212529;
+}
+
+.types-category {
+  font-size: 13px;
+  color: #212529;
+}
+
 @media (max-width: 900px) {
   .container-filters {
-    display: block; /* Mostra i filtri come una lista verticale */
+    display: block;
+    /* Mostra i filtri come una lista verticale */
   }
 
-  .type-checkbox + label {
-    display: block; /* Mostra ogni checkbox e label su una riga separata */
-    margin-bottom: 10px; /* Spazio tra le checkbox */
+  .type-checkbox+label {
+    display: block;
+    /* Mostra ogni checkbox e label su una riga separata */
+    margin-bottom: 10px;
+    /* Spazio tra le checkbox */
   }
 
   .type-img-container {
-    display: none; /* Nascondi il container dell'immagine */
+    display: none;
+    /* Nascondi il container dell'immagine */
   }
 
   /* Stile per il pulsante dei filtri quando è attivo */
-  .type-checkbox:checked + label {
+  .type-checkbox:checked+label {
     background-color: $orange;
     color: $beige;
     border-radius: 5px;
     padding: 5px 10px;
   }
+
   /* Stili per i filtri mobile */
   .type-name-mobile {
     display: block;
     cursor: pointer;
-    margin-bottom: 10px; /* Spazio tra i filtri */
+    margin-bottom: 10px;
+    /* Spazio tra i filtri */
     padding: 5px;
     border-radius: 5px;
     text-align: center;
-    background-color: $beige; /* Colore di sfondo iniziale */
-    color: $orange; /* Colore del testo iniziale */
+    background-color: $beige;
+    /* Colore di sfondo iniziale */
+    color: $orange;
+    /* Colore del testo iniziale */
   }
 
   /* Quando la checkbox è selezionata, cambia lo sfondo e il colore del testo */
-  .type-checkbox:checked + .type-name-mobile {
+  .type-checkbox:checked+.type-name-mobile {
     background-color: $orange;
     color: $beige;
   }

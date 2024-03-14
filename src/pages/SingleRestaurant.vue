@@ -71,8 +71,8 @@ export default {
       axios
         .get(
           this.store.api.mainUrl +
-            this.store.api.listUrl.restaurants +
-            this.$route.params.slug
+          this.store.api.listUrl.restaurants +
+          this.$route.params.slug
         )
         .then((response) => {
           this.restaurant = response.data.result;
@@ -161,10 +161,10 @@ export default {
 </script>
 
 <template>
-  <div class="p-5 text-center">
-    <button class="btn btn-secondary mt-3" @click="redirectToAllRestaurant">
+  <div class="container py-5 text-center">
+    <!-- <button class="btn btn-secondary mt-3" @click="redirectToAllRestaurant">
       Back to Home
-    </button>
+    </button> -->
     <div class="row">
       <div class="col-12 col-md-8">
         <div id="menu" class="container my-4 text-dark rounded-4">
@@ -172,97 +172,83 @@ export default {
             <div>
               <div class="rst-ttl fw-bold text-white text-center">{{ restaurant.name }}</div>
             </div>
-          
-          
-            <img class="rst-img rounded img-fluid" :src="store.api.mainUrl + store.api.storagePath + restaurant.cover_img" :alt="restaurant.name"/>
-          
-        </div>
-          
+
+
+            <img class="rst-img rounded img-fluid"
+              :src="store.api.mainUrl + store.api.storagePath + restaurant.cover_img" :alt="restaurant.name" />
+
+          </div>
+
           <div class="card-body">
             <!-- <h1 class="card-title text-center">{{ restaurant.name }}</h1>
           <p class="text-center">{{ restaurant.address }}</p> -->
             <h3 class="mt-2 text-center">Menu</h3>
 
             <div class="row p-0 gap-5">
-              <div
-                v-for="food in restaurant.foods"
-                :key="food.id"
-                class="col-md-6 mb-4 card card-h card-h row p-0"
-              >
-                <!-- <div class="card h-100 shadow col-md-6 row"> -->
+              <div v-for="food in restaurant.foods" :key="food.id" class="col-md-6 mb-4 card card-h card-h row p-0">
                 <div class="col-md-4">
-                  <img
-                    :src="store.api.mainUrl + store.api.storagePath + food.img"
-                    :alt="food.slug"
-                    class="card-img-top w-100"
-                  />
+                  <img :src="store.api.mainUrl + store.api.storagePath + food.img" :alt="food.slug"
+                    class="card-img-top w-100" />
                 </div>
-
                 <div class="col-8 p-0">
                   <div>
                     <h5 class="card-title">{{ food.name }}</h5>
                     <p class="card-text">{{ food.description }}</p>
                   </div>
-
-                  <div
-                    class="d-flex justify-content-between mt-4 align-items-center"
-                  >
+                  <div class="d-flex justify-content-between mt-4 align-items-center">
                     <p class="card-text">{{ food.price }} €</p>
-                    <!-- <p v-if="food.is_vegetarian">Vegetariano</p>
-                  <p v-else>Non vegetariano</p>
-                  <p v-if="food.is_visible">Elemento disponibile</p>
-                  <p v-else>Elemento non disponibile</p> -->
-                    <button
-                      class="btn btn-success"
-                      @click="addItemToCart(food, restaurant)"
-                    >
+                    <button class="btn btn-success" @click="addItemToCart(food, restaurant)">
                       +
                     </button>
                   </div>
                 </div>
-                <!-- </div> -->
               </div>
             </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="empty-modal-cart">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1
-                      class="modal-title fs-5 text-dark"
-                      id="exampleModalLabel"
-                    >
-                      Emptying cart
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
+          </div> -->
+          <div class="d-flex gap-3 flex-wrap">
+            <div v-for="food in restaurant.foods" :key="food.id" id="card-container">
+              <div class="card mb-3" style="max-width: 500px;">
+                <div class="row g-0 align-items-center fixed-height">
+                  <div class="col-md-3">
+                    <img :src="store.api.mainUrl + store.api.storagePath + food.img" class="width-calc rounded-start"
+                      :alt="food.slug">
                   </div>
-                  <div class="modal-body text-dark text-start">
-                    You can order from one restaurant at a time. Do you want to
-                    empty your cart and insert "{{ this.selectedFoodName }}"?
+                  <div class="col-md-9">
+                    <div class="card-body text-start">
+                      <h5 class="card-title">{{ food.name }}</h5>
+                      <p class="card-text">{{ food.description }}</p>
+                      <p>{{ food.price }} €</p>
+                      <button class="btn position-absolute add-button" @click="addItemToCart(food, restaurant)">
+                        +
+                      </button>
+                    </div>
                   </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary text-white"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger text-white"
-                      @click="emptyAndReplaceCart()"
-                      data-bs-dismiss="modal"
-                    >
-                      Empty cart
-                    </button>
-                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="empty-modal-cart">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
+                    Emptying cart
+                  </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-dark text-start">
+                  You can order from one restaurant at a time. Do you want to
+                  empty your cart and insert "{{ this.selectedFoodName }}"?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-danger text-white" @click="emptyAndReplaceCart()"
+                    data-bs-dismiss="modal">
+                    Empty cart
+                  </button>
                 </div>
               </div>
             </div>
@@ -280,15 +266,26 @@ export default {
 .bg-team {
   background-color: #0c2d57;
 }
-.rst-cnt{
+
+#card-container {
+  width: calc(100% / 2 - 8px);
+
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
+}
+
+.rst-cnt {
   background-color: #386641;
 }
-.rst-ttl{
+
+.rst-ttl {
   font-size: 60px;
 }
-.rst-img{
+
+.rst-img {
   width: 440px;
-  height:100px;
+  height: 100px;
 }
 
 .container.text-center {
@@ -301,11 +298,47 @@ export default {
   align-self: start;
 }
 
-.card-h {
+.width-calc {
+  @media (max-width: 768px) {
+    width: 150px;
+  }
+}
+
+.fixed-height {
   height: 150px;
+  overflow-y: hidden;
+
+  img {
+    object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    height: auto;
+  }
 }
 
 img {
-  width: 100%;
+  max-width: 100%;
+}
+
+// .card {
+//   background-color: #386641;
+// }
+
+.add-button {
+  background-color: #EC732C;
+  color: #fff;
+
+  &:hover {
+    background-color: transparent;
+    border-color: #EC732C;
+    color: #EC732C;
+  }
+}
+
+.position-absolute {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 </style>
