@@ -191,7 +191,7 @@ export default {
 </script>
 
 <template>
-    <div class="container d-flex align-items-center flex-column gap-3">
+    <div class="container cart d-flex align-items-center flex-column gap-3">
         <h1 class="text-center my-4">Checkout page</h1>
         <div class="card w-75 mb-3">
             <div class="card-body">
@@ -292,6 +292,10 @@ export default {
     height: 100px;
     overflow: hidden;
     border-radius: 50%;
+}
+
+.cart{
+    min-height: 70vh;
 }
 
 .button {

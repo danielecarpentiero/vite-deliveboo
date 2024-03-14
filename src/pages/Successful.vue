@@ -1,12 +1,12 @@
 <script>
-import { RouterLink } from 'vue-router';
+import { RouterLink } from "vue-router";
 
 export default {
-  name: 'successful',
+  name: "successful",
 };
 </script>
 <template>
-  <div class="container d-flex justify-content-center overflow-auto">
+  <div class="container success d-flex justify-content-center overflow-auto">
     <div
       class="d-flex flex-wrap p-2 justify-content-center mt-5 mb-5 gap-3 card"
       style="width: 500px"
@@ -29,5 +29,9 @@ export default {
 .icon {
   font-size: 100px;
   color: green;
+}
+
+.success {
+  min-height: 70vh;
 }
 </style>
