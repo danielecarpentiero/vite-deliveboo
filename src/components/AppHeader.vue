@@ -16,7 +16,7 @@ export default {
 </script>
 
 <template>
-  <header>
+  <header class="d-flex align-items-center">
     <!-- Navbar -->
     <div class="container">
       <nav class="navbar">
@@ -35,6 +35,9 @@ export default {
         </div>
       </nav>
     </div>
+    <a href="http://127.0.0.1:8000/">
+      <h6 class="pe-2">Restaurateur? Click here!</h6>
+    </a>
 
     <!-- Div vuoto per l'overlay nero sopra il video -->
   </header>
