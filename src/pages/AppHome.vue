@@ -301,22 +301,23 @@ export default {
 }
 
 .card .card-image {
-  height: 20%;
+  height: 30vh; // Usa viewport height per una dimensione relativa alla altezza della viewport
+  width: 92%; // Larghezza al 100% per adattarsi al contenitore
   position: relative;
+  bottom: 30px;
   overflow: hidden;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-top: -30px;
+  margin: 15px;
   border-radius: 6px;
   box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
     0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .card .card-image img {
-  width: 100%;
-  height: 20%;
+  width: 100%; // Larghezza al 100% per adattarsi al contenitore
+  height: 100%; // Altezza al 100% per adattarsi al contenitore
   border-radius: 6px;
   pointer-events: none;
+  object-fit: cover; // Mantiene le proporzioni dell'immagine
 }
 
 .card .card-image .card-caption {
@@ -326,15 +327,6 @@ export default {
   color: #fff;
   font-size: 1.3em;
   text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);
-}
-
-.card img {
-  width: 20%;
-  height: auto;
-}
-
-.card-restaurant {
-  margin-top: 30px;
 }
 
 .card-restaurant .card-caption {
@@ -348,5 +340,11 @@ export default {
 .category {
   color: $orange;
   font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .card .card-image {
+    height: 20vh; // Riduci l'altezza per dispositivi più piccoli
+  }
 }
 </style>
