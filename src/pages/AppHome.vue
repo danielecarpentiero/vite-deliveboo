@@ -62,6 +62,11 @@ export default {
     selectedTypes: 'updateFilter',
   },
 
+  computed: {
+    isMobile() {
+      return window.innerWidth <= 600; // o qualsiasi altro breakpoint che preferisci
+    },
+  },
   mounted() {
     this.selectedTypes = this.$route.query.types
       ? this.$route.query.types.split(',')
@@ -101,7 +106,37 @@ export default {
       <h1 class="my-5 text-center">What you want to eat today?</h1>
     </section>
     <div class="container-filters">
-      <ul class="d-flex justify-content-between p-0">
+      <!-- Filtri per mobile -->
+      <ul v-if="isMobile" class="list-unstyled">
+        <li v-for="(type, index) in types" :key="index">
+          <input
+            type="checkbox"
+            :id="`type-${type.name}`"
+            v-model="selectedTypes"
+            :value="type.name"
+            class="type-checkbox"
+          />
+          <label :for="`type-${type.name}`" class="type-name-mobile">
+            <b>{{ type.name.toUpperCase() }}</b>
+          </label>
+        </li>
+      </ul>
+      <!-- Filtri desktop-->
+      <ul v-else class="d-flex justify-content-between p-0">
+        <li v-for="(type, index) in types" :key="index">
+          <input
+            type="checkbox"
+            :id="`type-${type.name}`"
+            v-model="selectedTypes"
+            :value="type.name"
+            class="type-checkbox"
+          />
+          <label :for="`type-${type.name}`" class="type-name">
+            <b>{{ type.name.toUpperCase() }}</b>
+          </label>
+        </li>
+      </ul>
+      <ul v-else class="d-flex justify-content-between p-0">
         <li v-for="(type, index) in types" class="list-unstyled" :key="index">
           <input
             type="checkbox"
@@ -125,7 +160,7 @@ export default {
     </div>
 
     <!-- Ristoranti -->
-    <h2 class="text-center">Restaurants</h2>
+    <h2 class="text-center mb-5 mt-3">Restaurants</h2>
     <ul class="row list-unstyled">
       <li
         class="col-12 col-md-6 col-lg-4 g2"
@@ -300,11 +335,20 @@ export default {
   background: #fff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  transition: 0.3s;
+}
+
+.card-image {
+  transition: transform 0.3s;
+}
+
+.card-image:hover {
+  transform: scale(1.1);
 }
 
 .card .card-image {
-  height: 30vh; // Usa viewport height per una dimensione relativa alla altezza della viewport
-  width: 92%; // Larghezza al 100% per adattarsi al contenitore
+  height: 30vh;
+  width: 92%;
   position: relative;
   bottom: 30px;
   overflow: hidden;
@@ -312,14 +356,15 @@ export default {
   border-radius: 6px;
   box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
     0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .card .card-image img {
-  width: 100%; // Larghezza al 100% per adattarsi al contenitore
-  height: 100%; // Altezza al 100% per adattarsi al contenitore
+  width: 100%;
+  height: 100%;
   border-radius: 6px;
   pointer-events: none;
-  object-fit: cover; // Mantiene le proporzioni dell'immagine
+  object-fit: cover;
 }
 
 .card .card-image .card-caption {
@@ -345,8 +390,56 @@ export default {
 }
 
 @media (max-width: 600px) {
-  .card .card-image {
-    height: 20vh; // Riduci l'altezza per dispositivi più piccoli
+  .container-filters {
+    display: block; /* Mostra i filtri come una lista verticale */
+  }
+
+  .type-checkbox + label {
+    display: block; /* Mostra ogni checkbox e label su una riga separata */
+    margin-bottom: 10px; /* Spazio tra le checkbox */
+  }
+
+  .type-img-container {
+    display: none; /* Nascondi il container dell'immagine */
+  }
+
+  /* Stile per il pulsante dei filtri quando è attivo */
+  .type-checkbox:checked + label {
+    background-color: $orange;
+    color: $beige;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+  /* Stili per i filtri mobile */
+  .type-name-mobile {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 10px; /* Spazio tra i filtri */
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: $beige; /* Colore di sfondo iniziale */
+    color: $orange; /* Colore del testo iniziale */
+  }
+
+  /* Quando la checkbox è selezionata, cambia lo sfondo e il colore del testo */
+  .type-checkbox:checked + .type-name-mobile {
+    background-color: $orange;
+    color: $beige;
+  }
+
+  /* Nascondi i filtri mobile su desktop */
+  @media (min-width: 601px) {
+    .type-name-mobile {
+      display: none;
+    }
+  }
+
+  /* Nascondi i filtri desktop su mobile */
+  @media (max-width: 600px) {
+    .type-img-container {
+      display: none;
+    }
   }
 }
 </style>
