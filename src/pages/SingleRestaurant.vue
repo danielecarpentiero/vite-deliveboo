@@ -173,11 +173,11 @@ export default {
           <p class="text-center">{{ restaurant.address }}</p> -->
             <h3 class="mt-2 text-center">Menu</h3>
 
-            <div class="row">
+            <div class="row p-0 gap-5">
               <div
                 v-for="food in restaurant.foods"
                 :key="food.id"
-                class="col-md-6 mb-4 card card-h card-h row"
+                class="col-md-6 mb-4 card card-h card-h row p-0"
               >
                 <!-- <div class="card h-100 shadow col-md-6 row"> -->
                 <div class="col-md-4">
@@ -188,7 +188,7 @@ export default {
                   />
                 </div>
 
-                <div class="col-6">
+                <div class="col-8 p-0">
                   <div>
                     <h5 class="card-title">{{ food.name }}</h5>
                     <p class="card-text">{{ food.description }}</p>
