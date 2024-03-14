@@ -1,195 +1,439 @@
 <script>
 import axios from 'axios';
 import store from '../store';
-import RestaurantCard from '../components/RestaurantCard.vue';
 import { RouterLink } from 'vue-router';
 
 export default {
-	name: 'AppHome',
-	components: {
-		RestaurantCard,
-	},
+  name: 'AppHome',
 
-	data() {
-		return {
-			restaurants: [],
-			store,
-			types: [],
-			selectedTypes: [],
-		};
-	},
+  data() {
+    return {
+      restaurants: [],
+      store,
+      types: [],
+      selectedTypes: [],
+    };
+  },
 
-	methods: {
-		getRestaurants() {
-			let params = {};
+  methods: {
+    //Ottiene i ristoranti dall'api
+    getRestaurants() {
+      let params = {};
 
-			if (this.selectedTypes.length > 0) {
-				params.types = this.selectedTypes.join(',');
-			}
+      if (this.selectedTypes.length > 0) {
+        params.types = this.selectedTypes.join(',');
+      }
 
-			axios
-				.get(this.store.api.mainUrl + this.store.api.listUrl.restaurants, {
-					params: params,
-				})
-				.then((response) => {
-					this.restaurants = response.data.results.data;
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		},
+      axios
+        .get(this.store.api.mainUrl + this.store.api.listUrl.restaurants, {
+          params: params,
+        })
+        .then((response) => {
+          this.restaurants = response.data.results.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
-		getTypes() {
-			axios
-				.get(this.store.api.mainUrl + this.store.api.listUrl.types)
-				.then((response) => {
-					this.types = response.data.results;
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		},
+    //Ottiene i tipi
+    getTypes() {
+      axios
+        .get(this.store.api.mainUrl + this.store.api.listUrl.types)
+        .then((response) => {
+          this.types = response.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
-		updateFilter() {
-			// Aggiorna l'URL con i tipi selezionati
-			const selectedTypesString = this.selectedTypes.join(',');
-			this.$router.push({ query: { types: selectedTypesString || undefined } });
+    updateFilter() {
+      // Aggiorna l'URL con i tipi selezionati
+      const selectedTypesString = this.selectedTypes.join(',');
+      this.$router.push({ query: { types: selectedTypesString || undefined } });
 
-			// Aggiorna la lista dei ristoranti
-			this.getRestaurants();
-		},
-	},
+      // Aggiorna la lista dei ristoranti
+      this.getRestaurants();
+    },
+  },
 
-	watch: {
-		selectedTypes: 'updateFilter', // Aggiorna il filtro quando cambia l'array dei tipi selezionati
-	},
+  watch: {
+    selectedTypes: 'updateFilter',
+  },
 
-	mounted() {
-		this.selectedTypes = this.$route.query.types ? this.$route.query.types.split(',') : [];
-		this.getRestaurants();
-		this.getTypes();
-	},
+  computed: {
+    isMobile() {
+      return window.innerWidth <= 900; // o qualsiasi altro breakpoint che preferisci
+    },
+  },
+  mounted() {
+    this.selectedTypes = this.$route.query.types
+      ? this.$route.query.types.split(',')
+      : [];
+    this.getRestaurants();
+    this.getTypes();
+  },
 };
 </script>
 
 <template>
-	<div class="jumbo">
-		<!-- Div Vuoto per -->
-		<div class="overlay"></div>
+  <div class="jumbo">
+    <!-- Div Vuoto per -->
+    <div class="overlay"></div>
 
-		<!-- Video -->
-		<video playsinline autoplay muted loop>
-			<source src="/HeaderVideoSD.mp4" type="video/mp4" />
-		</video>
+    <!-- Video -->
+    <video playsinline autoplay muted loop class="img-fluid">
+      <source src="/HeaderVideoSD.mp4" type="video/mp4" />
+    </video>
 
-		<!-- Contenuti Header -->
-		<div class="container h-100 jumbotext">
-			<div class="d-flex h-100 align-items-center justify-content-center">
-				<div class="w-100 text-center text-white">
-					<h1 class="display-3 fw-bold">
-						Get delicious meals delivered fast, right to your door. Order now
-						and satisfy your cravings in minutes!
-					</h1>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- Contenuti Header -->
+    <div class="container h-100 jumbotext">
+      <div class="d-flex h-100 align-items-center justify-content-center">
+        <div class="w-100 text-center text-white">
+          <h1 class="display-3 fw-bold">What do you want to eat today?</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <!-- tipi -->
 
-	<div class="container">
-		<!-- tipi -->
-		<section>
-			<h1>What would you like to eat?</h1>
-		</section>
+    <div class="container-filters">
+      <!-- Filtri per mobile -->
+      <ul v-if="isMobile" class="list-unstyled">
+        <li v-for="(type, index) in types" :key="index">
+          <input
+            type="checkbox"
+            :id="`type-${type.name}`"
+            v-model="selectedTypes"
+            :value="type.name"
+            class="type-checkbox"
+          />
+          <label :for="`type-${type.name}`" class="type-name-mobile">
+            <b>{{ type.name.toUpperCase() }}</b>
+          </label>
+        </li>
+      </ul>
+      <!-- Filtri desktop-->
+      <ul v-else class="d-flex justify-content-between p-0">
+        <li v-for="(type, index) in types" :key="index">
+          <input
+            type="checkbox"
+            :id="`type-${type.name}`"
+            v-model="selectedTypes"
+            :value="type.name"
+            class="type-checkbox"
+          />
+          <label :for="`type-${type.name}`" class="type-name">
+            <b>{{ type.name.toUpperCase() }}</b>
+          </label>
+        </li>
+      </ul>
+      <ul v-else class="d-flex justify-content-between p-0">
+        <li v-for="(type, index) in types" class="list-unstyled" :key="index">
+          <input
+            type="checkbox"
+            :id="`type-${type.name}`"
+            v-model="selectedTypes"
+            :value="type.name"
+            class="type-checkbox"
+          />
+          <label :for="`type-${type.name}`" class="type-img-container">
+            <img
+              class="types-image"
+              :src="store.api.mainUrl + type.img"
+              :alt="type.name"
+            />
+            <div class="type-name">
+              <b>{{ type.name.toUpperCase() }}</b>
+            </div>
+          </label>
+        </li>
+      </ul>
+    </div>
 
-		<h2>Choose the type of food you would like to eat</h2>
-		<ul class="d-flex flex-wrap gap-4 p-0">
-			<li v-for="(type, index) in types" class="list-unstyled">
-				<div class="form-check">
-					<input v-model="selectedTypes" class="form-check-input" type="checkbox" :value="type.name"
-						:id="index" />
-					<label class="form-check-label" :for="index">
-						{{ type.name }}
-					</label>
-					<div class="type-img-container">
-						<img class="types-image" :src="store.api.mainUrl + type.img" :alt="type.name" />
-					</div>
-				</div>
-			</li>
-		</ul>
-		<!-- Ristoranti -->
-		<h2 class="text-center">Restaurants</h2>
-		<ul class="row list-unstyled">
-			<li class="col-12 col-md-6 col-lg-4 g2" v-for="(restaurant, index) in restaurants" :key="index">
-				<RouterLink class="link-offset-2 link-underline link-underline-opacity-0 text-dark"
-					:to="{ name: 'restaurant', params: { slug: restaurant.slug } }">
-					<div class="shadow p-3 mb-5 bg-white rounded text-center glass-card">
-						<h2>{{ restaurant.name }}</h2>
-						<div class="box">
-							<img :src="store.api.mainUrl + store.api.storagePath + restaurant.cover_img" alt="">
-						</div>
-						<h6 class="mt-3 mb-1">Restaurant Types:</h6>
-						<ul class="list-unstyled d-flex gap-3 justify-content-center">
-							<li v-for="(type, index) in restaurant.types">{{ type.name }}</li>
-						</ul>
-					</div>
-				</RouterLink>
-			</li>
-		</ul>
-	</div>
+    <!-- Ristoranti -->
+    <h2 class="text-center mb-5 mt-3">Restaurants</h2>
+    <ul class="row list-unstyled">
+      <li
+        class="col-12 col-md-6 col-lg-4 g2"
+        v-for="(restaurant, index) in restaurants"
+        :key="index"
+      >
+        <RouterLink
+          class="link-offset-2 link-underline link-underline-opacity-0 text-dark"
+          :to="{ name: 'restaurant', params: { slug: restaurant.slug } }"
+        >
+          <div class="card card-restaurant">
+            <div class="card-image">
+              <img
+                class="img"
+                :src="
+                  store.api.mainUrl +
+                  store.api.storagePath +
+                  restaurant.cover_img
+                "
+                alt=""
+              />
+              <div class="ripple-cont"></div>
+            </div>
+            <div class="table">
+              <h2 class="card-caption text-center">
+                {{ restaurant.name }}
+              </h2>
+              <h6 class="category text-center">
+                Restaurant Types:
+                <ul class="list-unstyled d-flex gap-3 justify-content-center">
+                  <li
+                    v-for="(type, index) in restaurant.types"
+                    :key="`type-${index}`"
+                  >
+                    {{ type.name }}
+                  </li>
+                </ul>
+              </h6>
+            </div>
+          </div>
+        </RouterLink>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <style scoped lang="scss">
+@import '/src/style.scss';
+
+/* Stili per il jumbotron */
 .jumbo {
-	position: relative;
+  position: relative;
 
-	.jumbotext {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		z-index: 4;
-	}
+  .jumbotext {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+  }
 
-	.overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 99.5%;
-		width: 100%;
-		background-color: black;
-		opacity: 0.5;
-		z-index: 1;
-	}
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 99.5%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 1;
+  }
 
-	video {
-		min-width: 100%;
-		min-height: 100%;
-		width: auto;
-		height: auto;
-		z-index: 0;
-	}
+  video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+  }
 }
 
+/* Stili per le immagini */
 .box {
-	height: 300px;
-	img{
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
+  height: 300px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
+/* Nascondi le checkbox */
+.type-checkbox {
+  display: none;
+}
+
+/* Stili per il container dei filtri */
+.container-filters {
+  display: flex;
+  justify-content: center;
+}
+
+/* Stili per il container delle immagini */
 .type-img-container {
-	width: 50px;
-	height: 50px;
-	overflow: hidden;
-	border-radius: 50%;
+  position: relative;
+  width: 100px;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: 0.3s;
 }
 
+/* Stili per le immagini dei tipi */
 .types-image {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+  filter: grayscale(1);
 }
 
+/* Stili per il nome del tipo */
+.type-name {
+  position: absolute;
+  width: 100%;
+  bottom: 10;
+  left: 0;
+  background-color: $beige;
+  color: $orange;
+  padding: 5px 0;
+}
 
+/* Stili quando la checkbox è selezionata */
+.type-checkbox:checked + label .type-img-container {
+  border-color: $orange;
+}
+
+.type-checkbox:checked + label .type-name {
+  background-color: $orange;
+  color: $beige;
+}
+.type-checkbox:checked + label .types-image {
+  filter: grayscale(0);
+}
+
+/* Effetto hover - solo per desktop */
+@media (min-width: 901px) {
+  .type-img-container:hover {
+    width: 300px;
+    border-color: orange;
+
+    img {
+      filter: grayscale(0);
+    }
+  }
+}
+
+.card {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.87);
+  background: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  transition: 0.3s;
+}
+
+.card-image {
+  transition: transform 0.3s;
+}
+
+.card-image:hover {
+  transform: scale(1.1);
+}
+
+.card .card-image {
+  height: 30vh;
+  width: 92%;
+  position: relative;
+  bottom: 30px;
+  overflow: hidden;
+  margin: 15px;
+  border-radius: 6px;
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.card .card-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  pointer-events: none;
+  object-fit: cover;
+}
+
+.card .card-image .card-caption {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: #fff;
+  font-size: 1.3em;
+  text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);
+}
+
+.card-restaurant .card-caption {
+  margin-top: 5px;
+}
+
+.card-restaurant .card-image + .category {
+  margin-top: 20px;
+}
+
+.category {
+  color: $orange;
+  font-weight: bold;
+}
+
+@media (max-width: 900px) {
+  .container-filters {
+    display: block; /* Mostra i filtri come una lista verticale */
+  }
+
+  .type-checkbox + label {
+    display: block; /* Mostra ogni checkbox e label su una riga separata */
+    margin-bottom: 10px; /* Spazio tra le checkbox */
+  }
+
+  .type-img-container {
+    display: none; /* Nascondi il container dell'immagine */
+  }
+
+  /* Stile per il pulsante dei filtri quando è attivo */
+  .type-checkbox:checked + label {
+    background-color: $orange;
+    color: $beige;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+  /* Stili per i filtri mobile */
+  .type-name-mobile {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 10px; /* Spazio tra i filtri */
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: $beige; /* Colore di sfondo iniziale */
+    color: $orange; /* Colore del testo iniziale */
+  }
+
+  /* Quando la checkbox è selezionata, cambia lo sfondo e il colore del testo */
+  .type-checkbox:checked + .type-name-mobile {
+    background-color: $orange;
+    color: $beige;
+  }
+
+  /* Nascondi i filtri mobile su desktop */
+  @media (min-width: 901px) {
+    .type-name-mobile {
+      display: none;
+    }
+  }
+
+  /* Nascondi i filtri desktop su mobile */
+  @media (max-width: 900px) {
+    .type-img-container {
+      display: none;
+    }
+  }
+}
 </style>

@@ -161,46 +161,56 @@ export default {
 </script>
 
 <template>
-  <div class="container text-center">
+  <div class="p-5 text-center">
     <button class="btn btn-secondary mt-3" @click="redirectToAllRestaurant">
       Back to Home
     </button>
     <div class="row">
       <div class="col-12 col-md-8">
-        <div id="menu" class="container card my-4 bg-dark text-white rounded-4">
+        <div id="menu" class="container my-4 text-dark rounded-4">
           <div class="card-body">
             <!-- <h1 class="card-title text-center">{{ restaurant.name }}</h1>
           <p class="text-center">{{ restaurant.address }}</p> -->
             <h3 class="mt-2 text-center">Menu</h3>
 
-            <div class="row">
+            <div class="row p-0 gap-5">
               <div
                 v-for="food in restaurant.foods"
                 :key="food.id"
-                class="col-md-4 mb-4"
+                class="col-md-6 mb-4 card card-h card-h row p-0"
               >
-                <div class="card h-100 shadow">
+                <!-- <div class="card h-100 shadow col-md-6 row"> -->
+                <div class="col-md-4">
                   <img
                     :src="store.api.mainUrl + store.api.storagePath + food.img"
                     :alt="food.slug"
-                    class="card-img-top"
+                    class="card-img-top w-100"
                   />
-                  <div class="card-body">
+                </div>
+
+                <div class="col-8 p-0">
+                  <div>
                     <h5 class="card-title">{{ food.name }}</h5>
                     <p class="card-text">{{ food.description }}</p>
-                    <p class="card-text">Prezzo: {{ food.price }} €</p>
-                    <p v-if="food.is_vegetarian">Vegetariano</p>
-                    <p v-else>Non vegetariano</p>
-                    <p v-if="food.is_visible">Elemento disponibile</p>
-                    <p v-else>Elemento non disponibile</p>
+                  </div>
+
+                  <div
+                    class="d-flex justify-content-between mt-4 align-items-center"
+                  >
+                    <p class="card-text">{{ food.price }} €</p>
+                    <!-- <p v-if="food.is_vegetarian">Vegetariano</p>
+                  <p v-else>Non vegetariano</p>
+                  <p v-if="food.is_visible">Elemento disponibile</p>
+                  <p v-else>Elemento non disponibile</p> -->
                     <button
-                      class="btn btn-success w-100 mt-4"
+                      class="btn btn-success"
                       @click="addItemToCart(food, restaurant)"
                     >
-                      Aggiungi al carrello
+                      +
                     </button>
                   </div>
                 </div>
+                <!-- </div> -->
               </div>
             </div>
 
@@ -261,14 +271,21 @@ export default {
   background-color: #0c2d57;
 }
 
+.container.text-center {
+  min-height: 70vh;
+}
+
 .cart {
   position: sticky;
   top: 20px;
   align-self: start;
 }
 
+.card-h {
+  height: 150px;
+}
+
 img {
   width: 100%;
-  height: 100%;
 }
 </style>

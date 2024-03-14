@@ -1,8 +1,11 @@
 <script>
-import store from '../store';
+import store from "../store";
+import { RouterLink } from "vue-router";
+import { myMixin } from "../myMixin";
 
 export default {
-  name: 'AppHeader',
+  name: "AppHeader",
+  mixins: [myMixin],
 
   data() {
     return {
@@ -13,24 +16,29 @@ export default {
 </script>
 
 <template>
-  <header>
+  <header class="d-flex align-items-center">
     <!-- Navbar -->
-    <nav class="navbar">
-      <!-- Logo -->
-      <div class="navbar-brand">
-        <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
-      </div>
-      <div>
-        <font-awesome-icon :icon="['fas', 'cart-shopping']" class="cart-icon" />
-      </div>
-    </nav>
-
+    <div class="container">
+      <nav class="navbar">
+        <!-- Logo -->
+        <RouterLink :to="{ name: 'home' }">
+          <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
+        </RouterLink>
+        <div class="d-flex align-items-center margin-top">
+          <RouterLink :to="{ name: 'checkout' }" class="d-flex align-items-center">
+            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="cart-icon" />
+            <a class="px-2"> Subtotal: {{ store.cart.subtotal }} € </a>
+          </RouterLink>
+          <a href="http://127.0.0.1:8000/" class="btn ms-4 login">Login</a>
+        </div>
+      </nav>
+    </div>
     <!-- Div vuoto per l'overlay nero sopra il video -->
   </header>
 </template>
 
 <style scoped lang="scss">
-@import '/src/style.scss';
+@import "/src/style.scss";
 
 header {
   position: relative;
@@ -69,13 +77,32 @@ header .overlay {
   z-index: 1;
 }
 
+a {
+  color: #f2e8cf;
+  text-decoration: none;
+}
+
+.login {
+  color: #212529;
+  background-color: #f2e8cf;
+
+  &:hover {
+    background-color: #f2e8cf;
+    color: #212529;
+  }
+}
+
 /* Navbar */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.3rem 12.5rem;
   z-index: 3;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.margin-top {
+  margin: 20px 0;
 }
 
 .logo {

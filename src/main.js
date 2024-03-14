@@ -1,32 +1,33 @@
-import { createApp } from "vue";
+import { createApp } from 'vue';
 
-import "./style.scss";
+import './style.scss';
 
-import * as bootstrap from "bootstrap";
+import * as bootstrap from 'bootstrap';
 
-import { router } from "./router.js";
+import { router } from './router.js';
 
-import App from "./App.vue";
+import App from './App.vue';
 
 // Font Exo-2
-import "@fontsource/exo-2";
-import "@fontsource/exo-2/400.css";
-import "@fontsource/exo-2/400-italic.css";
+import '@fontsource/exo-2';
+import '@fontsource/exo-2/400.css';
+import '@fontsource/exo-2/400-italic.css';
 
 /* import the fontawesome core */
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 /* import font awesome icon component */
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
-import { faApple } from "@fortawesome/free-brands-svg-icons";
-import { faGooglePlay } from "@fortawesome/free-brands-svg-icons";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faApple } from '@fortawesome/free-brands-svg-icons';
+import { faGooglePlay } from '@fortawesome/free-brands-svg-icons';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 // import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 
 /* add icons to the library */
 library.add(
@@ -38,10 +39,11 @@ library.add(
   faCartShopping,
   // faTrashCan,
   faPlus,
-  faMinus
+  faMinus,
+  faCircleCheck
 );
 
 createApp(App)
   .use(router)
-  .component("font-awesome-icon", FontAwesomeIcon)
-  .mount("#app");
+  .component('font-awesome-icon', FontAwesomeIcon)
+  .mount('#app');
