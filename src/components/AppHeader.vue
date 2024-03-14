@@ -24,21 +24,15 @@ export default {
         <RouterLink :to="{ name: 'home' }">
           <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
         </RouterLink>
-        <div>
-          <RouterLink :to="{ name: 'checkout' }">
-            <font-awesome-icon
-              :icon="['fas', 'cart-shopping']"
-              class="cart-icon"
-            />
+        <div class="d-flex align-items-center margin-top">
+          <RouterLink :to="{ name: 'checkout' }" class="d-flex align-items-center">
+            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="cart-icon" />
             <a class="px-2"> Subtotal: {{ store.cart.subtotal }} € </a>
           </RouterLink>
+          <a href="http://127.0.0.1:8000/" class="btn ms-4 login">Login</a>
         </div>
       </nav>
     </div>
-    <a href="http://127.0.0.1:8000/">
-      <h6 class="pe-2">Restaurateur? Click here!</h6>
-    </a>
-
     <!-- Div vuoto per l'overlay nero sopra il video -->
   </header>
 </template>
@@ -88,9 +82,27 @@ a {
   text-decoration: none;
 }
 
+.login {
+  color: #212529;
+  background-color: #f2e8cf;
+
+  &:hover {
+    background-color: #f2e8cf;
+    color: #212529;
+  }
+}
+
 /* Navbar */
 .navbar {
   z-index: 3;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.margin-top {
+  margin: 20px 0;
 }
 
 .logo {
