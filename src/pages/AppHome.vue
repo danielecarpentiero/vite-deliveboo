@@ -83,7 +83,7 @@ export default {
     <div class="overlay"></div>
 
     <!-- Video -->
-    <video playsinline autoplay muted loop>
+    <video playsinline autoplay muted loop class="img-fluid">
       <source src="/HeaderVideoSD.mp4" type="video/mp4" />
     </video>
 
