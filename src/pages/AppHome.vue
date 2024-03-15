@@ -173,7 +173,7 @@ export default {
         <div class="slide">
           <img
             decoding="async"
-            src="https://play-lh.googleusercontent.com/uBCQPdCCHbFJCk3dDidGQ1paIeHaLRi-tJn83t2MkRoYiUX0X3K9CP3uV7dusjfRsqV5"
+            src="https://i0.wp.com/www.linkiesta.it/wp-content/uploads/2021/01/nuovo-logo-burger-king-fonte-pagina-fb-burger-king.jpg?fit=960%2C960&ssl=1"
           />
         </div>
         <div class="slide">
@@ -209,7 +209,7 @@ export default {
         <div class="slide">
           <img
             decoding="async"
-            src="https://play-lh.googleusercontent.com/0Tg1WjgxG7heMONj-WOwarkvBaUfQ4SUV--JetZgDw-vRUxAZfKB6pMd9fzeREc_-Q0K"
+            src="https://play-lh.googleusercontent.com/_lq2HX0YJNDrr0EeUebLAB2JsGbRGyoFY-XOnuUFTPfeEqaHNIyMOGqLx-oq4mUWPpn0"
           />
         </div>
       </section>
