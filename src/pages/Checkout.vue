@@ -285,7 +285,7 @@ export default {
                 </div>
                 </p>
                 <div v-if="hasError" class="alert alert-warning" role="alert">
-                    Compila tutti i campi per procedere al pagamento
+                    Complete all fields to proceed with payment.
                 </div>
                 <div id="dropin-container" v-if="store.cart.items.length > 0"></div>
                 <button id="submit-button" class="my-btn me-3" v-show="store.cart.items.length > 0"
