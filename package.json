@@ -18,6 +18,8 @@
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
     "braintree-web-drop-in": "^1.42.0",
+    "jquery": "^3.7.1",
+    "slick-carousel": "^1.8.1",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0"
   },
