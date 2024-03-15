@@ -151,7 +151,7 @@ export default {
     <svg
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1200 120"
+      viewBox="0 0 1100 120"
       preserveAspectRatio="none"
     >
       <path
@@ -219,7 +219,7 @@ export default {
     <svg
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1200 120"
+      viewBox="0 0 1100 120"
       preserveAspectRatio="none"
     >
       <path
@@ -368,7 +368,7 @@ export default {
     height: calc(100vh - 96px);
     object-fit: cover;
     z-index: 0;
-    height: 100%;
+    height: 100vh;
   }
 }
 
@@ -398,10 +398,11 @@ export default {
   fill: #f88a35;
 }
 
-.divider-top-1710507184 svg {
+.divider-top svg {
   position: relative;
+  top: 10px;
   display: block;
-  width: calc(100% + 1.3px);
+  width: calc(100% + 2px);
   height: 228px;
   transform: rotateY(180deg);
 }
