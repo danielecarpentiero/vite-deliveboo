@@ -10,21 +10,27 @@ export default {
     <div class="p-5">
       <div class="row">
         <ul class="col col-md-3">
-          <li class="list-group-item"><h4>Join us</h4></li>
+          <li class="list-group-item">
+            <h4>Join us</h4>
+          </li>
           <li class="list-group-item">Restaurant</li>
           <li class="list-group-item">Careers</li>
           <li class="list-group-item">About</li>
         </ul>
 
         <ul class="col-12 col-md-3">
-          <li class="list-group-item"><h4>Let us help you</h4></li>
+          <li class="list-group-item">
+            <h4>Let us help you</h4>
+          </li>
           <li class="list-group-item">Help Center</li>
           <li class="list-group-item">Support</li>
           <li class="list-group-item">Contacts</li>
         </ul>
 
-        <ul class="col-12 col-md-3 fa-ul ul-width">
-          <li class="list-group-item"><h4>Follow us</h4></li>
+        <ul class="col-12 col-md-3 fa-ul ul-width ms-0">
+          <li class="list-group-item">
+            <h4>Follow us</h4>
+          </li>
           <li class="list-group-item">
             <span class="fa-li"><font-awesome-icon icon="fa-brands fa-facebook-f" /></span>
             Facebook
@@ -34,7 +40,7 @@ export default {
             Twitters
           </li>
           <li class="list-group-item">
-            <span class="fa-li"><font-awesome-icon icon="fa-brands fa-instagram"/></span>
+            <span class="fa-li"><font-awesome-icon icon="fa-brands fa-instagram" /></span>
             Instagram
           </li>
         </ul>
@@ -43,23 +49,16 @@ export default {
           <h4>Download our App</h4>
 
           <div class="row gap-4 mt-3">
-            <a
-              href="#"
-              class="store col d-flex align-items-center link-underline-0 gap-3 py-1 text-white link-offset-2 link-underline link-underline-opacity-0"
-            >
+            <a href="#"
+              class="store col d-flex align-items-center link-underline-0 gap-3 py-1 text-white link-offset-2 link-underline link-underline-opacity-0">
               <font-awesome-icon icon="fa-brands fa-apple" class="icon col-2" />
               <div class="col">
                 <h5>App Store</h5>
               </div>
             </a>
-            <a
-              href="#"
-              class="store col d-flex align-items-center link-underline-0 gap-3 py-1 text-white link-offset-2 link-underline link-underline-opacity-0"
-            >
-              <font-awesome-icon
-                icon="fa-brands fa-google-play"
-                class="icon col-2"
-              />
+            <a href="#"
+              class="store col d-flex align-items-center link-underline-0 gap-3 py-1 text-white link-offset-2 link-underline link-underline-opacity-0">
+              <font-awesome-icon icon="fa-brands fa-google-play" class="icon col-2" />
               <div class="col">
                 <h5>Google Play</h5>
               </div>
@@ -86,17 +85,18 @@ export default {
 
 <style scoped lang="scss">
 @import "/src/style.scss";
+
 footer {
   background-color: $orange;
   color: $beige;
 
   .store {
 
-    
+
     border-radius: 10px;
     border: 1px solid $beige;
     color: $beige;
-   
+
 
     .icon {
       font-size: 40px;
@@ -108,13 +108,16 @@ footer {
       color: $beige;
     }
   }
-  .ul-width{
+
+  .ul-width {
     max-width: 300px;
   }
-  hr{
-    color:$beige;
+
+  hr {
+    color: $beige;
   }
-  .list-group-item{
+
+  .list-group-item {
     cursor: pointer;
   }
 }
