@@ -165,9 +165,9 @@ export default {
     <!-- <button class="btn btn-secondary mt-3" @click="redirectToAllRestaurant">
       Back to Home
     </button> -->
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-12 col-md-8">
-        <div id="menu" class="container my-4 text-dark rounded-4">
+        <div id="menu" class="container my-3 text-dark rounded-4">
           <div
             class="rst-cnt p-3 rounded d-flex justify-content-between align-items-center"
           >
@@ -191,40 +191,56 @@ export default {
           <p class="text-center">{{ restaurant.address }}</p> -->
             <h3 class="mt-2 text-center">Menu</h3>
           </div>
-          <div class="d-flex gap-3 flex-wrap">
+
+          <!-- Card Cibi -->
+          <div class="d-flex gap-3 flex-wrap justify-content-center">
             <div
               v-for="food in restaurant.foods"
               :key="food.id"
-              id="card-container"
+              class="my-card mb-3 rounded"
+              style="width: 250px; height: 350px"
             >
-              <div class="card mb-3" style="max-width: 500px">
-                <div class="row g-0 align-items-center fixed-height">
-                  <div class="col-md-3">
-                    <img
-                      :src="
-                        store.api.mainUrl + store.api.storagePath + food.img
-                      "
-                      class="width-calc rounded-start"
-                      :alt="food.slug"
-                    />
+              <div
+                class="card-bg"
+                :style="{
+                  backgroundImage:
+                    'url(' +
+                    store.api.mainUrl +
+                    store.api.storagePath +
+                    food.img +
+                    ')',
+                }"
+              >
+                <div class="overlay"></div>
+                <!-- Overlay trasparente -->
+                <div class="card-overlay">
+                  <!-- Elemento per la descrizione del cibo -->
+                  <div class="card-info">
+                    <h5 class="card-title text-white">{{ food.name }}</h5>
+                    <p class="card-text text-white font-weight-bold">
+                      {{ food.price }} €
+                    </p>
                   </div>
-                  <div class="col-md-9">
-                    <div class="card-body text-start">
-                      <h5 class="card-title">{{ food.name }}</h5>
-                      <p class="card-text">{{ food.description }}</p>
-                      <p>{{ food.price }} €</p>
-                      <button
-                        class="btn position-absolute add-button"
-                        @click="addItemToCart(food, restaurant)"
-                      >
-                        +
-                      </button>
-                    </div>
+
+                  <div class="card-description">
+                    <p class="card-text text-white">{{ food.description }}</p>
+                  </div>
+                  <div class="card-body">
+                    <!-- Rimuovi i pulsanti dal corpo della card -->
+                  </div>
+                  <div class="card-footer">
+                    <button
+                      class="my-btn"
+                      @click="addItemToCart(food, restaurant)"
+                    >
+                      <i class="fas fa-cart-plus"></i> Aggiungi al carrello
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
           <!-- Modal -->
           <div class="modal fade" id="empty-modal-cart">
             <div class="modal-dialog">
@@ -274,6 +290,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
+@import '/src/style.scss';
 .bg-team {
   background-color: #0c2d57;
 }
@@ -355,5 +372,108 @@ img {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+.my-card {
+  width: 250px;
+  height: 350px;
+  border-radius: 15px;
+  transition: all 0.2s;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.card-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 15px;
+}
+
+.card-info {
+  background-color: rgba(255, 153, 0, 0.428);
+  backdrop-filter: blur(12px);
+  border-radius: 15px 15px 0 0;
+  -webkit-backdrop-filter: blur(12px);
+  padding: 20px 0px;
+}
+
+.my-card {
+  &:hover {
+    .overlay {
+      visibility: visible;
+    }
+  }
+
+  .overlay {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(45, 45, 45, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.6px);
+    -webkit-backdrop-filter: blur(6.6px);
+  }
+}
+
+.card-description {
+  position: absolute;
+  bottom: 130px;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 15px;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.card-body,
+.card-footer {
+  padding: 1rem;
+}
+
+.card-title,
+.card-text {
+  margin-bottom: 0;
+  color: white; /* Assicura che il titolo e il prezzo siano sempre bianchi */
+}
+
+.card-overlay {
+  position: absolute; /* Posizione assoluta all'interno della card-bg */
+  top: 0; /* Allinea il card-overlay sopra la card-bg */
+  left: 0; /* Allinea il card-overlay a sinistra della card-bg */
+  width: 100%; /* Larghezza del card-overlay */
+  height: 100%; /* Altezza del card-overlay */
+  display: flex; /* Display flessibile per i pulsanti */
+  flex-direction: column; /* Direzione della flessione verticale */
+  justify-content: space-between; /* Allinea i pulsanti in alto e in basso */
+}
+
+/* Aggiungi regole specifiche al passaggio del mouse */
+.my-card:hover .card-description {
+  opacity: 1;
+}
+
+.my-btn {
+  border-radius: 40px;
+  margin: 0;
+  padding: 5px 20px;
+  border-style: none;
+  color: $orange;
+  background-color: white;
+
+  &:hover {
+    background-color: $orange;
+    color: white;
+  }
 }
 </style>

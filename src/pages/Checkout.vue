@@ -226,16 +226,16 @@ export default {
                                                 {{ item.item }}
                                             </div>
                                             <div class="price">
-                                                Prezzo: {{ item.price }} €
+                                                Price: {{ item.price }} €
                                             </div>
                                             <div class="quantity">
-                                                Quantità: {{ item.quantity }}
+                                                Quantity: {{ item.quantity }}
                                             </div>
                                             <div class="arr-remove d-flex gap-2 justify-content-center mt-2">
-                                                <button class="btn btn-sm border"
+                                                <button class="quantity-btn"
                                                     @click.stop="removeItemFromCart(index)"><font-awesome-icon
                                                         :icon="['fas', 'minus']" /></button>
-                                                <button class="btn btn-sm border"
+                                                <button class="quantity-btn"
                                                     @click.stop="incrementItemInCart(index)"><font-awesome-icon
                                                         :icon="['fas', 'plus']" /></button>
                                             </div>
@@ -246,7 +246,7 @@ export default {
                         </div>
                     </li>
                 </ul>
-                <div v-if="store.cart.items.length > 0" class="total">Totale: {{ store.cart.subtotal }} €
+                <div v-if="store.cart.items.length > 0" class="total">Total: {{ store.cart.subtotal }} €
                 </div>
                 <div v-else>
                     <p>Cart is empty</p>
@@ -288,16 +288,18 @@ export default {
                     Compila tutti i campi per procedere al pagamento
                 </div>
                 <div id="dropin-container" v-if="store.cart.items.length > 0"></div>
-                <button id="submit-button" class="btn btn-success me-3" v-show="store.cart.items.length > 0"
+                <button id="submit-button" class="my-btn me-3" v-show="store.cart.items.length > 0"
                     :disabled="hasError">Pay</button>
-                <button v-if="store.cart.items.length > 0" class="btn btn-secondary me-3" @click ="redirectToSingleRestaurant">Back to restaurant</button>
-               <button class="btn btn-secondary" @click="redirectToAllRestaurant">Back to Home</button>
+                <button v-if="store.cart.items.length > 0" class="my-btn  me-3" @click ="redirectToSingleRestaurant">Back to restaurant</button>
+               <button class="my-btn " @click="redirectToAllRestaurant">Back to Home</button>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
+@import '/src/style.scss';
+
 .food-img {
     width: 100px;
     height: 100px;
@@ -339,5 +341,32 @@ export default {
 .button--green:hover {
     background-color: #8bdda8;
     color: white;
+}
+
+.my-btn {
+  border-radius: 40px;
+  margin: 0;
+  padding: 5px 20px;
+  border: 1px solid $orange;
+  color: white;
+  background-color: $orange;
+
+  &:hover {
+    background-color: white;
+    color: $orange;
+  }
+}
+
+.quantity-btn {
+  color: $darkgreen;
+  background-color: white;
+  border: 1px solid $darkgreen;
+  border-radius: 50%;
+  padding: 5px 10px;
+
+  &:hover {
+    background-color: $darkgreen;
+    color: white;
+  }
 }
 </style>
