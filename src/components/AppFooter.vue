@@ -6,7 +6,7 @@ export default {
 </script>
 
 <template>
-  <footer class="text-white">
+  <footer>
     <div class="p-5">
       <div class="row">
         <ul class="col col-md-3">
@@ -23,20 +23,19 @@ export default {
           <li class="list-group-item">Contacts</li>
         </ul>
 
-        <ul class="col-12 col-md-3">
+        <ul class="col-12 col-md-3 fa-ul ul-width">
           <li class="list-group-item"><h4>Follow us</h4></li>
           <li class="list-group-item">
-            <font-awesome-icon icon="fa-brands fa-facebook-f" class="me-2" />
+            <span class="fa-li"><font-awesome-icon icon="fa-brands fa-facebook-f" /></span>
             Facebook
           </li>
           <li class="list-group-item">
-            <font-awesome-icon icon="fa-brands fa-x-twitter" />
+            <span class="fa-li"> <font-awesome-icon icon="fa-brands fa-x-twitter" /></span>
+            Twitters
           </li>
           <li class="list-group-item">
-            <font-awesome-icon
-              icon="fa-brands fa-instagram"
-              class="me-2"
-            />Instagram
+            <span class="fa-li"><font-awesome-icon icon="fa-brands fa-instagram"/></span>
+            Instagram
           </li>
         </ul>
 
@@ -50,7 +49,6 @@ export default {
             >
               <font-awesome-icon icon="fa-brands fa-apple" class="icon col-2" />
               <div class="col">
-                <p class="m-0 text-secondary">Download now</p>
                 <h5>App Store</h5>
               </div>
             </a>
@@ -63,7 +61,6 @@ export default {
                 class="icon col-2"
               />
               <div class="col">
-                <p class="m-0 text-secondary">Download now</p>
                 <h5>Google Play</h5>
               </div>
             </a>
@@ -71,7 +68,7 @@ export default {
         </div>
       </div>
 
-      <hr class="border border-secondary border-2 opacity-50" />
+      <hr class="border border-2 opacity-50" />
 
       <div class="d-flex justify-content-between">
         <div>
@@ -88,24 +85,37 @@ export default {
 </template>
 
 <style scoped lang="scss">
+@import "/src/style.scss";
 footer {
-  background-color: #2b3445;
+  background-color: $orange;
+  color: $beige;
 
   .store {
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+
+    
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid $beige;
+    color: $beige;
+   
 
     .icon {
       font-size: 40px;
+      color: $beige;
     }
 
     p {
       font-size: 13px;
+      color: $beige;
     }
+  }
+  .ul-width{
+    max-width: 300px;
+  }
+  hr{
+    color:$beige;
+  }
+  .list-group-item{
+    cursor: pointer;
   }
 }
 </style>
