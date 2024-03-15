@@ -96,6 +96,7 @@ export default {
   </div>
 </template>
 <style scoped lang="scss">
+@import '/src/style.scss';
 .cart-container {
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -104,23 +105,32 @@ export default {
 }
 
 .quantity-btn {
-  background-color: rgb(188, 188, 188);
-  color: white;
+  color: $darkgreen;
+  background-color: white;
+  border: 1px solid $darkgreen;
+
+  &:hover {
+    background-color: $darkgreen;
+    color: white;
+  }
 }
 
 .my-btn {
-  background-color: rgb(254, 156, 57);
   border-radius: 40px;
   margin: 0;
   padding: 5px 20px;
   border-style: none;
+  color: $orange;
+  background-color: white;
+  border: 1px solid $orange;
 
-  :hover {
-    background-color: white;
-    border-color: rgb(136, 225, 255);
+  &:hover {
+    background-color: $orange;
+    color: white;
   }
 }
 hr {
   width: 80%;
+  color: $darkgreen;
 }
 </style>

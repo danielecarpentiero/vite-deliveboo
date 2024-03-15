@@ -1,10 +1,10 @@
 <script>
-import store from "../store";
-import { RouterLink } from "vue-router";
-import { myMixin } from "../myMixin";
+import store from '../store';
+import { RouterLink } from 'vue-router';
+import { myMixin } from '../myMixin';
 
 export default {
-  name: "AppHeader",
+  name: 'AppHeader',
   mixins: [myMixin],
 
   data() {
@@ -25,8 +25,14 @@ export default {
           <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
         </RouterLink>
         <div class="d-flex align-items-center margin-top">
-          <RouterLink :to="{ name: 'checkout' }" class="d-flex align-items-center">
-            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="cart-icon" />
+          <RouterLink
+            :to="{ name: 'checkout' }"
+            class="d-flex align-items-center"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'cart-shopping']"
+              class="cart-icon"
+            />
             <a class="px-2"> Subtotal: {{ store.cart.subtotal }} € </a>
           </RouterLink>
           <a href="http://127.0.0.1:8000/" class="btn ms-4 login">Login</a>
@@ -38,7 +44,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import "/src/style.scss";
+@import '/src/style.scss';
 
 header {
   position: relative;
@@ -78,17 +84,18 @@ header .overlay {
 }
 
 a {
-  color: #f2e8cf;
+  color: $beige;
   text-decoration: none;
 }
 
 .login {
-  color: #212529;
-  background-color: #f2e8cf;
+  color: $darkgreen;
+  background-color: $beige;
 
   &:hover {
-    background-color: #f2e8cf;
-    color: #212529;
+    background-color: $orange;
+    color: $beige;
+    border: 1px solid $orange;
   }
 }
 
@@ -111,7 +118,10 @@ a {
 
 .cart-icon {
   color: $beige;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  &:hover {
+    color: $orange;
+  }
 }
 
 .dropdown-item {
