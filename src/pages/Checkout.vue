@@ -79,35 +79,35 @@ export default {
         validateInput() {
             this.hasError = false;
             if (this.guestName === '') {
-                this.errorName = 'Inserisci un nome';
+                this.errorName = 'Insert a valid name';
                 this.hasError = true;
             } else {
                 this.errorName = '';
             }
 
             if (this.guestSurname === '') {
-                this.errorSurname = 'Inserisci un cognome';
+                this.errorSurname = 'Insert a valid surname';
                 this.hasError = true;
             } else {
                 this.errorSurname = '';
             }
 
             if (this.guestAddress === '') {
-                this.errorAddress = 'Inserisci un indirizzo';
+                this.errorAddress = 'Insert a valid address';
                 this.hasError = true;
             } else {
                 this.errorAddress = '';
             }
 
             if (this.guestPhone === '' || !(this.isValidPhone(this.guestPhone))) {
-                this.errorPhone = 'Inserisci un telefono valido';
+                this.errorPhone = 'Insert a valid telephone';
                 this.hasError = true;
             } else {
                 this.errorPhone = '';
             }
 
             if (this.guestEmail === '' || !(this.isValidEmail(this.guestEmail))) {
-                this.errorEmail = 'Inserisci un\'email valida';
+                this.errorEmail = 'Insert a valid e-mail';
                 this.hasError = true;
             } else {
                 this.errorEmail = '';
