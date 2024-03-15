@@ -71,8 +71,8 @@ export default {
       axios
         .get(
           this.store.api.mainUrl +
-          this.store.api.listUrl.restaurants +
-          this.$route.params.slug
+            this.store.api.listUrl.restaurants +
+            this.$route.params.slug
         )
         .then((response) => {
           this.restaurant = response.data.result;
@@ -168,15 +168,22 @@ export default {
     <div class="row">
       <div class="col-12 col-md-8">
         <div id="menu" class="container my-4 text-dark rounded-4">
-          <div class="rst-cnt p-3 rounded d-flex justify-content-between align-items-center">
+          <div
+            class="rst-cnt p-3 rounded d-flex justify-content-between align-items-center"
+          >
             <div>
-              <div class="rst-ttl fw-bold text-white text-center">{{ restaurant.name }}</div>
+              <div class="rst-ttl fw-bold text-white text-center">
+                {{ restaurant.name }}
+              </div>
             </div>
 
-
-            <img class="rst-img rounded img-fluid"
-              :src="store.api.mainUrl + store.api.storagePath + restaurant.cover_img" :alt="restaurant.name" />
-
+            <img
+              class="rst-img rounded img-fluid"
+              :src="
+                store.api.mainUrl + store.api.storagePath + restaurant.cover_img
+              "
+              :alt="restaurant.name"
+            />
           </div>
 
           <div class="card-body">
@@ -185,19 +192,31 @@ export default {
             <h3 class="mt-2 text-center">Menu</h3>
           </div>
           <div class="d-flex gap-3 flex-wrap">
-            <div v-for="food in restaurant.foods" :key="food.id" id="card-container">
-              <div class="card mb-3" style="max-width: 500px;">
+            <div
+              v-for="food in restaurant.foods"
+              :key="food.id"
+              id="card-container"
+            >
+              <div class="card mb-3" style="max-width: 500px">
                 <div class="row g-0 align-items-center fixed-height">
                   <div class="col-md-3">
-                    <img :src="store.api.mainUrl + store.api.storagePath + food.img" class="width-calc rounded-start"
-                      :alt="food.slug">
+                    <img
+                      :src="
+                        store.api.mainUrl + store.api.storagePath + food.img
+                      "
+                      class="width-calc rounded-start"
+                      :alt="food.slug"
+                    />
                   </div>
                   <div class="col-md-9">
                     <div class="card-body text-start">
                       <h5 class="card-title">{{ food.name }}</h5>
                       <p class="card-text">{{ food.description }}</p>
                       <p>{{ food.price }} €</p>
-                      <button class="btn position-absolute add-button" @click="addItemToCart(food, restaurant)">
+                      <button
+                        class="btn position-absolute add-button"
+                        @click="addItemToCart(food, restaurant)"
+                      >
                         +
                       </button>
                     </div>
@@ -214,18 +233,31 @@ export default {
                   <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
                     Emptying cart
                   </h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
                 </div>
                 <div class="modal-body text-dark text-start">
                   You can order from one restaurant at a time. Do you want to
                   empty your cart and insert "{{ this.selectedFoodName }}"?
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">
+                  <button
+                    type="button"
+                    class="btn btn-secondary text-white"
+                    data-bs-dismiss="modal"
+                  >
                     Close
                   </button>
-                  <button type="button" class="btn btn-danger text-white" @click="emptyAndReplaceCart()"
-                    data-bs-dismiss="modal">
+                  <button
+                    type="button"
+                    class="btn btn-danger text-white"
+                    @click="emptyAndReplaceCart()"
+                    data-bs-dismiss="modal"
+                  >
                     Empty cart
                   </button>
                 </div>
@@ -256,6 +288,9 @@ export default {
 
 .rst-cnt {
   background-color: #386641;
+  @media (max-width: 1400px) {
+    flex-direction: column;
+  }
 }
 
 .rst-ttl {
@@ -306,13 +341,13 @@ img {
 // }
 
 .add-button {
-  background-color: #EC732C;
+  background-color: #ec732c;
   color: #fff;
 
   &:hover {
     background-color: transparent;
-    border-color: #EC732C;
-    color: #EC732C;
+    border-color: #ec732c;
+    color: #ec732c;
   }
 }
 
