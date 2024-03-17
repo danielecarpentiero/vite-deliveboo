@@ -171,10 +171,8 @@ export default {
           <div
             class="rst-cnt rounded d-flex justify-content-between align-items-center"
           >
-            <div>
-              <div class="rst-ttl fw-bold text-white text-center">
-                {{ restaurant.name }}
-              </div>
+            <div class="rst-ttl fw-bold ps-4 text-white">
+              {{ restaurant.name }}
             </div>
 
             <img
