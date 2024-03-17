@@ -169,7 +169,7 @@ export default {
       <div class="col-12 col-md-8">
         <div id="menu" class="container my-3 text-dark rounded-4">
           <div
-            class="rst-cnt p-3 rounded d-flex justify-content-between align-items-center"
+            class="rst-cnt rounded d-flex justify-content-between align-items-center"
           >
             <div>
               <div class="rst-ttl fw-bold text-white text-center">
@@ -184,6 +184,7 @@ export default {
               "
               :alt="restaurant.name"
             />
+            <div class="overlay"></div>
           </div>
 
           <div class="card-body">
@@ -309,20 +310,43 @@ export default {
 }
 
 .rst-cnt {
-  background-color: #386641;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url("../../public/color-doodle-food-burger-pattern_1409-3918-transformed.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
   @media (max-width: 1400px) {
     flex-direction: column;
   }
+  position: relative;
+}
+
+.rst-cnt {
+  position: relative; /* Assicura che l'overlay sia posizionato correttamente */
+}
+
+.overlay {
+  position: absolute; /* Posizionamento assoluto rispetto al contenitore rst-cnt */
+  top: 0; /* Allineamento in alto */
+  left: 0; /* Allineamento a sinistra */
+  width: 100%; /* Occupa l'intera larghezza del contenitore */
+  height: 100%; /* Occupa l'intera altezza del contenitore */
+  background-color: rgba(0, 0, 0, 0.5); /* Colore di sfondo con trasparenza */
+  pointer-events: none; /* Assicura che l'overlay non interagisca con il contenuto sottostante */
+  border-radius: 15px; /* Opzionale: arrotonda gli angoli dell'overlay */
 }
 
 .rst-ttl {
   font-size: 60px;
+  position: relative;
+  z-index: 2;
 }
 
 .rst-img {
   width: 440px;
   height: 100%;
   object-fit: contain;
+  position: relative;
+  z-index: 2;
 }
 
 .container.text-center {

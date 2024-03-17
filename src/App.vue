@@ -1,10 +1,10 @@
 <script>
-import AppHeader from './components/AppHeader.vue';
-import AppFooter from './components/AppFooter.vue';
-import { RouterView } from 'vue-router';
+import AppHeader from "./components/AppHeader.vue";
+import AppFooter from "./components/AppFooter.vue";
+import { RouterView } from "vue-router";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     AppHeader,
     RouterView,
@@ -14,9 +14,15 @@ export default {
 </script>
 
 <template>
-  <AppHeader />
-  <RouterView />
-  <AppFooter />
+  <div class="content">
+    <AppHeader />
+    <RouterView />
+    <AppFooter />
+  </div>
 </template>
 
-<style></style>
+<style scoped lang="scss">
+.content {
+  overflow-x: hidden;
+}
+</style>
