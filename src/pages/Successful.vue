@@ -1,8 +1,8 @@
 <script>
-import { RouterLink } from 'vue-router';
+import { RouterLink } from "vue-router";
 
 export default {
-  name: 'successful',
+  name: "successful",
 };
 </script>
 <template>
@@ -77,7 +77,7 @@ export default {
     position: relative;
     display: block;
     width: calc(158% + 1.3px);
-    height: 242px;
+    height: 90%;
     transform: rotateY(180deg);
   }
 
