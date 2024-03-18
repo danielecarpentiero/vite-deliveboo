@@ -23,7 +23,7 @@ export default {
     <div
       class="d-flex flex-wrap p-2 justify-content-center flex-column mt-5 mb-5 gap-3 container"
     >
-      <h1 class="display-1 text-white text-center mb-4">
+      <h1 class="display-1  text-center mb-4">
         Your order has been sent
       </h1>
       <font-awesome-icon
@@ -76,7 +76,7 @@ export default {
   .custom-shape-divider-top-1710498412 svg {
     position: relative;
     display: block;
-    width: calc(158% + 1.3px);
+    // width: calc(158% + 1.3px);
     height: 90%;
     transform: rotateY(180deg);
   }
