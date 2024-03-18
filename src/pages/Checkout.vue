@@ -116,16 +116,16 @@ export default {
             }
 
             if (this.hasError) {
-                return; // Non impostare il focus se ci sono errori
+                return;
             }
         }
     },
 
     submitOrder() {
         this.submitted = true;
-        this.validateInput(); // Chiamata alla validazione quando l'utente tenta di inviare il modulo
+        this.validateInput();
         if (!this.hasError) {
-            // Effettua l'invio del pagamento
+            /* Paga */
         }
     }
     
