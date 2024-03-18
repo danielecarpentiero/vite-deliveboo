@@ -77,7 +77,9 @@ export default {
         },
 
         validateInput() {
-            this.hasError = false;
+        this.hasError = false;
+
+        if (this.submitted) {
             if (this.guestName === '') {
                 this.errorName = 'Insert a valid name';
                 this.hasError = true;
@@ -112,8 +114,21 @@ export default {
             } else {
                 this.errorEmail = '';
             }
-            // Check ritorna 5 se tutti i controlli sono superati
-        },
+
+            if (this.hasError) {
+                return; // Non impostare il focus se ci sono errori
+            }
+        }
+    },
+
+    submitOrder() {
+        this.submitted = true;
+        this.validateInput(); // Chiamata alla validazione quando l'utente tenta di inviare il modulo
+        if (!this.hasError) {
+            // Effettua l'invio del pagamento
+        }
+    }
+    
     },
 
     mounted() {
@@ -251,35 +266,35 @@ export default {
                 <div v-else>
                     <p>Cart is empty</p>
                 </div>
-                <div v-if="store.cart.items.length > 0" class="paymeny-form mt-5">
+                <div v-if="store.cart.items.length > 0" class="payment-form mt-5">
                     <div class="mb-3">
                         <label for="guestName" class="form-label">Name</label>
                         <input type="text" class="form-control" id="guestName" placeholder="Name" v-model="guestName"
-                            maxlength="20">
+                            maxlength="20" ref="guestName">
                         <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorName }}</strong>
                     </div>
                     <div class="mb-3">
                         <label for="guestSurname" class="form-label">Surname</label>
                         <input type="text" class="form-control" id="guestSurname" placeholder="Surname"
-                            v-model="guestSurname" maxlength="20">
+                            v-model="guestSurname" maxlength="20" ref="guestSurname">
                         <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorSurname }}</strong>
                     </div>
                     <div class="mb-3">
                         <label for="guestAddress" class="form-label">Address</label>
                         <input type="text" class="form-control" id="guestAddress" placeholder="Address"
-                            v-model="guestAddress" maxlength="50">
+                            v-model="guestAddress" maxlength="50" ref="guestAddress">
                         <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorAddress }}</strong>
                     </div>
                     <div class="mb-3">
                         <label for="guestPhone" class="form-label">Phone</label>
                         <input type="text" class="form-control" id="guestPhone" placeholder="Phone"
-                            v-model="guestPhone">
+                            v-model="guestPhone" ref="guestPhone">
                         <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorPhone }}</strong>
                     </div>
                     <div class="mb-3">
                         <label for="guestEmail" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="guestEmail" placeholder="name@example.com"
-                            v-model="guestEmail">
+                            v-model="guestEmail" ref="guestEmail">
                         <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorEmail }}</strong>
                     </div>
                 </div>
@@ -289,13 +304,14 @@ export default {
                 </div>
                 <div id="dropin-container" v-if="store.cart.items.length > 0"></div>
                 <button id="submit-button" class="my-btn me-3" v-show="store.cart.items.length > 0"
-                    :disabled="hasError">Pay</button>
+                    @click="submitOrder" :disabled="hasError">Pay</button>
                 <button v-if="store.cart.items.length > 0" class="my-btn  me-3" @click ="redirectToSingleRestaurant">Back to restaurant</button>
-               <button class="my-btn " @click="redirectToAllRestaurant">Back to Home</button>
+                <button class="my-btn " @click="redirectToAllRestaurant">Back to Home</button>
             </div>
         </div>
     </div>
 </template>
+
 
 <style scoped lang="scss">
 @import '/src/style.scss';
