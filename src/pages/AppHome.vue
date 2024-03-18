@@ -269,7 +269,7 @@ export default {
     </ul>
   </div>
   <div class="dividerwork-top mt-5">
-    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 120" preserveAspectRatio="none">
+    <svg style="" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 120" preserveAspectRatio="none">
       <path
         d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
         class="shape-fill"></path>
@@ -358,6 +358,7 @@ export default {
 .partner-container {
   padding: 10vh 0;
   background-color: $orange;
+  border: 1px solid $orange;
 }
 
 .divider svg {
@@ -384,6 +385,8 @@ export default {
   fill: #f88a35;
 }
 
+
+
 .dividerwork-top svg {
   position: relative;
   top: 10px;
@@ -391,7 +394,10 @@ export default {
   width: calc(100% + 2px);
   height: 228px;
   transform: rotateY(180deg);
+  
 }
+
+
 
 .dividerwork .shape-fill {
   fill: $darkgreen;
@@ -628,5 +634,15 @@ export default {
 .work-section {
   background-color: $darkgreen;
   color: $beige;
+  border-bottom: 1px solid $darkgreen;
+}
+@media screen and (max-width: 576px) {
+  .dividerwork .svg{
+  border-top:1px solid $darkgreen;
+}
+.dividerwork-top .svg{
+  border-top: 1px solid $darkgreen;
+}
+
 }
 </style>

@@ -96,4 +96,9 @@ export default {
     }
   }
 }
+@media screen and (max-width: 576px) {
+  .pages{
+    position: static;
+  }
+}
 </style>
