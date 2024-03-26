@@ -23,7 +23,7 @@ export default {
     <div
       class="d-flex flex-wrap p-2 justify-content-center flex-column mt-5 mb-5 gap-3 container"
     >
-      <h1 class="display-1  text-center mb-4">
+      <h1 class="display-1 text-white text-center mb-4">
         Your order has been sent
       </h1>
       <font-awesome-icon

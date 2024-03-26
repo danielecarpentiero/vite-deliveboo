@@ -24,18 +24,16 @@ export default {
         <RouterLink :to="{ name: 'home' }">
           <img src="/DelivebooLogo.png" alt="Logo" class="logo" />
         </RouterLink>
-        <div class="d-flex align-items-center margin-top">
-          <RouterLink
-            :to="{ name: 'checkout' }"
-            class="d-flex align-items-center"
-          >
-            <font-awesome-icon
-              :icon="['fas', 'cart-shopping']"
-              class="cart-icon"
-            />
+        <div class="d-flex gap-5 align-items-center margin-top">
+          <RouterLink :to="{ name: 'checkout' }" class="d-flex align-items-center">
+            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="cart-icon" />
             <a class="px-2"> Subtotal: {{ store.cart.subtotal }} € </a>
           </RouterLink>
-          <a href="http://127.0.0.1:8000/" class="btn ms-4 login">Login</a>
+          <div class="d-flex gap-2 justify-content-center align-items-center">
+            <div class="login-txt">Are you a restaurateur?</div>
+            <a href="http://127.0.0.1:8000/" class="btn login">Login</a>
+          </div>
+
         </div>
       </nav>
     </div>
@@ -119,8 +117,17 @@ a {
 .cart-icon {
   color: $beige;
   font-size: 1.5rem;
+
   &:hover {
     color: $orange;
+  }
+}
+
+.login-txt {
+  color: $beige;
+
+  @media(max-width:768px) {
+    display: none;
   }
 }
 
