@@ -3,7 +3,7 @@ import store from '../store';
 import { myMixin } from '../myMixin';
 import axios from 'axios';
 import config from '../config.json';
-import {router} from '../router'
+import { router } from '../router'
 
 export default {
     name: 'Checkout',
@@ -48,19 +48,19 @@ export default {
             this.store.cart.items[index].quantity++;
         },
 
-        redirectToSingleRestaurant(){
+        redirectToSingleRestaurant() {
             this.$router.push({ name: 'restaurant', params: { slug: store.cart.items[0].restaurant_slug } });
             window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // Optional: Add smooth scrolling behavior
-      });
+                top: 0,
+                behavior: 'smooth' // Optional: Add smooth scrolling behavior
+            });
         },
 
         redirectToAllRestaurant() {
             this.$router.push({ name: 'home' });
             window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // Optional: Add smooth scrolling behavior
+                top: 0,
+                behavior: 'smooth' // Optional: Add smooth scrolling behavior
             });
         },
 
@@ -77,58 +77,58 @@ export default {
         },
 
         validateInput() {
-        this.hasError = false;
+            this.hasError = false;
 
-        if (this.submitted) {
-            if (this.guestName === '') {
-                this.errorName = 'Insert a valid name';
-                this.hasError = true;
-            } else {
-                this.errorName = '';
+            if (this.submitted) {
+                if (this.guestName === '') {
+                    this.errorName = 'Insert a valid name';
+                    this.hasError = true;
+                } else {
+                    this.errorName = '';
+                }
+
+                if (this.guestSurname === '') {
+                    this.errorSurname = 'Insert a valid surname';
+                    this.hasError = true;
+                } else {
+                    this.errorSurname = '';
+                }
+
+                if (this.guestAddress === '') {
+                    this.errorAddress = 'Insert a valid address';
+                    this.hasError = true;
+                } else {
+                    this.errorAddress = '';
+                }
+
+                if (this.guestPhone === '' || !(this.isValidPhone(this.guestPhone))) {
+                    this.errorPhone = 'Insert a valid telephone';
+                    this.hasError = true;
+                } else {
+                    this.errorPhone = '';
+                }
+
+                if (this.guestEmail === '' || !(this.isValidEmail(this.guestEmail))) {
+                    this.errorEmail = 'Insert a valid e-mail';
+                    this.hasError = true;
+                } else {
+                    this.errorEmail = '';
+                }
+
+                if (this.hasError) {
+                    return;
+                }
             }
+        },
 
-            if (this.guestSurname === '') {
-                this.errorSurname = 'Insert a valid surname';
-                this.hasError = true;
-            } else {
-                this.errorSurname = '';
-            }
-
-            if (this.guestAddress === '') {
-                this.errorAddress = 'Insert a valid address';
-                this.hasError = true;
-            } else {
-                this.errorAddress = '';
-            }
-
-            if (this.guestPhone === '' || !(this.isValidPhone(this.guestPhone))) {
-                this.errorPhone = 'Insert a valid telephone';
-                this.hasError = true;
-            } else {
-                this.errorPhone = '';
-            }
-
-            if (this.guestEmail === '' || !(this.isValidEmail(this.guestEmail))) {
-                this.errorEmail = 'Insert a valid e-mail';
-                this.hasError = true;
-            } else {
-                this.errorEmail = '';
-            }
-
-            if (this.hasError) {
-                return;
+        submitOrder() {
+            this.submitted = true;
+            this.validateInput();
+            if (!this.hasError) {
+                /* Paga */
             }
         }
-    },
 
-    submitOrder() {
-        this.submitted = true;
-        this.validateInput();
-        if (!this.hasError) {
-            /* Paga */
-        }
-    }
-    
     },
 
     mounted() {
@@ -287,8 +287,8 @@ export default {
                     </div>
                     <div class="mb-3">
                         <label for="guestPhone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="guestPhone" placeholder="Phone"
-                            v-model="guestPhone" ref="guestPhone">
+                        <input type="text" class="form-control" id="guestPhone" placeholder="Phone" v-model="guestPhone"
+                            ref="guestPhone">
                         <strong style="font-size: 0.875em; color: red;" role="alert">{{ errorPhone }}</strong>
                     </div>
                     <div class="mb-3">
@@ -303,10 +303,11 @@ export default {
                     Complete all fields to proceed with payment.
                 </div>
                 <div id="dropin-container" v-if="store.cart.items.length > 0"></div>
-                <button id="submit-button" class="my-btn me-3" v-show="store.cart.items.length > 0"
-                    @click="submitOrder" :disabled="hasError">Pay</button>
-                <button v-if="store.cart.items.length > 0" class="my-btn  me-3" @click ="redirectToSingleRestaurant">Back to restaurant</button>
-                <button class="my-btn " @click="redirectToAllRestaurant">Back to Home</button>
+                <button id="submit-button" class="my-btn me-3" v-show="store.cart.items.length > 0" @click="submitOrder"
+                    :disabled="hasError">Pay</button>
+                <button v-if="store.cart.items.length > 0" class="my-btn  me-3" @click="redirectToSingleRestaurant">Back
+                    to restaurant</button>
+                <button class="my-btn" @click="redirectToAllRestaurant">Back to Home</button>
             </div>
         </div>
     </div>
@@ -323,7 +324,7 @@ export default {
     border-radius: 50%;
 }
 
-.cart{
+.cart {
     min-height: 70vh;
 }
 
@@ -360,29 +361,29 @@ export default {
 }
 
 .my-btn {
-  border-radius: 40px;
-  margin: 0;
-  padding: 5px 20px;
-  border: 1px solid $orange;
-  color: white;
-  background-color: $orange;
+    border-radius: 40px;
+    margin: 0;
+    padding: 5px 20px;
+    border: 1px solid $orange;
+    color: white;
+    background-color: $orange;
 
-  &:hover {
-    background-color: white;
-    color: $orange;
-  }
+    &:hover {
+        background-color: white;
+        color: $orange;
+    }
 }
 
 .quantity-btn {
-  color: $darkgreen;
-  background-color: white;
-  border: 1px solid $darkgreen;
-  border-radius: 50%;
-  padding: 5px 10px;
+    color: $darkgreen;
+    background-color: white;
+    border: 1px solid $darkgreen;
+    border-radius: 50%;
+    padding: 5px 10px;
 
-  &:hover {
-    background-color: $darkgreen;
-    color: white;
-  }
+    &:hover {
+        background-color: $darkgreen;
+        color: white;
+    }
 }
 </style>

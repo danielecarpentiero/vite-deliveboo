@@ -28,6 +28,7 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
 library.add(
@@ -40,7 +41,8 @@ library.add(
   // faTrashCan,
   faPlus,
   faMinus,
-  faCircleCheck
+  faCircleCheck,
+  faChevronUp
 );
 
 createApp(App)

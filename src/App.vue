@@ -14,7 +14,7 @@ export default {
 </script>
 
 <template>
-  <div class="content">
+  <div>
     <AppHeader />
     <RouterView />
     <AppFooter />
@@ -23,6 +23,6 @@ export default {
 
 <style scoped lang="scss">
 .content {
-  // overflow-x: hidden;
+  //overflow-x: hidden;
 }
 </style>

@@ -32,15 +32,20 @@ export default {
     removeAllItems() {
       this.store.cart.items = [];
     },
+    redirectToAllRestaurant() {
+      this.$router.push({ name: 'home' });
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Optional: Add smooth scrolling behavior
+      });
+    },
   },
 };
 </script>
 
 <template>
   <div class="cart-container p-3">
-    <div
-      class="cart-header d-flex justify-content-between align-items-center p-2"
-    >
+    <div class="cart-header d-flex justify-content-between align-items-center p-2">
       <h5 class="m-0">Shopping Cart</h5>
       <span class="text-danger btn" @click="removeAllItems">Remove All</span>
     </div>
@@ -51,27 +56,18 @@ export default {
         {{ store.cart.items[0].restaurant_name }}
       </div>
       <li v-if="store.cart.items.length > 0">
-        <div
-          v-for="(food, index) in store.cart.items"
-          :key="index"
-          class="d-flex justify-content-between align-items-center p-2"
-        >
+        <div v-for="(food, index) in store.cart.items" :key="index"
+          class="d-flex justify-content-between align-items-center p-2">
           <div>
             <span>{{ food.item }}</span> -
             <span>{{ food.price }} €</span>
           </div>
           <div class="d-flex align-items-center">
-            <button
-              @click.stop="removeItemFromCart(index)"
-              class="btn quantity-btn btn-sm rounded-circle me-2"
-            >
+            <button @click.stop="removeItemFromCart(index)" class="btn quantity-btn btn-sm rounded-circle me-2">
               <font-awesome-icon :icon="['fas', 'minus']" />
             </button>
             <span>{{ food.quantity }}</span>
-            <button
-              @click.stop="incrementItemInCart(index)"
-              class="btn quantity-btn btn-sm rounded-circle ms-2"
-            >
+            <button @click.stop="incrementItemInCart(index)" class="btn quantity-btn btn-sm rounded-circle ms-2">
               <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
           </div>
@@ -80,9 +76,7 @@ export default {
           <hr />
         </div>
 
-        <div
-          class="checkout d-flex justify-content-between align-items-center p-2"
-        >
+        <div class="checkout d-flex justify-content-between align-items-center p-2">
           <div class="subtotal">Subtotal: €{{ store.cart.subtotal }}</div>
           <router-link :to="{ name: 'checkout' }">
             <button class="my-btn">Go to checkout</button>
@@ -94,9 +88,11 @@ export default {
       </li>
     </ul>
   </div>
+  <button class="my-btn" @click="redirectToAllRestaurant">Back to Home</button>
 </template>
 <style scoped lang="scss">
 @import '/src/style.scss';
+
 .cart-container {
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -129,8 +125,18 @@ export default {
     color: white;
   }
 }
+
 hr {
   width: 80%;
   color: $darkgreen;
+}
+
+.my-btn {
+  border-radius: 40px;
+  margin: 1.25rem;
+  padding: 5px 20px;
+  border: 1px solid $orange;
+  color: white;
+  background-color: $orange;
 }
 </style>
