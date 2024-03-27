@@ -71,8 +71,8 @@ export default {
       axios
         .get(
           this.store.api.mainUrl +
-            this.store.api.listUrl.restaurants +
-            this.$route.params.slug
+          this.store.api.listUrl.restaurants +
+          this.$route.params.slug
         )
         .then((response) => {
           this.restaurant = response.data.result;
@@ -168,20 +168,13 @@ export default {
     <div class="row justify-content-center">
       <div class="col-12 col-md-8">
         <div id="menu" class="container my-3 text-dark rounded-4">
-          <div
-            class="rst-cnt rounded d-flex justify-content-between align-items-center"
-          >
+          <div class="rst-cnt rounded d-flex justify-content-between align-items-center">
             <div class="rst-ttl fw-bold ps-4 text-white">
               {{ restaurant.name }}
             </div>
 
-            <img
-              class="rst-img rounded img-fluid"
-              :src="
-                store.api.mainUrl + store.api.storagePath + restaurant.cover_img
-              "
-              :alt="restaurant.name"
-            />
+            <img class="rst-img rounded img-fluid" :src="store.api.mainUrl + store.api.storagePath + restaurant.cover_img
+                " :alt="restaurant.name" />
             <div class="overlay"></div>
           </div>
 
@@ -193,23 +186,16 @@ export default {
 
           <!-- Card Cibi -->
           <div class="d-flex gap-3 flex-wrap justify-content-center">
-            <div
-              v-for="food in restaurant.foods"
-              :key="food.id"
-              class="my-card mb-3 rounded"
-              style="width: 250px; height: 350px"
-            >
-              <div
-                class="card-bg"
-                :style="{
-                  backgroundImage:
-                    'url(' +
-                    store.api.mainUrl +
-                    store.api.storagePath +
-                    food.img +
-                    ')',
-                }"
-              >
+            <div v-for="food in restaurant.foods" :key="food.id" class="my-card mb-3 rounded"
+              style="width: 250px; height: 350px">
+              <div class="card-bg" :style="{
+                backgroundImage:
+                  'url(' +
+                  store.api.mainUrl +
+                  store.api.storagePath +
+                  food.img +
+                  ')',
+              }">
                 <div class="overlay"></div>
                 <!-- Overlay trasparente -->
                 <div class="card-overlay">
@@ -228,10 +214,7 @@ export default {
                     <!-- Rimuovi i pulsanti dal corpo della card -->
                   </div>
                   <div class="card-footer" v-if="food.is_visible === 1">
-                    <button
-                      class="my-btn"
-                      @click="addItemToCart(food, restaurant)"
-                    >
+                    <button class="my-btn" @click="addItemToCart(food, restaurant)">
                       <i class="fas fa-cart-plus"></i> Add item to cart
                     </button>
                   </div>
@@ -253,31 +236,18 @@ export default {
                   <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
                     Emptying cart
                   </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-dark text-start">
                   You can order from one restaurant at a time. Do you want to
                   empty your cart and insert "{{ this.selectedFoodName }}"?
                 </div>
                 <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary text-white"
-                    data-bs-dismiss="modal"
-                  >
+                  <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">
                     Close
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger text-white"
-                    @click="emptyAndReplaceCart()"
-                    data-bs-dismiss="modal"
-                  >
+                  <button type="button" class="btn btn-danger text-white" @click="emptyAndReplaceCart()"
+                    data-bs-dismiss="modal">
                     Empty cart
                   </button>
                 </div>
@@ -286,7 +256,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="cart col-12 col-md-4 cart my-4">
+      <div class="cart col-12 col-md-4 my-4">
         <Cart />
       </div>
     </div>
@@ -295,6 +265,7 @@ export default {
 
 <style scoped lang="scss">
 @import "/src/style.scss";
+
 .bg-team {
   background-color: #0c2d57;
 }
@@ -312,25 +283,36 @@ export default {
   background-image: url("../../public/color-doodle-food-burger-pattern_1409-3918-transformed.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
+
   @media (max-width: 1400px) {
     flex-direction: column;
   }
+
   position: relative;
 }
 
 .rst-cnt {
-  position: relative; /* Assicura che l'overlay sia posizionato correttamente */
+  position: relative;
+  /* Assicura che l'overlay sia posizionato correttamente */
 }
 
 .overlay {
-  position: absolute; /* Posizionamento assoluto rispetto al contenitore rst-cnt */
-  top: 0; /* Allineamento in alto */
-  left: 0; /* Allineamento a sinistra */
-  width: 100%; /* Occupa l'intera larghezza del contenitore */
-  height: 100%; /* Occupa l'intera altezza del contenitore */
-  background-color: rgba(0, 0, 0, 0.5); /* Colore di sfondo con trasparenza */
-  pointer-events: none; /* Assicura che l'overlay non interagisca con il contenuto sottostante */
-  border-radius: 15px; /* Opzionale: arrotonda gli angoli dell'overlay */
+  position: absolute;
+  /* Posizionamento assoluto rispetto al contenitore rst-cnt */
+  top: 0;
+  /* Allineamento in alto */
+  left: 0;
+  /* Allineamento a sinistra */
+  width: 100%;
+  /* Occupa l'intera larghezza del contenitore */
+  height: 100%;
+  /* Occupa l'intera altezza del contenitore */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Colore di sfondo con trasparenza */
+  pointer-events: none;
+  /* Assicura che l'overlay non interagisca con il contenuto sottostante */
+  border-radius: 15px;
+  /* Opzionale: arrotonda gli angoli dell'overlay */
 }
 
 .rst-ttl {
@@ -408,6 +390,7 @@ img {
   transition: all 0.2s;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
   &:hover {
     transform: scale(1.05);
   }
@@ -471,18 +454,27 @@ img {
 .card-title,
 .card-text {
   margin-bottom: 0;
-  color: white; /* Assicura che il titolo e il prezzo siano sempre bianchi */
+  color: white;
+  /* Assicura che il titolo e il prezzo siano sempre bianchi */
 }
 
 .card-overlay {
-  position: absolute; /* Posizione assoluta all'interno della card-bg */
-  top: 0; /* Allinea il card-overlay sopra la card-bg */
-  left: 0; /* Allinea il card-overlay a sinistra della card-bg */
-  width: 100%; /* Larghezza del card-overlay */
-  height: 100%; /* Altezza del card-overlay */
-  display: flex; /* Display flessibile per i pulsanti */
-  flex-direction: column; /* Direzione della flessione verticale */
-  justify-content: space-between; /* Allinea i pulsanti in alto e in basso */
+  position: absolute;
+  /* Posizione assoluta all'interno della card-bg */
+  top: 0;
+  /* Allinea il card-overlay sopra la card-bg */
+  left: 0;
+  /* Allinea il card-overlay a sinistra della card-bg */
+  width: 100%;
+  /* Larghezza del card-overlay */
+  height: 100%;
+  /* Altezza del card-overlay */
+  display: flex;
+  /* Display flessibile per i pulsanti */
+  flex-direction: column;
+  /* Direzione della flessione verticale */
+  justify-content: space-between;
+  /* Allinea i pulsanti in alto e in basso */
 }
 
 /* Aggiungi regole specifiche al passaggio del mouse */
