@@ -519,6 +519,8 @@ img {
 }
 
 .btn-close {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+
   &:hover {
     color: #fff;
   }
