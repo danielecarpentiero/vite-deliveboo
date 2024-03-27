@@ -233,21 +233,20 @@ export default {
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
+                  <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">
                     Emptying cart
                   </h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body text-dark text-start">
+                <div class="modal-body text-start">
                   You can order from one restaurant at a time. Do you want to
                   empty your cart and insert "{{ this.selectedFoodName }}"?
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">
+                  <button type="button" class="btn-resume" data-bs-dismiss="modal">
                     Close
                   </button>
-                  <button type="button" class="btn btn-danger text-white" @click="emptyAndReplaceCart()"
-                    data-bs-dismiss="modal">
+                  <button type="button" class="btn-empty" @click="emptyAndReplaceCart()" data-bs-dismiss="modal">
                     Empty cart
                   </button>
                 </div>
@@ -498,5 +497,44 @@ img {
 
 #not {
   opacity: 0.7;
+}
+
+.modal-header {
+  background-color: #ec732c;
+
+}
+
+.btn-empty {
+  padding: 5px 20px;
+  color: #f88a35;
+  background-color: white;
+  border: 1px solid #f88a35;
+  border-radius: 30px;
+
+  &:hover {
+    color: white;
+    background-color: #f88a35;
+    border: 1px solid #f88a35;
+  }
+}
+
+.btn-close {
+  &:hover {
+    color: #fff;
+  }
+}
+
+.btn-resume {
+  padding: 5px 20px;
+  color: grey;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 30px;
+
+  &:hover {
+    color: white;
+    background-color: grey;
+    border: 1px solid grey;
+  }
 }
 </style>
